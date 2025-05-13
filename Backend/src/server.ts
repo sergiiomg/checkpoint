@@ -2,7 +2,7 @@ import http from 'http';
 import express, { Express } from 'express';
 import morgan from 'morgan';
 import routes from './routes';
-import { conectarDB } from './db';
+import { obtenerDB } from './db';
 
 const app = express();
 
@@ -28,7 +28,7 @@ app.use((err: Error, req: express.Request, res: express.Response, next: express.
 
 /** Server */
 async function main() {
-  await conectarDB(); // Aquí se abre la conexión
+  await obtenerDB(); // Aquí se abre la conexión
 
   const httpServer = http.createServer(app);
   const PORT: any = process.env.PORT ?? 8080;

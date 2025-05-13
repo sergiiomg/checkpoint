@@ -34,6 +34,28 @@ class UsuariosController {
             res.status(500).json({ error: 'Hubo un error inesperado.' });
         }
     }
+
+    async iniciarSesion(req: Request, res: Response): Promise<void>{
+        try{
+            const { email, contrasena } = req.body;
+
+            if(!email || !contrasena){
+                res.status(400).json({error: 'Email y contraseña son requeridos'});
+                return;
+            }
+
+            const usuario = await this.usuariosService.iniciarSesion(email, contrasena);
+
+            if(!usuario){
+                res.status(401).json({error: 'Credenciales incorrectas'});
+                return;
+            }
+
+            res.status(200).json(usuario);
+        } catch(error){
+            res.status(500).json({error: 'Error en el servidor'});
+        }
+    }
 }
 
 export { UsuariosController };

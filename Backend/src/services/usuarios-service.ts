@@ -1,5 +1,6 @@
 import { UsuariosRepository } from '../repository/usuarios-repository';
 import bcrypt from 'bcryptjs';
+import { Usuario } from '../models/usuarios';
 
 class UsuariosService{
     private usuariosRepository: UsuariosRepository;
@@ -34,6 +35,21 @@ class UsuariosService{
             throw new Error('Error desconocido al crear el usuario.');
           }
         }
+    }
+
+    async iniciarSesion(email: string, contrasena: string){
+        const usuario: Usuario | null = await this.usuariosRepository.obtenerPorEmail(email);
+
+        if(!usuario) return null;
+
+        const coincide = await bcrypt.compare(contrasena, usuario.contrasena_hash);
+
+        if(!coincide) return null;
+
+        const { contrasena_hash, ...resto } = usuario;
+        const usuarioSinPassword: Omit<Usuario, 'contrasena_hash'> = resto;
+        
+        return usuarioSinPassword;
     }
 }
 

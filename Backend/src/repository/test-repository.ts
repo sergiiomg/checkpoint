@@ -1,4 +1,5 @@
 import { db } from '../db';
+import { Usuario } from '../models/usuarios';
 
 class TestRepository{
     //Declaraciones para cliente DB
@@ -16,7 +17,12 @@ class TestRepository{
     }
 
     async getTestResponse() {
-        return "FINOOOOOOOOOOOOO";
+        if (!db) {
+            throw new Error("No hay conexión a la base de datos");
+        }
+
+        const [rows] = await db.execute('SELECT * FROM usuarios');
+        return rows;
     }
 }
 

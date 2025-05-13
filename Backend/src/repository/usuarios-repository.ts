@@ -1,5 +1,7 @@
 import { DB_CONFIG} from '../config';
 import mysql from 'mysql2/promise';
+import { obtenerDB } from '../db';
+import { Usuario } from '../models/usuarios';
 
 class UsuariosRepository{
     private connection;
@@ -41,6 +43,20 @@ class UsuariosRepository{
             banner_url: null,
             fecha_registro: Date.now()
         };
+     }
+
+     async obtenerPorEmail(email: string): Promise<Usuario | null>{
+        const conexion = await obtenerDB();
+
+        const [filas] = await conexion.execute(
+            'SELECT * FROM usuarios WHERE email = ?',
+            [email]
+        );
+
+        await conexion.end();
+
+        const resultados = filas as Usuario[];
+        return resultados.length > 0 ? resultados[0] : null;
      }
 }
 
