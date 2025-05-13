@@ -16,14 +16,14 @@ class UsuariosController {
 
     async crearUsuario(req: Request, res: Response): Promise<void>{
         try{
-            const { nombre_usuario, email, contrasena_hash } = req.body;
+            const { nombre_usuario, email, contrasena } = req.body;
 
-            if(!nombre_usuario || !email || !contrasena_hash){
+            if(!nombre_usuario || !email || !contrasena){
                 res.status(400).json({ error: 'Todos los campos son requeridos.' });
                 return;
             }
 
-            const usuarioCreado = await this.usuariosService.crearUsuario(nombre_usuario, email, contrasena_hash);
+            const usuarioCreado = await this.usuariosService.crearUsuario(nombre_usuario, email, contrasena);
 
             if(usuarioCreado){
                 res.status(201).json(usuarioCreado);

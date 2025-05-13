@@ -1,0 +1,94 @@
+body {
+    background-color: #0F0F10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1A1A1D;
+    width: 60%;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.bienvenido {
+    font-size: 1.8em;
+    font-weight: 100 !important;
+    margin-top: -1.5rem;
+    text-align: center;
+    background: linear-gradient(to right, rgb(255, 33, 33), rgb(255, 50, 200), rgb(238, 255, 0));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bienvenido h1{
+    font-weight: 500;
+}
+
+.formulario form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+form input {
+    width: 80%;
+    padding: 0.7rem;
+    font-size: 16px;
+    border-radius: 4px;
+    border: none;
+    background-color: #2E2E30;
+    color: white;
+    outline: none;
+    text-align: center;
+}
+
+form input::placeholder {
+    color: #B0B0B0;
+}
+
+.botones {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem; /* Espaciado adecuado */
+    margin-top: 1rem;
+}
+
+.btn-registrarse {
+    padding: 0.7rem 1.5rem;
+    font-size: 16px;
+    border-radius: 6px;
+    border: none;
+    background: linear-gradient(to right, rgb(255, 50, 50), rgb(255, 47, 182)); /* Degradado elegante */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s
+}
+
+.btn-registrarse:hover {
+    color: rgb(255, 225, 225);
+}
+
+.enlace-login {
+    font-size: 14px;
+    color: rgb(255, 67, 214); /* Color a juego con el degradado */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.enlace-login:hover {
+    color: rgb(255, 37, 84);
+}
