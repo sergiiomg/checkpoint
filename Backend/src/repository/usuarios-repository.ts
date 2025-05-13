@@ -2,6 +2,7 @@ import { DB_CONFIG} from '../config';
 import mysql from 'mysql2/promise';
 import { obtenerDB } from '../db';
 import { Usuario } from '../models/usuarios';
+import { db } from '../db';
 
 class UsuariosRepository{
     private connection;
@@ -57,6 +58,15 @@ class UsuariosRepository{
 
         const resultados = filas as Usuario[];
         return resultados.length > 0 ? resultados[0] : null;
+     }
+
+     async obtenerUsuarioPorId(id: number): Promise<Usuario | null>{
+        const [rows] = await db!.execute('SELECT * FROM usuarios WHERE id = ?', [id]);
+        const usuarios = rows as Usuario[];
+
+        if(usuarios.length === 0) return null;
+
+        return usuarios[0];
      }
 }
 

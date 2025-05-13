@@ -56,6 +56,28 @@ class UsuariosController {
             res.status(500).json({error: 'Error en el servidor'});
         }
     }
+
+    async obtenerUsuarioPorId(req: Request, res: Response): Promise<void>{
+        try{
+            const id = parseInt(req.params.id);
+
+            if(isNaN(id)){
+                res.status(400).json({error: 'ID inválido'});
+                return;
+            }
+
+            const usuario = await this.usuariosService.obtenerUsuarioPorId(id);
+
+            if(!usuario){
+                res.status(401).json({error: 'Usuario no encontrado'});
+                return;
+            }
+
+            res.status(200).json(usuario);
+        } catch(error){
+            res.status(500).json({error: 'Error al obtener al usuario'});
+        }
+    }
 }
 
 export { UsuariosController };

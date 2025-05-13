@@ -48,9 +48,13 @@ class UsuariosService{
 
         const { contrasena_hash, ...resto } = usuario;
         const usuarioSinPassword: Omit<Usuario, 'contrasena_hash'> = resto;
-        
+
         return usuarioSinPassword;
     }
+
+    async obtenerUsuarioPorId(id: number) {
+    return await this.usuariosRepository.obtenerUsuarioPorId(id);
+}
 }
 
 export { UsuariosService }

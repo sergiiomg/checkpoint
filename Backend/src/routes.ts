@@ -15,4 +15,7 @@ router.post('/usuarios', (req, res) => usuariosController.crearUsuario(req, res)
 //Llamada POST para iniciar sesión
 router.post('/login', (req, res) => usuariosController.iniciarSesion(req, res));
 
+//Llamada GET para obtener un usuario
+router.get('/usuarios/:id', (req, res) => usuariosController.obtenerUsuarioPorId(req, res));
+
 export = router;
