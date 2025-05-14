@@ -37,14 +37,14 @@ class UsuariosController {
 
     async iniciarSesion(req: Request, res: Response): Promise<void>{
         try{
-            const { email, contrasena } = req.body;
+            const { nombre_usuario, contrasena } = req.body;
 
-            if(!email || !contrasena){
-                res.status(400).json({error: 'Email y contraseña son requeridos'});
+            if(!nombre_usuario || !contrasena){
+                res.status(400).json({error: 'Usuario y contraseña son requeridos'});
                 return;
             }
 
-            const usuario = await this.usuariosService.iniciarSesion(email, contrasena);
+            const usuario = await this.usuariosService.iniciarSesion(nombre_usuario, contrasena);
 
             if(!usuario){
                 res.status(401).json({error: 'Credenciales incorrectas'});

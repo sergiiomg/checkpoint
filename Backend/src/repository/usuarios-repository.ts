@@ -46,15 +46,13 @@ class UsuariosRepository{
         };
      }
 
-     async obtenerPorEmail(email: string): Promise<Usuario | null>{
+     async obtenerPorNombreUsuario(nombre_usuario: string): Promise<Usuario | null>{
         const conexion = await obtenerDB();
 
         const [filas] = await conexion.execute(
-            'SELECT * FROM usuarios WHERE email = ?',
-            [email]
+            'SELECT * FROM usuarios WHERE nombre_usuario = ?',
+            [nombre_usuario]
         );
-
-        await conexion.end();
 
         const resultados = filas as Usuario[];
         return resultados.length > 0 ? resultados[0] : null;

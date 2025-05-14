@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UsuariosService, UsuarioRegistro } from '../services/usuarios.service';
+import { UsuariosService, UsuarioRegistro } from '../../services/usuarios.service';
 
 @Component({
   selector: 'signup-page',

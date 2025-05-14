@@ -21,17 +21,16 @@ body {
 
 .bienvenido {
     font-size: 1.8em;
-    font-weight: 100 !important;
     margin-top: -1.5rem;
     text-align: center;
-    background: linear-gradient(to right, rgb(255, 33, 33), rgb(255, 50, 200), rgb(238, 255, 0));
+    background: linear-gradient(to right, rgb(255, 33, 33), rgb(255, 50, 200), rgb(255, 196, 0));
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .bienvenido h1{
-    font-weight: 500;
+    font-weight: 200;
 }
 
 .formulario form {

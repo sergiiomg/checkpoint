@@ -1,7 +1,7 @@
 import http from 'http';
 import express, { Express } from 'express';
 import morgan from 'morgan';
-import cors from 'cors';  // Añade esta importación
+import cors from 'cors';
 import routes from './routes';
 import { obtenerDB } from './db';
 
