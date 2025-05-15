@@ -38,7 +38,7 @@ class UsuariosService{
     }
 
     async iniciarSesion(nombre_usuario: string, contrasena: string){
-        const usuario: Usuario | null = await this.usuariosRepository.obtenerPorNombreUsuario(nombre_usuario);
+        const usuario: Usuario | null = await this.usuariosRepository.obtenerUsuarioPorNombre(nombre_usuario);
 
         if(!usuario) return null;
 

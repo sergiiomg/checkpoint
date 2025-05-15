@@ -17,7 +17,9 @@ export class LoginPageComponent {
 
   login(){
     this.usuariosService.loginUsuario(this.nombre_usuario, this.contrasena).subscribe(
-      (respuesta) => {
+      (respuesta: any) => {
+        localStorage.setItem('token', respuesta.token);
+        localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
         console.log('✅ Usuario autenticado, has iniciado sesión!:', respuesta);
       },
       (error) => {

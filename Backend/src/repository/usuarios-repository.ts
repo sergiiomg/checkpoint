@@ -46,7 +46,7 @@ class UsuariosRepository{
         };
      }
 
-     async obtenerPorNombreUsuario(nombre_usuario: string): Promise<Usuario | null>{
+     async obtenerUsuarioPorNombre(nombre_usuario: string): Promise<Usuario | null>{
         const conexion = await obtenerDB();
 
         const [filas] = await conexion.execute(

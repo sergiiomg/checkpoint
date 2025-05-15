@@ -6,6 +6,8 @@ import { SignUpComponent } from './components/signup-page/signup-page.component'
 import { AppComponent } from './app.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { LoginPageComponent } from './components/login-page/login-page.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,12 @@ import { LoginPageComponent } from './components/login-page/login-page.component
     FormsModule, 
   ],
   providers: [
-     provideHttpClient(withFetch())
+     provideHttpClient(withFetch()),
+     {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

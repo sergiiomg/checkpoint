@@ -3,5 +3,7 @@ export const DB_CONFIG = {
   port: 3306,
   user: 'root',
   password: '',
-  database: 'checkpoint_db'
+  database: 'checkpoint_db',
 };
+
+export const JWT_SECRET_KEY = 'jwt_secret'

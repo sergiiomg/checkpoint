@@ -1,20 +1,21 @@
-<body>
     <div class="container">
-        <div>   
-            <div class="bienvenido">
-                <h1>Bienvenido a CheckPoint!</h1>
-            </div>
-            <div class="formulario">
-                <form (ngSubmit)="registrar()" #formulario="ngForm">
-                    <input type="text" placeholder="Nombre de usuario" [(ngModel)]="nombre_usuario" name="nombre_usuario" required>
-                    <input class="email" type="email" placeholder="Correo electrónico" [(ngModel)]="email" name="email" required>
-                    <input type="password" placeholder="Contraseña" [(ngModel)]="contrasena" name="contrasena" required>
-                    <div class="botones">
-                        <button type="submit" class="btn-registrarse">Registrarse</button>
-                        <a routerLink="/login" class="enlace-login">¿Ya tienes cuenta? Inicia sesión</a>
-                    </div>
-                </form>
-            </div>
+        <div class="card">
+            <div>
+                <div class="bienvenido">
+                    <h1>Bienvenido a CheckPoint!</h1>
+                </div>
+                <div class="formulario">
+                    <form (ngSubmit)="registrar()" #formulario="ngForm">
+                        <input type="text" placeholder="Nombre de usuario" [(ngModel)]="nombre_usuario" name="nombre_usuario" required>
+                        <input class="email" type="email" placeholder="Correo electrónico" [(ngModel)]="email" name="email" required>
+                        <input type="password" placeholder="Contraseña" [(ngModel)]="contrasena" name="contrasena" required>
+                        <div class="botones">
+                            <button type="submit" class="btn-registrarse">Registrarse</button>
+                            <a routerLink="/login" class="enlace-login">¿Ya tienes cuenta? Inicia sesión</a>
+                        </div>
+                    </form>
+                </div>
+            </div> 
+            
         </div>
     </div>
-</body>

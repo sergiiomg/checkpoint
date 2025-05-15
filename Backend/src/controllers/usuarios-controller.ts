@@ -35,28 +35,6 @@ class UsuariosController {
         }
     }
 
-    async iniciarSesion(req: Request, res: Response): Promise<void>{
-        try{
-            const { nombre_usuario, contrasena } = req.body;
-
-            if(!nombre_usuario || !contrasena){
-                res.status(400).json({error: 'Usuario y contraseña son requeridos'});
-                return;
-            }
-
-            const usuario = await this.usuariosService.iniciarSesion(nombre_usuario, contrasena);
-
-            if(!usuario){
-                res.status(401).json({error: 'Credenciales incorrectas'});
-                return;
-            }
-
-            res.status(200).json(usuario);
-        } catch(error){
-            res.status(500).json({error: 'Error en el servidor'});
-        }
-    }
-
     async obtenerUsuarioPorId(req: Request, res: Response): Promise<void>{
         try{
             const id = parseInt(req.params.id);

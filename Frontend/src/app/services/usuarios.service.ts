@@ -18,13 +18,13 @@ export class UsuariosService {
   constructor(private http: HttpClient) { }
 
   registrarUsuario(usuario: UsuarioRegistro): Observable<any> {
-    return this.http.post(this.apiUrl + 'usuarios', usuario);
+    return this.http.post(this.apiUrl + 'auth/usuarios', usuario);
   }
 
   loginUsuario(nombre_usuario: string, contrasena: string) {
-  return this.http.post(this.apiUrl + 'login', {
-    nombre_usuario,
-    contrasena
-  });
-}
+    return this.http.post(this.apiUrl + 'auth/login', {
+      nombre_usuario,
+      contrasena
+    });
+  }
 }

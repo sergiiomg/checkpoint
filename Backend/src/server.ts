@@ -2,8 +2,10 @@ import http from 'http';
 import express, { Express } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import routes from './routes';
+import routes from './routes/protected-routes';
 import { obtenerDB } from './db';
+import authRoutes from './routes/auth-routes';
+import { authenticateToken } from './middleware/auth';
 
 const app = express();
 
@@ -21,8 +23,11 @@ app.use(cors({
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-/** Routes */
-app.use('/', routes);
+// Rutas públicas
+app.use('/auth', authRoutes);
+
+// Rutas públicas
+app.use('/', authenticateToken, routes);
 
 /** Error handling */
 app.use((req, res, next) => {
