@@ -1,19 +1,21 @@
-import { NgModule } from '@angular/core';
+import { ApplicationConfig, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { SignUpComponent } from './components/signup-page/signup-page.component';
 import { AppComponent } from './app.component';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptorsFromDi } from '@angular/common/http';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { PerfilPageComponent } from './components/perfil-page/perfil-page.component';
 
 @NgModule({
   declarations: [
     SignUpComponent,
     AppComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    PerfilPageComponent
   ],
   imports: [
     BrowserModule,
@@ -21,7 +23,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
     FormsModule, 
   ],
   providers: [
-     provideHttpClient(withFetch()),
+     provideHttpClient(withInterceptorsFromDi()),
      {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { UsuariosService } from '../../services/usuarios.service';
+import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -10,21 +11,37 @@ export class LoginPageComponent {
 
   nombre_usuario: string = '';
   contrasena: string = '';
+  error: string | null = null;
 
-  constructor(private usuariosService: UsuariosService){
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-  }
+  login() {
+    // Verificar que hemos completado los campos
+    if (!this.nombre_usuario || !this.contrasena) {
+      this.error = "Por favor completa todos los campos";
+      return;
+    }
 
-  login(){
-    this.usuariosService.loginUsuario(this.nombre_usuario, this.contrasena).subscribe(
-      (respuesta: any) => {
-        localStorage.setItem('token', respuesta.token);
-        localStorage.setItem('usuario', JSON.stringify(respuesta.usuario));
-        console.log('✅ Usuario autenticado, has iniciado sesión!:', respuesta);
+    this.error = null;
+    console.log('⌛ Intentando iniciar sesión con:', this.nombre_usuario);
+    
+    this.authService.loginUsuario(this.nombre_usuario, this.contrasena).subscribe({
+      next: (respuesta) => {
+        console.log('✅ Usuario autenticado, has iniciado sesión!');
+        
+        // Verificar que el token existe antes de navegar
+        const token = localStorage.getItem('token');
+        console.log('Token almacenado después del login:', token ? 'Presente' : 'No encontrado');
+        
+        this.router.navigate(['/perfil']);
       },
-      (error) => {
+      error: (error) => {
         console.error('❌ Error al iniciar sesión:', error);
+        this.error = error.error?.mensaje || 'Error al iniciar sesión. Verifica tus credenciales.';
       }
-    )
+    });
   }
 }

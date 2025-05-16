@@ -16,6 +16,28 @@ class AuthController {
     constructor(){
         this.usuariosService = new UsuariosService();
     }
+
+    async crearUsuario(req: Request, res: Response): Promise<void>{
+        try{
+            const { nombre_usuario, email, contrasena } = req.body;
+
+            if(!nombre_usuario || !email || !contrasena){
+                res.status(400).json({ error: 'Todos los campos son requeridos.' });
+                return;
+            }
+
+            const usuarioCreado = await this.usuariosService.crearUsuario(nombre_usuario, email, contrasena);
+
+            if(usuarioCreado){
+                res.status(201).json(usuarioCreado);
+            } else{
+                res.status(500).json({ error: 'Error al crear el usuario.' });
+            }
+        } catch{
+            res.status(500).json({ error: 'Hubo un error inesperado.' });
+        }
+    }
+
   async iniciarSesion(req: Request, res: Response): Promise<void>{
         try{
             const { nombre_usuario, contrasena } = req.body;
@@ -33,7 +55,7 @@ class AuthController {
             }
 
             const token = jwt.sign(
-              { id: usuario.id, username: usuario.nombre },
+              { id: usuario.id, nombre_usuario: usuario.nombre },
               SECRET_KEY,
               { expiresIn: '1h' }
             );

@@ -5,7 +5,9 @@ import { JWT_SECRET_KEY } from '../config';
 const SECRET_KEY = JWT_SECRET_KEY;
 
 export function authenticateToken(req: Request, res: Response, next: NextFunction){
+    console.log("Headers recibidos:", req.headers);
     const authHeader = req.headers['authorization'];
+    console.log("Auth header:", authHeader);
     const token = authHeader && authHeader.split(' ')[1];
 
     if(!token){

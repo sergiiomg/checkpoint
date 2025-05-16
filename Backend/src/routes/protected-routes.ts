@@ -12,5 +12,7 @@ router.get('/', (req, res) => controller.getTestResponse(req, res));
 //Llamada GET para obtener un usuario
 router.get('/usuarios/:id', (req, res) => usuariosController.obtenerUsuarioPorId(req, res));
 
+//Llamada get para obtener el usuario propio
+router.get('/perfil', (req, res) => usuariosController.obtenerPerfil(req, res));
 
 export = router;
