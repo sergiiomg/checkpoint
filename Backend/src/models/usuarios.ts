@@ -10,3 +10,6 @@ export interface Usuario{
     banner_url?: string;
     fecha_registro: number;
 }
+
+export const DEFAULT_PROFILE_IMAGE = '/images/defaults/perfil-default.png';
+export const DEFAULT_BANNER_IMAGE = '/images/defaults/banner-default.png';

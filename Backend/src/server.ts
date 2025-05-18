@@ -2,6 +2,7 @@ import http from 'http';
 import express, { Express } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import path from 'path';
 import routes from './routes/protected-routes';
 import { obtenerDB } from './db';
 import authRoutes from './routes/auth-routes';
@@ -23,11 +24,14 @@ app.use(cors({
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// Rutas públicas
-app.use('/auth', authRoutes);
+console.log('📂 Servir imágenes desde:', path.join(__dirname, '../public/images/defaults'));
+app.use('/images', express.static(path.join(__dirname, '..', 'public', 'images')));
 
 // Rutas públicas
-app.use('/', authenticateToken, routes);
+app.use('/api/auth', authRoutes);
+
+// Rutas protegidas
+app.use('/api', authenticateToken, routes);
 
 /** Error handling */
 app.use((req, res, next) => {

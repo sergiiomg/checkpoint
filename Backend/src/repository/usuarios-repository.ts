@@ -1,7 +1,7 @@
 import { DB_CONFIG} from '../config';
 import mysql from 'mysql2/promise';
 import { obtenerDB } from '../db';
-import { Usuario } from '../models/usuarios';
+import { Usuario, DEFAULT_PROFILE_IMAGE, DEFAULT_BANNER_IMAGE } from '../models/usuarios';
 import { db } from '../db';
 
 class UsuariosRepository{
@@ -27,9 +27,9 @@ class UsuariosRepository{
 
      async crearUsuario(nombre_usuario: string, email: string, contrasena_hash: string){
         const [result] = await this.connection.execute(
-            `INSERT INTO usuarios (nombre_usuario, email, contrasena_hash, nivel, experiencia, fecha_registro)
-            VALUES (?, ?, ?, 1, 0, ?)`,
-            [nombre_usuario, email, contrasena_hash, Date.now()]
+            `INSERT INTO usuarios (nombre_usuario, email, contrasena_hash, nivel, experiencia, fecha_registro, foto_perfil_url, banner_url)
+            VALUES (?, ?, ?, 1, 0, ?, ?, ?)`,
+            [nombre_usuario, email, contrasena_hash, Date.now(), DEFAULT_PROFILE_IMAGE, DEFAULT_BANNER_IMAGE]
         );
 
         const insertResult = result as mysql.ResultSetHeader;
@@ -40,8 +40,8 @@ class UsuariosRepository{
             email,
             nivel: 1,
             experiencia: 0,
-            foto_perfil_url: null,
-            banner_url: null,
+            foto_perfil_url: DEFAULT_PROFILE_IMAGE,
+            banner_url: DEFAULT_BANNER_IMAGE,
             fecha_registro: Date.now()
         };
      }
@@ -63,6 +63,14 @@ class UsuariosRepository{
         const usuarios = rows as Usuario[];
 
         if(usuarios.length === 0) return null;
+
+        if (!usuarios[0].foto_perfil_url) {
+            usuarios[0].foto_perfil_url = DEFAULT_PROFILE_IMAGE;
+        }
+        
+        if (!usuarios[0].banner_url) {
+            usuarios[0].banner_url = DEFAULT_BANNER_IMAGE;
+        }
 
         return usuarios[0];
      }
