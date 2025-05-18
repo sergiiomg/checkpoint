@@ -1,11 +1,18 @@
-<div class="perfil-container" *ngIf="usuario; else cargando">
-  <img [src]="usuario.banner_url" alt="Banner" class="banner">
-  <img [src]="usuario.foto_perfil_url" alt="Foto de perfil" class="foto-perfil">
+<div class="container" *ngIf="usuario; else cargando">
+  <div class="imagenes">
+    <img [src]="usuario.banner_url" alt="Banner" class="banner">
+    <img [src]="usuario.foto_perfil_url" alt="Foto de perfil" class="foto-perfil">
+  </div>
 
-  <h2>{{ usuario.nombre }}</h2>
-  <p>Nivel: {{ usuario.nivel }}</p>
-  <p>Experiencia: {{ usuario.experiencia }}</p>
-  <p>Mote actual: {{ usuario.mote_actual }}</p>
+  <div class="info">
+    <div>
+      <h2>{{usuario.nombre_usuario}}</h2>
+      <button class="editar-perfil">Editar perfil</button>
+    </div>
+    <p>Nivel: {{ usuario.nivel }}</p>
+    <p>Experiencia: {{ usuario.experiencia }}</p>
+    <p>{{ usuario.mote_actual }}</p>
+  </div>
 </div>
 
 <ng-template #cargando>
