@@ -1,7 +1,6 @@
 import { obtenerDB } from '../db';
 import { Publicacion } from '../models/publicacion';
 
-
 export class PublicacionesRepository {
   async crearPublicacion(publicacion: Omit<Publicacion, 'id'>) {
     const db = await obtenerDB();
@@ -23,4 +22,13 @@ export class PublicacionesRepository {
       ...publicacion
     };
   }
+
+  async obtenerTodas(): Promise<Publicacion[]> {
+    const db = await obtenerDB();
+    const [rows] = await db.execute(
+        'SELECT * FROM publicaciones ORDER BY fecha_creacion DESC'
+    );
+    await db.end();
+    return rows as Publicacion[];
+}
 }

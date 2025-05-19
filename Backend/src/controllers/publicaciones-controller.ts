@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { PublicacionesService } from '../services/publicaciones-service';
 
 export class PublicacionesController {
-  private service = new PublicacionesService();
+  private PublicacionesService = new PublicacionesService();
 
   async crear(req: Request, res: Response): Promise<void> {
     try {
@@ -18,7 +18,7 @@ export class PublicacionesController {
         return;
       }
 
-      const nueva = await this.service.crearPublicacion({
+      const nueva = await this.PublicacionesService.crearPublicacion({
         autor_id,
         titulo,
         descripcion,
@@ -32,4 +32,13 @@ export class PublicacionesController {
       res.status(500).json({ error: 'Error al crear la publicación' });
     }
   }
+
+  async obtenerTodas(req: Request, res: Response): Promise<void> {
+    try {
+        const publicaciones = await this.PublicacionesService.obtenerTodasPublicaciones();
+        res.status(200).json(publicaciones);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener las publicaciones' });
+    }
+}
 }

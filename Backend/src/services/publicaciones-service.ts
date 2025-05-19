@@ -10,4 +10,8 @@ export class PublicacionesService {
       fecha_creacion: Date.now()
     });
   }
+
+  async obtenerTodasPublicaciones() {
+    return await this.repo.obtenerTodas();
+  }
 }
