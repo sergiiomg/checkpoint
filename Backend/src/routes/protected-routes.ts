@@ -1,10 +1,12 @@
 import express from 'express';
 import { TestController } from '../controllers/test-controller';
 import { UsuariosController } from '../controllers/usuarios-controller';
+import { PublicacionesController } from '../controllers/publicaciones-controller';
 
 const router = express.Router();
 const controller = new TestController();
 const usuariosController = new UsuariosController();
+const publicacionesController = new PublicacionesController();
 
 // Llamada GET genérica al controlador
 router.get('/', (req, res) => controller.getTestResponse(req, res));
@@ -14,5 +16,8 @@ router.get('/usuarios/:id', (req, res) => usuariosController.obtenerUsuarioPorId
 
 //Llamada get para obtener el usuario propio
 router.get('/perfil', (req, res) => usuariosController.obtenerPerfil(req, res));
+
+//Llamada post para crear una publicación
+router.post('/publicaciones', (req, res) => publicacionesController.crear(req, res));
 
 export = router;
