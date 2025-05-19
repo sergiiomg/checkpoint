@@ -9,16 +9,21 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { PerfilPageComponent } from './components/perfil-page/perfil-page.component';
+import { EditarPerfilComponent } from './components/editar-perfil/editar-perfil.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
     SignUpComponent,
     AppComponent,
     LoginPageComponent,
-    PerfilPageComponent
+    PerfilPageComponent,
+    EditarPerfilComponent
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     FormsModule, 
   ],

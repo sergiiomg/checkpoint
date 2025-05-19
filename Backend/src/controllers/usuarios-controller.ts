@@ -1,6 +1,7 @@
 import e, { Request, Response } from 'express';
 import { UsuariosService } from '../services/usuarios-service';
 import { DEFAULT_PROFILE_IMAGE, DEFAULT_BANNER_IMAGE } from '../models/usuarios';
+import { use } from '../routes/protected-routes';
 
 class UsuariosController {
     private usuariosService: UsuariosService;
@@ -90,6 +91,55 @@ class UsuariosController {
         } catch(error){
             res.status(500).json({error: 'Error al obtener el perfil del usuario'});
         }
+    }
+
+    async editarPerfil(req: Request, res: Response): Promise<void> {
+      try {
+        const userId = (req as any).user?.id;
+    
+        if (!userId) {
+          res.status(401).json({ error: 'Usuario no encontrado' });
+          return;
+        }
+
+        console.log('Body recibido:', req.body);
+        console.log('Archivos recibidos:', (req as any).files);
+
+        const { nombre_usuario } = req.body;
+        const foto_perfil = (req as any).files?.foto_perfil?.[0];
+        const banner = (req as any).files?.banner?.[0];
+
+        if (!nombre_usuario && !foto_perfil && !banner) {
+          res.status(400).json({ error: 'No hay cambios para aplicar' });
+          return;
+        }
+    
+        const cambios: any = {};
+        if (nombre_usuario) cambios.nombre_usuario = nombre_usuario;
+        if (foto_perfil) cambios.foto_perfil_url = `/uploads/${foto_perfil.filename}`;
+        if (banner) cambios.banner_url = `/uploads/${banner.filename}`;
+
+        console.log('Cambios a aplicar:', cambios);
+    
+        const actualizado = await this.usuariosService.actualizarUsuario(userId, cambios);
+
+        if (!actualizado) {
+          res.status(404).json({ error: 'Usuario no encontrado' });
+          return;
+        }
+    
+        res.status(200).json({ 
+          mensaje: 'Perfil actualizado correctamente', 
+          datos: {
+            ...actualizado,
+            foto_perfil_url: actualizado.foto_perfil_url ? `http://localhost:8080${actualizado.foto_perfil_url}` : null,
+            banner_url: actualizado.banner_url ? `http://localhost:8080${actualizado.banner_url}` : null
+          }
+        });
+      } catch (error) {
+        console.error('Error detallado al editar perfil:', error);  // <-- Aquí imprime el error completo
+        res.status(500).json({ error: 'Error al editar perfil', detalle: error instanceof Error ? error.message : error });
+      }
     }
 }
 

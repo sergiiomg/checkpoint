@@ -1,53 +1,60 @@
-import { Injectable, inject, PLATFORM_ID } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpInterceptor,
+  HttpErrorResponse
+} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  private platformId = inject(PLATFORM_ID);
-  private router = inject(Router);
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('AuthInterceptor: Interceptando petición a', req.url);
+  constructor(private router: Router) {}
+
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    // Obtenemos el token del localStorage
+    const token = localStorage.getItem('auth_token'); // Asegúrate de usar la clave correcta
+    console.log('AuthInterceptor: Interceptando petición a', request.url);
     
-    if (isPlatformBrowser(this.platformId)) {
-      const token = localStorage.getItem('token');
-      console.log('Token recuperado del localStorage:', token ? 'Presente' : 'No encontrado');
+    // Si existe un token, lo añadimos a las cabeceras
+    if (token) {
+      console.log('Token encontrado, añadiendo a la cabecera');
+      const authRequest = request.clone({
+        headers: request.headers.set('Authorization', `Bearer ${token}`)
+      });
       
-      if (token) {
-        // Clonar la solicitud y agregar el token a los headers
-        const cloned = req.clone({
-          setHeaders: {
-            Authorization: `Bearer ${token}`
+      // Continuamos con la petición modificada
+      return next.handle(authRequest).pipe(
+        catchError((error: HttpErrorResponse) => {
+          // Si es un error de autenticación (401), redirigimos al login
+          if (error.status === 401) {
+            console.log('Error 401: Token no válido o expirado');
+            localStorage.removeItem('auth_token'); // Eliminamos el token inválido
+            this.router.navigate(['/login']);
           }
-        });
-        
-        console.log('Headers enviados:', cloned.headers.keys());
-        console.log('Authorization header:', cloned.headers.get('Authorization'));
-        
-        // Retornar la solicitud con el manejador de errores
-        return next.handle(cloned).pipe(
-          catchError((error: HttpErrorResponse) => {
-            console.error('Error en la petición HTTP:', error);
-            
-            // Si el token es inválido (401 o 403)
-            if (error.status === 401 || error.status === 403) {
-              console.error('Error de autenticación, redirigiendo a login');
-              localStorage.removeItem('token');
-              localStorage.removeItem('usuario');
-              this.router.navigate(['/login']);
-            }
-            return throwError(() => error);
-          })
-        );
-      } else {
-        console.warn('No se encontró token de autenticación');
-      }
+          console.error('Error en la petición HTTP:', error);
+          return throwError(() => error);
+        })
+      );
+    } else {
+      console.log('No se encontró token de autenticación');
+      // Si no hay token y la ruta requiere autenticación, podríamos redirigir aquí
+      // Pero dejamos que sea el backend quien devuelva 401 para no interferir con rutas públicas
+      
+      return next.handle(request).pipe(
+        catchError((error: HttpErrorResponse) => {
+          if (error.status === 401 && !request.url.includes('/login')) {
+            console.log('Error 401: Acceso no autorizado');
+            this.router.navigate(['/login']);
+          }
+          console.error('Error en la petición HTTP:', error);
+          return throwError(() => error);
+        })
+      );
     }
-    
-    return next.handle(req);
   }
 }

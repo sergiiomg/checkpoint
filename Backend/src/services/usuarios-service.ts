@@ -1,6 +1,7 @@
 import { UsuariosRepository } from '../repository/usuarios-repository';
 import bcrypt from 'bcryptjs';
 import { Usuario } from '../models/usuarios';
+import { obtenerDB } from '../db';
 
 class UsuariosService{
     private usuariosRepository: UsuariosRepository;
@@ -53,8 +54,28 @@ class UsuariosService{
     }
 
     async obtenerUsuarioPorId(id: number) {
-    return await this.usuariosRepository.obtenerUsuarioPorId(id);
-}
+      return await this.usuariosRepository.obtenerUsuarioPorId(id);
+    }
+
+    async actualizarUsuario(id: number, cambios: Partial<Usuario>) {
+      const db = await obtenerDB();
+  
+      const campos = Object.keys(cambios);
+      const valores = Object.values(cambios);
+  
+      if (campos.length === 0) {
+          throw new Error('No hay cambios para aplicar');
+      }
+  
+      const setClause = campos.map(campo => `${campo} = ?`).join(', ');
+      const sql = `UPDATE usuarios SET ${setClause} WHERE id = ?`;
+  
+      await db.query(sql, [...valores, id]);
+  
+      const [rows] = await db.query('SELECT * FROM usuarios WHERE id = ?', [id]);
+      const actualizado = (rows as Usuario[])[0];
+      return actualizado;
+  }  
 }
 
 export { UsuariosService }
