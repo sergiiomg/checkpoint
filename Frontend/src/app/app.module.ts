@@ -9,13 +9,17 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { PerfilPageComponent } from './components/perfil-page/perfil-page.component';
+import { AppHeaderComponent } from './components/app-header/app-header.component';
+import { AppAsideComponent } from './components/app-aside/app-aside.component';
 
 @NgModule({
   declarations: [
     SignUpComponent,
     AppComponent,
     LoginPageComponent,
-    PerfilPageComponent
+    PerfilPageComponent,
+    AppHeaderComponent,
+    AppAsideComponent
   ],
   imports: [
     BrowserModule,
