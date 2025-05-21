@@ -11,6 +11,7 @@ import { AuthInterceptor } from './services/auth.interceptor';
 import { PerfilPageComponent } from './components/perfil-page/perfil-page.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppAsideComponent } from './components/app-aside/app-aside.component';
+import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { AppAsideComponent } from './components/app-aside/app-aside.component';
     LoginPageComponent,
     PerfilPageComponent,
     AppHeaderComponent,
-    AppAsideComponent
+    AppAsideComponent,
+    DashboardPageComponent
   ],
   imports: [
     BrowserModule,

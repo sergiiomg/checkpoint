@@ -28,7 +28,6 @@ export class PublicacionesRepository {
     const [rows] = await db.execute(
         'SELECT * FROM publicaciones ORDER BY fecha_creacion DESC'
     );
-    await db.end();
     return rows as Publicacion[];
-}
+  }
 }

@@ -1,0 +1,42 @@
+<div class="dashboard-layout">
+  <app-header></app-header>
+  <div class="dashboard-body">
+    <app-aside></app-aside>
+    <div class="publicaciones-container" *ngIf="publicaciones.length > 0; else sinPublicaciones">
+      <div class="publicacion" *ngFor="let p of publicaciones">
+        <h3>{{ p.titulo }}</h3>
+        <p>{{ p.descripcion }}</p>
+
+        <div *ngIf="p.tipo_media === 'imagen' && p.media_url">
+          <img [src]="p.media_url" class="media" />
+        </div>
+        <div *ngIf="p.tipo_media === 'video' && p.media_url">
+          <video class="media" controls>
+            <source [src]="p.media_url" type="video/mp4" />
+          </video>
+        </div>
+
+        <small>Autor ID: {{ p.autor_id }} | {{ p.fecha_creacion | date:'short' }}</small>
+        <div class="acciones">
+          <div class="grupo-izquierda">
+            <button class="btn comentar">
+              <i class="far fa-comment"></i>
+            </button>
+            <button class="btn like">
+              <i class="far fa-heart"></i>
+            </button>
+          </div>
+          <div class="grupo-derecha">
+            <button class="btn guardar">
+              <i class="far fa-bookmark"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #sinPublicaciones>
+      <p>No hay publicaciones aún.</p>
+    </ng-template>
+  </div>
+</div>

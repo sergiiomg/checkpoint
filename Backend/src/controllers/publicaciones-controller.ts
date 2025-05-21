@@ -35,10 +35,11 @@ export class PublicacionesController {
 
   async obtenerTodas(req: Request, res: Response): Promise<void> {
     try {
-        const publicaciones = await this.PublicacionesService.obtenerTodasPublicaciones();
-        res.status(200).json(publicaciones);
+      const publicaciones = await this.PublicacionesService.obtenerTodasPublicaciones();
+      res.status(200).json(publicaciones);
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener las publicaciones' });
+      console.error('Error en obtenerTodas:', error);
+      res.status(500).json({ error: 'Error al obtener las publicaciones' });
     }
-}
+  }
 }

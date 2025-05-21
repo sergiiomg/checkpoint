@@ -2,7 +2,7 @@
 aside {
     background-color: #1A1A1D;
     width: 200px; /* Ancho del menú */
-    height: calc(100vh - 80px); /* Ajuste de altura restando la del header */
+    height: 919px; /* Ajuste de altura restando la del header */
     position: fixed;
     top: 80px; /* Igualando la altura del header */
     left: 0;
@@ -10,6 +10,7 @@ aside {
     display: flex;
     flex-direction: column;
     font-family: sans-serif; /* Fuente sans-serif */
+    margin-top: 4px;
 }
 
 /* Contenedor de enlaces */
@@ -27,11 +28,6 @@ aside nav div:first-child {
     gap: 15px;
 }
 
-/* Mantener "Cerrar sesión" abajo del todo */
-aside nav div:last-child {
-    margin-bottom: 2rem;
-}
-
 /* Estilos de los enlaces */
 aside a {
     text-decoration: none;
@@ -40,13 +36,14 @@ aside a {
     padding: 12px;
     display: block;
     border-radius: 5px;
-    transition: background 0.3s;
+    transition: all 0.3s;
+}
+
+.logout a:hover{
+    background-color: rgb(255, 66, 66);
 }
 
 aside a:hover {
     background-color: #29292E; /* Color de fondo al pasar el ratón */
 }
 
-.logout:hover{
-    background-color: rgb(255, 66, 66);
-}
