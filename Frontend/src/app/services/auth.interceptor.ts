@@ -16,6 +16,10 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+     if (request.url.includes('/api/perfil') || request.url.includes('/api/auth/usuarios')) {
+      return next.handle(request); // Do not modify request
+    }
+    console.log(request.url);
     // Obtenemos el token del localStorage
     const token = localStorage.getItem('auth_token'); // Asegúrate de usar la clave correcta
     console.log('AuthInterceptor: Interceptando petición a', request.url);
