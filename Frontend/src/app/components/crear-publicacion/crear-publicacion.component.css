@@ -1,0 +1,94 @@
+/* Contenedor principal del formulario */
+.crear-publicacion-container {
+    background-color: #1A1A1D;
+    width: 50%;
+    margin: 40px auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    font-family: sans-serif;
+    color: white;
+}
+
+/* Título */
+.crear-publicacion-container h2 {
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+}
+
+/* Estilos generales del formulario */
+.crear-publicacion-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Etiquetas */
+.crear-publicacion-container label {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+/* Campos de entrada */
+.crear-publicacion-container input,
+.crear-publicacion-container textarea,
+.crear-publicacion-container select {
+    background-color: #29292E;
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    color: white;
+    font-size: 1em;
+    width: 100%;
+    outline: none;
+}
+
+/* Ajustes para el área de texto */
+.crear-publicacion-container textarea {
+    resize: none;
+    height: 100px;
+}
+
+/* Botón de envío */
+.crear-publicacion-container button {
+    background-color: #008CBA;
+    color: white;
+    font-size: 1.2em;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background 0.3s;
+}
+
+.crear-publicacion-container button:hover {
+    background-color: #005F7A;
+}
+
+/* Mensajes de error y éxito */
+.error-message,
+.success-message {
+    text-align: center;
+    font-size: 1.1em;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.error-message {
+    background-color: rgb(255, 66, 66);
+    color: white;
+}
+
+.success-message {
+    background-color: #2ECC71;
+    color: white;
+}
+
+/* Ajustes para los errores dentro del formulario */
+.error {
+    color: rgb(255, 66, 66);
+    font-size: 0.9em;
+    margin-top: 5px;
+}

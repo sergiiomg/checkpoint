@@ -7,7 +7,7 @@ export interface Publicacion {
   autor_id: number;
   titulo: string;
   descripcion: string;
-  media_url: string;
+  media_url: string | null;
   tipo_media: 'imagen' | 'video' | null;
   fecha_creacion: number;
   liked?: boolean;
@@ -20,6 +20,7 @@ export interface Publicacion {
 export class PublicacionesService {
 
   private apiUrl = 'http://localhost:8080/api/';
+   private baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) {}
 
@@ -34,7 +35,13 @@ export class PublicacionesService {
     );
   }
 
-  crearPublicacion(data: any): Observable<any> {
+  crearPublicacion(data: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}publicaciones`, data);
+  }
+
+  getFullMediaUrl(mediaUrl: string | null): string | null {
+    if (!mediaUrl) return null;
+    if (mediaUrl.startsWith('http')) return mediaUrl; // URL completa
+    return `${this.baseUrl}${mediaUrl}`; // URL relativa
   }
 }
