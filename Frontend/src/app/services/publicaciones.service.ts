@@ -10,6 +10,8 @@ export interface Publicacion {
   media_url: string;
   tipo_media: 'imagen' | 'video' | null;
   fecha_creacion: number;
+  liked?: boolean;
+  likesCount?: number;
 }
 
 @Injectable({
@@ -23,5 +25,16 @@ export class PublicacionesService {
 
   getPublicaciones(): Observable<Publicacion[]> {
     return this.http.get<Publicacion[]>(this.apiUrl + 'auth/publicaciones');
+  }
+
+  likePublicacion(publicacionId: number): Observable<{ liked: boolean, totalLikes: number }> {
+    return this.http.post<{ liked: boolean, totalLikes: number }>(
+      `${this.apiUrl}publicaciones/${publicacionId}/like`, 
+      {}
+    );
+  }
+
+  crearPublicacion(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}publicaciones`, data);
   }
 }

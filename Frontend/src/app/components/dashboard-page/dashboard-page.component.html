@@ -16,15 +16,15 @@
           </video>
         </div>
 
-        <small>Autor ID: {{ p.autor_id }} | {{ p.fecha_creacion | date:'short' }}</small>
         <div class="acciones">
           <div class="grupo-izquierda">
             <button class="btn comentar">
               <i class="far fa-comment"></i>
             </button>
-            <button class="btn like">
-              <i class="far fa-heart"></i>
-            </button>
+            <button class="btn like" (click)="toggleLike(p)">
+            <i class="{{ p.liked ? 'fas' : 'far' }} fa-heart"></i>
+            {{ p.likesCount || 0 }}
+          </button>
           </div>
           <div class="grupo-derecha">
             <button class="btn guardar">
@@ -33,6 +33,12 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <div class="acciones-superiores">
+      <button routerLink="/crear-publicacion" class="btn crear-publicacion">
+        Crear publicación
+      </button>
     </div>
 
     <ng-template #sinPublicaciones>

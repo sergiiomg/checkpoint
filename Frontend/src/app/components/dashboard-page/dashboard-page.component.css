@@ -28,12 +28,15 @@
   color: #f1f1f1;
   font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
-  transition: transform 0.2s ease-in-out;
+  transition: all 0.2s;
   width: 50%;
+  cursor: pointer;
 }
 
 .publicacion:hover {
-  transform: scale(1.01);
+  background-color: #0F0F10;
+  border: #0F0F10;
+  box-shadow: none;
 }
 
 .publicacion h3 {
@@ -64,51 +67,40 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1A1A1D;
-  border-radius: 8px;
 }
 
-/* Alineación y separación de grupos */
 .grupo-izquierda,
 .grupo-derecha {
   display: flex;
-  gap: 5px; /* Menos espacio entre botones */
+  gap: 5px;
 }
 
-/* Botones más pequeños y pegados a los bordes */
+/* Eliminamos el fondo y los estilos de botón */
 .btn {
-  width: 35px; /* Tamaño más reducido */
-  height: 35px;
-  border-radius: 50%;
-  border: 1px solid #ffffff;
-  background-color: #1A1A1D;
+  background: none;
+  border: none;
+  width: auto;
+  height: auto;
   color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem; /* Íconos más pequeños */
+  font-size: 1.2rem;
   cursor: pointer;
-  transition: border-color 0.3s, color 0.3s;
+  transition: color 0.3s;
 }
 
-.btn i{
-  margin-top: 0.1rem;
-  font-weight: 100;
-}
 
-/* Efecto neón al hacer hover */
+/* Efecto de color al pasar el cursor */
 .btn.comentar:hover {
-  border-color: #007BFF;
   color: #007BFF;
 }
 
 .btn.like:hover {
-  border-color: #FF0000;
   color: #FF0000;
 }
 
 .btn.guardar:hover {
-  border-color: #ff8800;
   color: #ff8800;
 }
 
+.liked {
+  color: red;
+}

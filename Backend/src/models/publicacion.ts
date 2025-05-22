@@ -3,7 +3,9 @@ export interface Publicacion {
   autor_id: number;
   titulo: string;
   descripcion: string;
-  media_url: string;
-  tipo_media: 'imagen' | 'video';
+  media_url?: string;
+  tipo_media?: 'imagen' | 'video';
   fecha_creacion: number;
+  liked?: boolean;
+  likesCount?: number;
 }

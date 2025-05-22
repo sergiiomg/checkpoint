@@ -12,6 +12,8 @@ import { PerfilPageComponent } from './components/perfil-page/perfil-page.compon
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppAsideComponent } from './components/app-aside/app-aside.component';
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
+import { CrearPublicacionComponent } from './components/crear-publicacion/crear-publicacion.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,12 +23,14 @@ import { DashboardPageComponent } from './components/dashboard-page/dashboard-pa
     PerfilPageComponent,
     AppHeaderComponent,
     AppAsideComponent,
-    DashboardPageComponent
+    DashboardPageComponent,
+    CrearPublicacionComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule, 
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
      provideHttpClient(withInterceptorsFromDi()),
