@@ -101,7 +101,11 @@ export class CrearPublicacionComponent {
       },
       error: (err) => {
         console.error('Error completo:', err);
-        alert('Ocurrió un error al crear la publicación.');
+        if (err.error && err.error.error) {
+          alert(`Error al crear publicación: ${err.error.error}`);
+        } else {
+          alert('Ocurrió un error al crear la publicación.');
+        }
       }
     });
   }

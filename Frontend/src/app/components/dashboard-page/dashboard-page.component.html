@@ -8,11 +8,11 @@
         <p>{{ p.descripcion }}</p>
 
         <div *ngIf="p.tipo_media === 'imagen' && p.media_url">
-          <img [src]="p.media_url" class="media" />
+          <img [src]="getMediaUrl(p.media_url)" class="media" />
         </div>
         <div *ngIf="p.tipo_media === 'video' && p.media_url">
           <video class="media" controls>
-            <source [src]="p.media_url" type="video/mp4" />
+            <source [src]="getMediaUrl(p.media_url)" type="video/mp4" />
           </video>
         </div>
 

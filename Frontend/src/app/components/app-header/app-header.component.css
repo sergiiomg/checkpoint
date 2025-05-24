@@ -1,11 +1,20 @@
+.container{
+    background-color: #1A1A1D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .header-container {
     background-color: #1A1A1D;
-    padding: 10px 10px; /* Aumenté el padding para hacer el header más alto */
+    padding: 10px 10px;
     width: 100%;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: sans-serif;
+    margin-left: 1rem;
 }
 
 .header-nav {
@@ -23,10 +32,10 @@
 }
 
 .logo img {
-    width: 50px; /* Aumenté el tamaño del logo */
+    width: 50px;
     height: 50px;
-    margin-right: 10px;
     border-radius: 8px;
+    margin-right: 0.5rem;
 }
 
 .site-name {
@@ -52,17 +61,18 @@
     outline: none;
     height: 50px;
     margin-top: 0.5rem;
+    margin-right: 4rem;
 }
 
 .search-form input::placeholder {
-    color: #B0B0B5; /* Color del placeholder para que sea visible */
+    color: #B0B0B5;
 }
 
 /* Estilos del perfil */
 .profile-link img {
-    width: 60px; /* Aumenté el tamaño de la imagen */
+    width: 60px;
     height: 60px;
     border-radius: 50%;
     border: none;
-    margin-left: 130px;
+    margin-right: 1rem;
 }

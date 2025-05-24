@@ -11,8 +11,8 @@ export class PublicacionesRepository {
         publicacion.autor_id,
         publicacion.titulo,
         publicacion.descripcion,
-        publicacion.media_url,
-        publicacion.tipo_media,
+        publicacion.media_url ?? null,
+        publicacion.tipo_media ?? null,
         publicacion.fecha_creacion
       ]
     );

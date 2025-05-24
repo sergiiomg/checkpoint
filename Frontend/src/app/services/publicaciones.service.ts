@@ -39,9 +39,24 @@ export class PublicacionesService {
     return this.http.post(`${this.apiUrl}publicaciones`, data);
   }
 
-  getFullMediaUrl(mediaUrl: string | null): string | null {
-    if (!mediaUrl) return null;
-    if (mediaUrl.startsWith('http')) return mediaUrl; // URL completa
-    return `${this.baseUrl}${mediaUrl}`; // URL relativa
+   getFullMediaUrl(mediaUrl: string | null): string | null {
+    if (!mediaUrl) {
+      console.warn('⚠️ mediaUrl está vacío o null');
+      return null;
+    }
+    
+    console.log('🔗 URL original recibida:', mediaUrl);
+    
+    // Si ya es una URL completa, devolverla tal como está
+    if (mediaUrl.startsWith('http://') || mediaUrl.startsWith('https://')) {
+      console.log('✅ URL ya es completa:', mediaUrl);
+      return mediaUrl;
+    }
+    
+    // Si es una ruta relativa, construir la URL completa
+    const fullUrl = `${this.baseUrl}${mediaUrl}`;
+    console.log('🌐 URL completa generada:', fullUrl);
+    
+    return fullUrl;
   }
 }
