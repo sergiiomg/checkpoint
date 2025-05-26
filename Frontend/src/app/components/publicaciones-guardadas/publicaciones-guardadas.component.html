@@ -2,7 +2,7 @@
   <app-header></app-header>
   <div class="dashboard-body">
     <app-aside></app-aside>
-    <div class="publicaciones-container" *ngIf="publicaciones.length > 0; else sinPublicaciones">
+    <div class="publicaciones-container" *ngIf="publicaciones.length > 0; else sinGuardadas">
       <div class="publicacion" *ngFor="let p of publicaciones">
         <h3>{{ p.titulo }}</h3>
         <p>{{ p.descripcion }}</p>
@@ -17,32 +17,26 @@
         </div>
 
         <div class="acciones">
-          <button class="btn like" (click)="toggleLike(p)">
-            <i class="{{ p.liked ? 'fas' : 'far' }} fa-heart"></i>
-            {{ p.likesCount || 0 }}
-          </button>
           <div class="grupo-izquierda">
             <button class="btn comentar">
               <i class="far fa-comment"></i>
             </button>
+            <button class="btn like" (click)="toggleLike(p)">
+              <i class="{{ p.liked ? 'fas' : 'far' }} fa-heart"></i>
+              {{ p.likesCount || 0 }}
+            </button>
           </div>
           <div class="grupo-derecha">
             <button class="btn guardar" (click)="toggleGuardado(p)">
-              <i class="{{ p.guardada ? 'fas' : 'far' }} fa-bookmark"></i>
+              <i class="fas fa-bookmark"></i>
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="acciones-superiores">
-      <button routerLink="/crear-publicacion" class="btn-crear-publicacion">
-        Crear publicación
-      </button>
-    </div>
-
-    <ng-template #sinPublicaciones>
-      <p>No hay publicaciones aún.</p>
+    <ng-template #sinGuardadas>
+      <p>No has guardado ninguna publicación aún.</p>
     </ng-template>
   </div>
 </div>

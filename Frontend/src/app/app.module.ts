@@ -14,6 +14,7 @@ import { AppAsideComponent } from './components/app-aside/app-aside.component';
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 import { CrearPublicacionComponent } from './components/crear-publicacion/crear-publicacion.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PublicacionesGuardadasComponent } from './components/publicaciones-guardadas/publicaciones-guardadas.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppHeaderComponent,
     AppAsideComponent,
     DashboardPageComponent,
-    CrearPublicacionComponent
+    CrearPublicacionComponent,
+    PublicacionesGuardadasComponent
   ],
   imports: [
     BrowserModule,

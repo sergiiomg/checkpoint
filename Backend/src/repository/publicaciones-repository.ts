@@ -26,7 +26,7 @@ export class PublicacionesRepository {
   async obtenerTodas(): Promise<Publicacion[]> {
     const db = await obtenerDB();
     const [rows] = await db.execute(
-        'SELECT * FROM publicaciones ORDER BY fecha_creacion DESC'
+        'SELECT * FROM publicaciones ORDER BY fecha_creacion ASC'
     );
     return rows as Publicacion[];
   }

@@ -5,6 +5,7 @@ import { SignUpComponent } from './components/signup-page/signup-page.component'
 import { PerfilPageComponent } from './components/perfil-page/perfil-page.component';
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 import { CrearPublicacionComponent } from './components/crear-publicacion/crear-publicacion.component';
+import { PublicacionesGuardadasComponent } from './components/publicaciones-guardadas/publicaciones-guardadas.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'perfil', component: PerfilPageComponent },
   { path: 'crear-publicacion', component: CrearPublicacionComponent },
+  {path: 'publicaciones-guardadas', component: PublicacionesGuardadasComponent},
   { path: '**', redirectTo: '' },
   
 ];

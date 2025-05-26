@@ -4,12 +4,15 @@ import { UsuariosController } from '../controllers/usuarios-controller';
 import { PublicacionesController } from '../controllers/publicaciones-controller';
 import { LikesController } from '../controllers/likes-controller';
 import { upload } from '../middleware/upload';
+import { PublicacionesGuardadasController } from '../controllers/publicaciones-guardadas-controller';
+import { authenticateToken } from '../middleware/auth';
 
 const router = express.Router();
 const controller = new TestController();
 const usuariosController = new UsuariosController();
 const publicacionesController = new PublicacionesController();
 const likesController = new LikesController();
+const publicacionesGuardadasController = new PublicacionesGuardadasController();
 
 // Llamada GET genérica al controlador
 router.get('/', (req, res) => controller.getTestResponse(req, res));
@@ -23,7 +26,24 @@ router.get('/perfil', (req, res) => usuariosController.obtenerPerfil(req, res));
 //Llamada post para crear una publicación
 router.post('/publicaciones', upload.single('media'), (req, res) => publicacionesController.crear(req, res));
 
+//Llamada para eliminar una publicación
+router.delete('/publicaciones/:id', authenticateToken, (req, res) =>publicacionesController.eliminar(req, res));
 //Llamada para dar o quitar like
 router.post('/publicaciones/:id/like', (req, res) => likesController.toggleLike(req, res));
+
+//Llamada para guardar publicación
+router.post('/publicaciones/:id/guardar', authenticateToken, (req, res) =>
+  publicacionesGuardadasController.guardar(req, res)
+);
+
+//Llamada para desguardar publicación
+router.delete('/publicaciones/:id/guardar', authenticateToken, (req, res) =>
+  publicacionesGuardadasController.desguardar(req, res)
+);
+
+//Llamada para obtener publicaciones guardadas
+router.get('/publicaciones-guardadas', authenticateToken, (req, res) =>
+  publicacionesGuardadasController.obtenerGuardadas(req, res)
+);
 
 export = router;

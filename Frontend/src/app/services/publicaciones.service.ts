@@ -12,6 +12,7 @@ export interface Publicacion {
   fecha_creacion: number;
   liked?: boolean;
   likesCount?: number;
+  guardada?: boolean;
 }
 
 @Injectable({
