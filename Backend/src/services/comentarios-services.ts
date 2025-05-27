@@ -89,4 +89,41 @@ export class ComentariosService {
       return true;
     }
 
+    async toggleLikeComentario(comentarioId: number, usuarioId: number): Promise<{ liked: boolean }> {
+      if (!this.db) this.db = await obtenerDB();
+    
+      const [rows] = await this.db.query<RowDataPacket[]>(
+        'SELECT * FROM likes_comentarios WHERE comentario_id = ? AND usuario_id = ?',
+        [comentarioId, usuarioId]
+      );
+    
+      if (rows.length > 0) {
+        // Ya dio like, así que lo quitamos
+        await this.db.query(
+          'DELETE FROM likes_comentarios WHERE comentario_id = ? AND usuario_id = ?',
+          [comentarioId, usuarioId]
+        );
+        return { liked: false };
+      } else {
+        // No dio like, así que lo agregamos
+        await this.db.query(
+          'INSERT INTO likes_comentarios (comentario_id, usuario_id) VALUES (?, ?)',
+          [comentarioId, usuarioId]
+        );
+        return { liked: true };
+      }
+    }
+
+    async contarLikesComentario(comentarioId: number): Promise<number> {
+      if (!this.db) this.db = await obtenerDB();
+    
+      const [rows] = await this.db.query<RowDataPacket[]>(
+        'SELECT COUNT(*) AS total FROM likes_comentarios WHERE comentario_id = ?',
+        [comentarioId]
+      );
+    
+      return rows[0].total;
+    }
+
+
 }

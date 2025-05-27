@@ -90,4 +90,32 @@ export class ComentariosController {
         res.status(500).json({ error: 'Error interno del servidor' });
       }
     }
+
+    async toggleLikeComentario(req: Request, res: Response): Promise<void> {
+      const comentarioId = parseInt(req.params.id);
+      const usuarioId = (req as any).user.id;
+    
+      try {
+        const resultado = await this.service.toggleLikeComentario(comentarioId, usuarioId);
+        res.status(200).json({
+          mensaje: resultado.liked ? 'Like añadido' : 'Like eliminado',
+        });
+      } catch (error) {
+        console.error('❌ Error al dar/retirar like:', error);
+        res.status(500).json({ error: 'Error al procesar el like' });
+      }
+    }
+
+    async obtenerLikes(req: Request, res: Response): Promise<void> {
+      const comentarioId = parseInt(req.params.id);
+    
+      try {
+        const total = await this.service.contarLikesComentario(comentarioId);
+        res.status(200).json({ total });
+      } catch (error) {
+        console.error('❌ Error al contar likes:', error);
+        res.status(500).json({ error: 'Error al obtener likes del comentario' });
+      }
+    }
+
 }
