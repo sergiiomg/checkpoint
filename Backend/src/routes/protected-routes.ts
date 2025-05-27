@@ -74,7 +74,11 @@ router.post('/usuarios/:id/seguir', authenticateToken, (req, res) => seguimiento
 //Llamada para dejar de seguir a un usuario
 router.delete('/usuarios/:id/seguir', authenticateToken, (req, res) => seguimientosController.dejarDeSeguir(req, res));
 
-//Llamada para ver a qué usuarios sigue un usuario
+//Llamada para ver los seguidos de un usuario
 router.get('/usuarios/:id/siguiendo', authenticateToken, (req, res) =>seguimientosController.getSiguiendo(req, res));
+
+//Llamada para ver los seguidores de un usuario
+router.get('/usuarios/:id/seguidores', authenticateToken, (req, res) =>seguimientosController.getSeguidores(req, res));
+
 
 export = router;

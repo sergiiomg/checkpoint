@@ -59,4 +59,29 @@ export class SeguimientosService {
 
     return rows;
   }
+
+  async seguidoresDeUsuario(usuarioId: number) {
+      if (!this.db) this.db = await obtenerDB();
+    
+      const [rows] = await this.db.query(
+        `SELECT u.id, u.nombre_usuario, u.email
+         FROM seguimientos s
+         JOIN usuarios u ON s.seguidor_id = u.id
+         WHERE s.seguido_id = ?`,
+        [usuarioId]
+      );
+    
+      return rows;
+    }
+
+    async estoySiguiendo(yoId: number, seguidoId: number): Promise<boolean> {
+      if (!this.db) this.db = await obtenerDB();
+    
+      const [rows] = await this.db.query(
+        'SELECT id FROM seguimientos WHERE seguidor_id = ? AND seguido_id = ?',
+        [yoId, seguidoId]
+      );
+    
+      return (rows as any[]).length > 0;
+    }
 }

@@ -54,4 +54,31 @@ export class SeguimientosController {
       res.status(500).json({ error: 'Error al obtener siguiendo' });
     }
   }
+
+  async getSeguidores(req: Request, res: Response) {
+      const usuarioId = parseInt(req.params.id);
+    
+      try {
+        const seguidores = await this.service.seguidoresDeUsuario(usuarioId);
+        res.status(200).json(seguidores);
+      } catch (error) {
+        console.error('❌ Error al obtener seguidores:', error);
+        res.status(500).json({ error: 'Error al obtener seguidores' });
+      }
+    }
+
+
+
+    async estoySiguiendo(req: Request, res: Response) {
+      const yoId = (req as any).user.id;
+      const seguidoId = parseInt(req.params.id);
+    
+      try {
+        const sigue = await this.service.estoySiguiendo(yoId, seguidoId);
+        res.status(200).json({ siguiendo: sigue });
+      } catch (error) {
+        console.error('❌ Error al comprobar seguimiento:', error);
+        res.status(500).json({ error: 'Error al comprobar seguimiento' });
+      }
+    }
 }
