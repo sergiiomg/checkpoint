@@ -29,13 +29,24 @@ export class ComentariosController {
   }
 
   async obtenerComentariosDePublicacion(req: Request, res: Response) {
-  const publicacionId = parseInt(req.params.id);
-  try {
-    const comentarios = await this.service.obtenerComentariosDePublicacion(publicacionId);
-    res.status(200).json(comentarios);
-  } catch (error) {
-    console.error('❌ Error al obtener comentarios:', error);
-    res.status(500).json({ error: 'Error al obtener comentarios' });
-  }
-}
+      const publicacionId = parseInt(req.params.id);
+      try {
+        const comentarios = await this.service.obtenerComentariosDePublicacion(publicacionId);
+        res.status(200).json(comentarios);
+      } catch (error) {
+        console.error('❌ Error al obtener comentarios:', error);
+        res.status(500).json({ error: 'Error al obtener comentarios' });
+      }
+    }
+
+    async obtenerRespuestasDeComentario(req: Request, res: Response) {
+      const comentarioId = parseInt(req.params.id);
+      try {
+        const respuestas = await this.service.obtenerRespuestasDeComentario(comentarioId);
+        res.status(200).json(respuestas);
+      } catch (error) {
+        console.error('❌ Error al obtener respuestas:', error);
+        res.status(500).json({ error: 'Error al obtener respuestas' });
+      }
+    }
 }

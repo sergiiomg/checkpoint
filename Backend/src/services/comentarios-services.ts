@@ -28,11 +28,22 @@ export class ComentariosService {
   }
 
   async obtenerComentariosDePublicacion(publicacionId: number) {
-  if (!this.db) this.db = await obtenerDB();
-  const [rows] = await this.db.query(
-    'SELECT * FROM comentarios WHERE publicacion_id = ? AND comentario_padre_id IS NULL ORDER BY fecha_creacion DESC',
-    [publicacionId]
-  );
-  return rows;
-}
+      if (!this.db) this.db = await obtenerDB();
+      const [rows] = await this.db.query(
+        'SELECT * FROM comentarios WHERE publicacion_id = ? AND comentario_padre_id IS NULL ORDER BY fecha_creacion DESC',
+        [publicacionId]
+      );
+      return rows;
+    }
+
+    async obtenerRespuestasDeComentario(comentarioId: number) {
+      if (!this.db) this.db = await obtenerDB();
+      const [rows] = await this.db.query(
+        'SELECT * FROM comentarios WHERE comentario_padre_id = ? ORDER BY fecha_creacion ASC',
+        [comentarioId]
+      );
+      return rows;
+    }
+
+    
 }

@@ -52,4 +52,7 @@ router.post('/publicaciones/:id/comentarios', authenticateToken, (req, res) =>co
 //Llamada para obtener todos los comentarios raíz de una publicación
 router.get('/publicaciones/:id/comentarios', (req, res) =>comentariosController.obtenerComentariosDePublicacion(req, res));
 
+//Llamada para obtener todos los comentarios respuesta de un comentario
+router.get('/comentarios/:id/respuestas', (req, res) =>comentariosController.obtenerRespuestasDeComentario(req, res));
+
 export = router;
