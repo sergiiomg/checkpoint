@@ -82,20 +82,20 @@ export class PublicacionesController {
   }
 
   async eliminar(req: Request, res: Response): Promise<void> {
-  const publicacion_id = parseInt(req.params.id);
-  const usuario_id = (req as any).user.id;
-
-  try {
-    const fueEliminada = await this.PublicacionesService.eliminar(publicacion_id, usuario_id);
-
-    if (!fueEliminada) {
-      res.status(403).json({ error: 'No tienes permiso para eliminar esta publicación' });
+    const publicacion_id = parseInt(req.params.id);
+    const usuario_id = (req as any).user.id;
+  
+    try {
+      const fueEliminada = await this.PublicacionesService.eliminar(publicacion_id, usuario_id);
+  
+      if (!fueEliminada) {
+        res.status(403).json({ error: 'No tienes permiso para eliminar esta publicación' });
+      }
+  
+        res.status(200).json({ mensaje: 'Publicación eliminada correctamente' });
+    } catch (error) {
+        console.error('Error al eliminar publicación:', error);
+        res.status(500).json({ error: 'Error al eliminar la publicación' });
     }
-
-      res.status(200).json({ mensaje: 'Publicación eliminada correctamente' });
-  } catch (error) {
-      console.error('Error al eliminar publicación:', error);
-      res.status(500).json({ error: 'Error al eliminar la publicación' });
   }
-}
 }

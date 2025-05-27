@@ -49,4 +49,22 @@ export class ComentariosController {
         res.status(500).json({ error: 'Error al obtener respuestas' });
       }
     }
+
+    async eliminarComentario(req: Request, res: Response) {
+      const comentarioId = parseInt(req.params.id);
+      const usuarioId = (req as any).user.id; // Obtener el id del usuario autenticado
+      
+      try {
+        const fueEliminado = await this.service.eliminarComentario(comentarioId, usuarioId);
+        
+        if (fueEliminado) {
+          res.status(200).json({ mensaje: 'Comentario eliminado correctamente' });
+        } else {
+          res.status(404).json({ mensaje: 'Comentario no encontrado o no autorizado a eliminarlo' });
+        }
+      } catch (error) {
+        console.error('❌ Error al eliminar comentario:', error);
+        res.status(500).json({ error: 'Error al eliminar comentario' });
+      }
+    }
 }

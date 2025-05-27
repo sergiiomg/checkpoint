@@ -55,4 +55,7 @@ router.get('/publicaciones/:id/comentarios', (req, res) =>comentariosController.
 //Llamada para obtener todos los comentarios respuesta de un comentario
 router.get('/comentarios/:id/respuestas', (req, res) =>comentariosController.obtenerRespuestasDeComentario(req, res));
 
+//Llamada para eliminar un comentario 
+router.delete('/comentarios/:id', authenticateToken, (req, res) =>comentariosController.eliminarComentario(req, res));
+
 export = router;
