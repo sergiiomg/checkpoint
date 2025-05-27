@@ -42,4 +42,16 @@ export class SeguimientosController {
       res.status(500).json({ error: 'Error interno del servidor' });
     }
   }
+
+  async getSiguiendo(req: Request, res: Response) {
+    const usuarioId = parseInt(req.params.id);
+
+    try {
+      const siguiendo = await this.service.siguiendoDeUsuario(usuarioId);
+      res.status(200).json(siguiendo);
+    } catch (error) {
+      console.error('❌ Error al obtener siguiendo:', error);
+      res.status(500).json({ error: 'Error al obtener siguiendo' });
+    }
+  }
 }

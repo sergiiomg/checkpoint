@@ -45,4 +45,18 @@ export class SeguimientosService {
 
     return true;
   }
+
+  async siguiendoDeUsuario(usuarioId: number) {
+    if (!this.db) this.db = await obtenerDB();
+
+    const [rows] = await this.db.query(
+      `SELECT u.id, u.nombre_usuario, u.email
+       FROM seguimientos s
+       JOIN usuarios u ON s.seguido_id = u.id
+       WHERE s.seguidor_id = ?`,
+      [usuarioId]
+    );
+
+    return rows;
+  }
 }
