@@ -84,4 +84,18 @@ export class SeguimientosService {
     
       return (rows as any[]).length > 0;
     }
+
+    async meSigue(yoId: number, otroUsuarioId: number): Promise<boolean> {
+      if (!this.db) this.db = await obtenerDB();
+    
+      const [rows] = await this.db.query(
+        'SELECT id FROM seguimientos WHERE seguidor_id = ? AND seguido_id = ?',
+        [otroUsuarioId, yoId]
+      );
+    
+      return (rows as any[]).length > 0;
+    }
+
+    
+
 }

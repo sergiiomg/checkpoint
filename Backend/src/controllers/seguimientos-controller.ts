@@ -81,4 +81,18 @@ export class SeguimientosController {
         res.status(500).json({ error: 'Error al comprobar seguimiento' });
       }
     }
+
+    async meSigue(req: Request, res: Response) {
+      const yoId = (req as any).user.id;
+      const otroUsuarioId = parseInt(req.params.id);
+    
+      try {
+        const teSigue = await this.service.meSigue(yoId, otroUsuarioId);
+        res.status(200).json({ teSigue });
+      } catch (error) {
+        console.error('❌ Error al comprobar si te sigue:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
+    }
+
 }
