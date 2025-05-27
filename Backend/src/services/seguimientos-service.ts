@@ -96,6 +96,17 @@ export class SeguimientosService {
       return (rows as any[]).length > 0;
     }
 
+    async sonAmigos(yoId: number, otroUsuarioId: number): Promise<boolean> {
+      if (!this.db) this.db = await obtenerDB();
     
-
+      const [rows] = await this.db.query(
+        `SELECT COUNT(*) as cantidad FROM seguimientos 
+         WHERE (seguidor_id = ? AND seguido_id = ?) 
+            OR (seguidor_id = ? AND seguido_id = ?)`,
+        [yoId, otroUsuarioId, otroUsuarioId, yoId]
+      );
+    
+      const cantidad = (rows as any)[0].cantidad;
+      return cantidad === 2;
+    }
 }

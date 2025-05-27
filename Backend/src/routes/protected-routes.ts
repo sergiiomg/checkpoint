@@ -86,4 +86,6 @@ router.get('/usuarios/:id/siguiendo/yo', authenticateToken, (req, res) =>seguimi
 //Llamada para ver si un usuario me sigue o no
 router.get('/usuarios/:id/me-sigue', authenticateToken, (req, res) =>seguimientosController.meSigue(req, res));
 
+//Llamada para ver si un usuario y tú os seguís mutuamente
+router.get('/usuarios/:id/amigos', authenticateToken, (req, res) =>seguimientosController.sonAmigos(req, res));
 export = router;

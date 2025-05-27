@@ -95,4 +95,17 @@ export class SeguimientosController {
       }
     }
 
+    async sonAmigos(req: Request, res: Response) {
+      const yoId = (req as any).user.id;
+      const otroUsuarioId = parseInt(req.params.id);
+    
+      try {
+        const amigos = await this.service.sonAmigos(yoId, otroUsuarioId);
+        res.status(200).json({ amigos });
+      } catch (error) {
+        console.error('❌ Error al comprobar amistad:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
+    }
+
 }
