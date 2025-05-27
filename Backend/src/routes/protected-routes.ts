@@ -49,5 +49,7 @@ router.get('/publicaciones-guardadas', authenticateToken, (req, res) =>publicaci
 //Llamada para crear un comentario
 router.post('/publicaciones/:id/comentarios', authenticateToken, (req, res) =>comentariosController.crearComentario(req, res));
 
+//Llamada para obtener todos los comentarios raíz de una publicación
+router.get('/publicaciones/:id/comentarios', (req, res) =>comentariosController.obtenerComentariosDePublicacion(req, res));
 
 export = router;

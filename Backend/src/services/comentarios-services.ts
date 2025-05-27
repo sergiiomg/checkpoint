@@ -26,4 +26,13 @@ export class ComentariosService {
       fecha_creacion: new Date().toISOString()
     };
   }
+
+  async obtenerComentariosDePublicacion(publicacionId: number) {
+  if (!this.db) this.db = await obtenerDB();
+  const [rows] = await this.db.query(
+    'SELECT * FROM comentarios WHERE publicacion_id = ? AND comentario_padre_id IS NULL ORDER BY fecha_creacion DESC',
+    [publicacionId]
+  );
+  return rows;
+}
 }
