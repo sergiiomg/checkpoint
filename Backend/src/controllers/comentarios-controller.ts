@@ -67,4 +67,27 @@ export class ComentariosController {
         res.status(500).json({ error: 'Error al eliminar comentario' });
       }
     }
+
+    async editar(req: Request, res: Response): Promise<void> {
+      const comentarioId = parseInt(req.params.id);
+      const { contenido } = req.body;
+      const usuarioId = (req as any).user.id;
+    
+      if (!contenido) {
+        res.status(400).json({ error: 'El contenido no puede estar vacío' });
+      }
+    
+      try {
+        const fueEditado = await this.service.editar(comentarioId, usuarioId, contenido);
+    
+        if (!fueEditado) {
+          res.status(403).json({ error: 'No tienes permiso para editar este comentario' });
+        }
+    
+        res.status(200).json({ mensaje: 'Comentario editado correctamente' });
+      } catch (error) {
+        console.error('❌ Error al editar comentario:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+      }
+    }
 }

@@ -58,4 +58,7 @@ router.get('/comentarios/:id/respuestas', (req, res) =>comentariosController.obt
 //Llamada para eliminar un comentario 
 router.delete('/comentarios/:id', authenticateToken, (req, res) =>comentariosController.eliminarComentario(req, res));
 
+//Llamada para editar un comentario
+router.put('/comentarios/:id', authenticateToken, (req, res) =>comentariosController.editar(req, res));
+
 export = router;

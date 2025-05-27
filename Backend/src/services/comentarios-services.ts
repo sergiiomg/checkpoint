@@ -68,4 +68,25 @@ export class ComentariosService {
         throw error;
       }
     }
+
+    async editar(id: number, autor_id: number, contenido: string): Promise<boolean> {
+      if (!this.db) this.db = await obtenerDB();
+    
+      const [rows] = await this.db.query<RowDataPacket[]>(
+        'SELECT id FROM comentarios WHERE id = ? AND autor_id = ?',
+        [id, autor_id]
+      );
+    
+      if ((rows as any[]).length === 0) {
+        return false;
+      }
+    
+      await this.db.query(
+        'UPDATE comentarios SET contenido = ? WHERE id = ? AND autor_id = ?',
+        [contenido, id, autor_id]
+      );
+    
+      return true;
+    }
+
 }
