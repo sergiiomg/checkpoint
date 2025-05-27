@@ -6,6 +6,7 @@ import { LikesController } from '../controllers/likes-controller';
 import { upload } from '../middleware/upload';
 import { PublicacionesGuardadasController } from '../controllers/publicaciones-guardadas-controller';
 import { authenticateToken } from '../middleware/auth';
+import { ComentariosController } from '../controllers/comentarios-controller';
 
 const router = express.Router();
 const controller = new TestController();
@@ -13,6 +14,7 @@ const usuariosController = new UsuariosController();
 const publicacionesController = new PublicacionesController();
 const likesController = new LikesController();
 const publicacionesGuardadasController = new PublicacionesGuardadasController();
+const comentariosController = new ComentariosController();
 
 // Llamada GET genérica al controlador
 router.get('/', (req, res) => controller.getTestResponse(req, res));
@@ -42,8 +44,10 @@ router.delete('/publicaciones/:id/guardar', authenticateToken, (req, res) =>
 );
 
 //Llamada para obtener publicaciones guardadas
-router.get('/publicaciones-guardadas', authenticateToken, (req, res) =>
-  publicacionesGuardadasController.obtenerGuardadas(req, res)
-);
+router.get('/publicaciones-guardadas', authenticateToken, (req, res) =>publicacionesGuardadasController.obtenerGuardadas(req, res));
+
+//Llamada para crear un comentario
+router.post('/publicaciones/:id/comentarios', authenticateToken, (req, res) =>comentariosController.crearComentario(req, res));
+
 
 export = router;

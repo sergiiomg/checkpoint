@@ -1,0 +1,30 @@
+import { Request, Response } from 'express';
+import { ComentariosService } from '../services/comentarios-services';
+
+export class ComentariosController {
+  private service = new ComentariosService();
+
+  async crearComentario(req: Request, res: Response): Promise<void> {
+    const usuario_id = (req as any).user.id;
+    const publicacion_id = parseInt(req.params.id);
+    const { contenido, comentario_padre_id } = req.body;
+
+    if (!contenido || contenido.trim() === '') {
+      res.status(400).json({ error: 'Contenido del comentario es requerido' });
+    }
+
+    try {
+      const nuevoComentario = await this.service.crearComentario({
+        contenido,
+        autor_id: usuario_id,
+        publicacion_id,
+        comentario_padre_id: comentario_padre_id || null
+      });
+
+      res.status(201).json(nuevoComentario);
+    } catch (error) {
+      console.error('❌ Error al crear comentario:', error);
+      res.status(500).json({ error: 'Error al crear comentario' });
+    }
+  }
+}
