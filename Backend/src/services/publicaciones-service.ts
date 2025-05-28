@@ -2,6 +2,8 @@ import { PublicacionesRepository } from '../repository/publicaciones-repository'
 import { Publicacion } from '../models/publicacion';
 import { obtenerDB } from '../db';
 import { Connection } from 'mysql2/promise';
+import { db } from '../db';
+import { RowDataPacket } from 'mysql2';
 
 
 export class PublicacionesService {
@@ -45,4 +47,13 @@ export class PublicacionesService {
       throw error;
     }
   }
+
+    async contarPublicacionesUsuario(usuarioId: number): Promise<number> {
+      const [rows] = await db!.query<RowDataPacket[]>(
+        'SELECT COUNT(*) AS total FROM publicaciones WHERE autor_id = ?',
+        [usuarioId]
+      );
+      return rows[0].total;
+    }
+
 }

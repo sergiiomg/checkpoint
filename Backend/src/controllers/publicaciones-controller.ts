@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { PublicacionesService } from '../services/publicaciones-service';
 import { agregarExperiencia } from '../utils/experiencia-utils';
+import { desbloquearLogro } from '../utils/logros';
 
 
 export class PublicacionesController {
@@ -52,6 +53,20 @@ export class PublicacionesController {
       });
 
       await agregarExperiencia(autor_id, 2);
+
+      const publicacionesUsuario = await this.PublicacionesService.contarPublicacionesUsuario(autor_id);
+      if (publicacionesUsuario === 1) {
+        await desbloquearLogro(autor_id, 'ROMPE_EL_HIELO');
+      }
+      if (publicacionesUsuario === 10) {
+        await desbloquearLogro(autor_id, 'SOCIALIZADOR');
+      }
+      if (publicacionesUsuario === 50) {
+        await desbloquearLogro(autor_id, 'FIEBRE_DEL_ORO');
+      }
+      if (publicacionesUsuario === 100) {
+        await desbloquearLogro(autor_id, 'INFLUENCER_TOTAL');
+      }
 
       console.log('✅ Publicación creada exitosamente:', nueva);
       res.status(201).json(nueva);

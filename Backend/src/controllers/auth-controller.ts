@@ -4,6 +4,7 @@ import { JWT_SECRET_KEY } from '../config';
 import bcrypt from 'bcryptjs';
 import { UsuariosService } from '../services/usuarios-service';
 import { db } from '../db';
+import { desbloquearLogro } from '../utils/logros';
 
 const SECRET_KEY = JWT_SECRET_KEY;
 
@@ -27,6 +28,7 @@ class AuthController {
             }
 
             const usuarioCreado = await this.usuariosService.crearUsuario(nombre_usuario, email, contrasena);
+            await desbloquearLogro(usuarioCreado.id, 'BIENVENIDO_A_BORDO');
 
             if(usuarioCreado){
                 res.status(201).json(usuarioCreado);
