@@ -29,6 +29,18 @@ export class SeguimientosController {
         await desbloquearLogro(seguidoId, 'IDOLO_DE_MASAS');
       }
 
+      const seguidosPorUsuario = await this.service.contarUsuariosSeguidos(seguidorId);
+
+      if (seguidosPorUsuario === 5) {
+        await desbloquearLogro(seguidorId, 'CURIOSO');
+      }
+      if (seguidosPorUsuario === 20) {
+        await desbloquearLogro(seguidorId, 'EXPLORADOR');
+      }
+      if (seguidosPorUsuario === 50) {
+        await desbloquearLogro(seguidorId, 'FANATICO');
+      }
+
       res.status(200).json({ mensaje: 'Ahora sigues a este usuario' });
     } catch (error) {
       console.error('❌ Error al seguir usuario:', error);
