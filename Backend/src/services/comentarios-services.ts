@@ -125,5 +125,13 @@ export class ComentariosService {
       return rows[0].total;
     }
 
+  async contarComentariosUsuario(usuarioId: number): Promise<number> {
+    if (!this.db) this.db = await obtenerDB();
 
+    const [resultado] = await this.db.query<RowDataPacket[]>(
+      'SELECT COUNT(*) AS total FROM comentarios WHERE autor_id = ?',
+      [usuarioId]
+    );
+    return resultado[0].total;
+  }
 }

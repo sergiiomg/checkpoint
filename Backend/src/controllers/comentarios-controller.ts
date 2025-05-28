@@ -1,10 +1,12 @@
 import { Request, Response } from 'express';
 import { ComentariosService } from '../services/comentarios-services';
 import { agregarExperiencia } from '../utils/experiencia-utils';
+import { desbloquearLogro } from '../utils/logros';
 
 
 export class ComentariosController {
   private service = new ComentariosService();
+  private comentariosService = new ComentariosService();
 
   async crearComentario(req: Request, res: Response): Promise<void> {
     const usuario_id = (req as any).user.id;
@@ -24,6 +26,17 @@ export class ComentariosController {
       });
 
       await agregarExperiencia(usuario_id, 1);
+
+      const comentariosUsuario = await this.comentariosService.contarComentariosUsuario(usuario_id);
+      if (comentariosUsuario === 1) {
+        await desbloquearLogro(usuario_id, 'HOLA_MUNDO');
+      }
+      if (comentariosUsuario === 20) {
+        await desbloquearLogro(usuario_id, 'CONVERSADOR');
+      }
+      if (comentariosUsuario === 100) {
+        await desbloquearLogro(usuario_id, 'CHARLISTA');
+      }
 
       res.status(201).json(nuevoComentario);
     } catch (error) {
