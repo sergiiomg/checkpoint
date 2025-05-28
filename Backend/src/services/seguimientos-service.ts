@@ -109,4 +109,13 @@ export class SeguimientosService {
       const cantidad = (rows as any)[0].cantidad;
       return cantidad === 2;
     }
+
+  async contarSeguidores(usuarioId: number): Promise<number> {
+    if (!this.db) this.db = await obtenerDB();
+    const [resultado] = await this.db.query<RowDataPacket[]>(
+      'SELECT COUNT(*) AS total FROM seguimientos WHERE seguido_id = ?',
+      [usuarioId]
+    );
+    return resultado[0].total;
+  }
 }

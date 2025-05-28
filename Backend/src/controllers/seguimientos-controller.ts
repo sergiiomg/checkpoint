@@ -1,6 +1,7 @@
 // controllers/seguimientos-controller.ts
 import { Request, Response } from 'express';
 import { SeguimientosService } from '../services/seguimientos-service';
+import { desbloquearLogro } from '../utils/logros';
 
 export class SeguimientosController {
   private service = new SeguimientosService();
@@ -14,6 +15,18 @@ export class SeguimientosController {
       if (!exito) {
         res.status(400).json({ error: 'No se pudo seguir al usuario (posiblemente ya lo sigues o es tu propio usuario).' });
         return;
+      }
+
+      const seguidoresUsuario = await this.service.contarSeguidores(seguidoId);
+
+      if (seguidoresUsuario === 10) {
+        await desbloquearLogro(seguidoId, 'POPULAR');
+      }
+      if (seguidoresUsuario === 50) {
+        await desbloquearLogro(seguidoId, 'QUERIDO_POR_MUCHOS');
+      }
+      if (seguidoresUsuario === 100) {
+        await desbloquearLogro(seguidoId, 'IDOLO_DE_MASAS');
       }
 
       res.status(200).json({ mensaje: 'Ahora sigues a este usuario' });
