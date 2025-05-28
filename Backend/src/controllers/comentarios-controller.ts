@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { ComentariosService } from '../services/comentarios-services';
-import { UsuariosService } from '../services/usuarios-service';
+import { agregarExperiencia } from '../utils/experiencia-utils';
+
 
 export class ComentariosController {
   private service = new ComentariosService();
-  private usuariosService = new UsuariosService();
 
   async crearComentario(req: Request, res: Response): Promise<void> {
     const usuario_id = (req as any).user.id;
@@ -22,8 +22,8 @@ export class ComentariosController {
         publicacion_id,
         comentario_padre_id: comentario_padre_id || null
       });
-      
-      await this.usuariosService.sumarExperiencia(usuario_id, 1);
+
+      await agregarExperiencia(usuario_id, 1);
 
       res.status(201).json(nuevoComentario);
     } catch (error) {

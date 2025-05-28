@@ -56,10 +56,6 @@ class UsuariosService{
     return await this.usuariosRepository.obtenerUsuarioPorId(id);
   }
 
-  async sumarExperiencia(usuarioId: number, cantidad: number): Promise<void> {
-    await this.usuariosRepository.sumarExperiencia(usuarioId, cantidad);
-  }
-
 }
 
 export { UsuariosService }

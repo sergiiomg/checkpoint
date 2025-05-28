@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 import { PublicacionesService } from '../services/publicaciones-service';
-import { UsuariosService } from '../services/usuarios-service';
+import { agregarExperiencia } from '../utils/experiencia-utils';
 
 
 export class PublicacionesController {
   private PublicacionesService = new PublicacionesService();
-  private usuariosService = new UsuariosService();
 
 
   async crear(req: Request, res: Response): Promise<void> {
@@ -52,7 +51,7 @@ export class PublicacionesController {
         tipo_media: finalTipoMedia || undefined
       });
 
-      await this.usuariosService.sumarExperiencia(parseInt(autor_id), 2);
+      await agregarExperiencia(autor_id, 2);
 
       console.log('✅ Publicación creada exitosamente:', nueva);
       res.status(201).json(nueva);
