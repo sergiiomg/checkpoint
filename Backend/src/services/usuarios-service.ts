@@ -18,43 +18,48 @@ class UsuariosService{
      */
 
     async crearUsuario(nombre_usuario: string, email: string, contrasena: string){
-        try{
-            const hash = await bcrypt.hash(contrasena, 10);
+      try{
+        const hash = await bcrypt.hash(contrasena, 10);
 
-            const nuevoUsuario = await this.usuariosRepository.crearUsuario(
-                nombre_usuario,
-                email,
-                hash
-            );
-            return nuevoUsuario;
+        const nuevoUsuario = await this.usuariosRepository.crearUsuario(
+          nombre_usuario,
+          email,
+          hash
+        );
+        return nuevoUsuario;
+      }
+      catch (error: unknown) {
+        if (error instanceof Error) {
+          throw new Error('Error al crear el usuario: ' + error.message);
+        } else {
+           throw new Error('Error desconocido al crear el usuario.');
         }
-        catch (error: unknown) {
-          if (error instanceof Error) {
-            throw new Error('Error al crear el usuario: ' + error.message);
-          } else {
-            throw new Error('Error desconocido al crear el usuario.');
-          }
-        }
+      }
     }
 
-    async iniciarSesion(nombre_usuario: string, contrasena: string){
-        const usuario: Usuario | null = await this.usuariosRepository.obtenerUsuarioPorNombre(nombre_usuario);
+  async iniciarSesion(nombre_usuario: string, contrasena: string){
+    const usuario: Usuario | null = await this.usuariosRepository.obtenerUsuarioPorNombre(nombre_usuario);
 
-        if(!usuario) return null;
+    if(!usuario) return null;
 
-        const coincide = await bcrypt.compare(contrasena, usuario.contrasena_hash);
+      const coincide = await bcrypt.compare(contrasena, usuario.contrasena_hash);
 
-        if(!coincide) return null;
+    if(!coincide) return null;
 
-        const { contrasena_hash, ...resto } = usuario;
-        const usuarioSinPassword: Omit<Usuario, 'contrasena_hash'> = resto;
+      const { contrasena_hash, ...resto } = usuario;
+      const usuarioSinPassword: Omit<Usuario, 'contrasena_hash'> = resto;
 
-        return usuarioSinPassword;
-    }
+      return usuarioSinPassword;
+  }
 
-    async obtenerUsuarioPorId(id: number) {
+  async obtenerUsuarioPorId(id: number) {
     return await this.usuariosRepository.obtenerUsuarioPorId(id);
-}
+  }
+
+  async sumarExperiencia(usuarioId: number, cantidad: number): Promise<void> {
+    await this.usuariosRepository.sumarExperiencia(usuarioId, cantidad);
+  }
+
 }
 
 export { UsuariosService }

@@ -74,6 +74,13 @@ class UsuariosRepository{
 
         return usuarios[0];
      }
+
+     async sumarExperiencia(usuarioId: number, cantidad: number): Promise<void> {
+        await this.connection.execute(
+            'UPDATE usuarios SET experiencia = experiencia + ? WHERE id = ?',
+            [cantidad, usuarioId]
+        );
+    }
 }
 
 export { UsuariosRepository }
