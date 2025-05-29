@@ -1,5 +1,6 @@
 import { obtenerDB } from '../db';
 import { agregarExperiencia } from './experiencia-utils';
+import { RowDataPacket } from 'mysql2';
 
 export async function desbloquearLogro(usuarioId: number, claveLogro: string) {
   const db = await obtenerDB();
@@ -30,6 +31,23 @@ export async function desbloquearLogro(usuarioId: number, claveLogro: string) {
      VALUES (?, ?, NOW())`,
     [usuarioId, logro.id]
   );
+
+  // Justo después de otorgar el logro
+  const [logrosUsuario] = await db.query<RowDataPacket[]>(
+    'SELECT COUNT(*) AS total FROM logros_usuarios WHERE usuario_id = ?',
+    [usuarioId]
+  );
+  
+  const totalLogros = logrosUsuario[0].total;
+  
+  // Solo intenta desbloquear si ha llegado a 10 y aún no lo tiene
+  if (totalLogros === 10) {
+    await desbloquearLogro(usuarioId, 'COMPLETISTA');
+  }
+
+  if (totalLogros === 20) {
+    await desbloquearLogro(usuarioId, 'MAESTRO_DEL_LOGRO');
+  }
 
   // Sumar experiencia
   await agregarExperiencia(usuarioId, logro.experiencia);
