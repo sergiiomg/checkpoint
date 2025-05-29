@@ -1,4 +1,3 @@
-// servicios/seguimientos-service.ts
 import { obtenerDB } from '../db';
 import { Connection } from 'mysql2/promise';
 import { RowDataPacket } from 'mysql2';
