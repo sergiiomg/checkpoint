@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import { SeguimientosService } from '../services/seguimientos-service';
 import { desbloquearLogro } from '../utils/logros';
+import { verificarAmistadYDesbloquear } from '../utils/logros';
 
 export class SeguimientosController {
   private service = new SeguimientosService();
@@ -40,6 +41,8 @@ export class SeguimientosController {
       if (seguidosPorUsuario === 50) {
         await desbloquearLogro(seguidorId, 'FANATICO');
       }
+
+      await verificarAmistadYDesbloquear(seguidorId, seguidoId);
 
       res.status(200).json({ mensaje: 'Ahora sigues a este usuario' });
     } catch (error) {

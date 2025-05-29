@@ -52,3 +52,21 @@ export async function desbloquearLogro(usuarioId: number, claveLogro: string) {
   // Sumar experiencia
   await agregarExperiencia(usuarioId, logro.experiencia);
 }
+
+export async function verificarAmistadYDesbloquear(usuarioId: number, seguidoId: number) {
+  const db = await obtenerDB();
+
+  const [rows] = await db.query<RowDataPacket[]>(
+    `SELECT 1 FROM seguimientos s1
+     JOIN seguimientos s2
+       ON s1.seguidor_id = s2.seguido_id AND s1.seguido_id = s2.seguidor_id
+     WHERE s1.seguidor_id = ? AND s1.seguido_id = ?`,
+    [usuarioId, seguidoId]
+  );
+
+  // Si hay amistad mutua, desbloquea para ambos
+  if (rows.length > 0) {
+    await desbloquearLogro(usuarioId, 'AMISTAD_VERDADERA');
+    await desbloquearLogro(seguidoId, 'AMISTAD_VERDADERA');
+  }
+}
