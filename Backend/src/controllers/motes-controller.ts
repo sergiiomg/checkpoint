@@ -25,12 +25,12 @@ export async function obtenerMotesDesbloqueados(req: Request, res: Response): Pr
   }
 }
 
-export async function seleccionarMote(req: Request, res: Response) {
+export async function seleccionarMote(req: Request, res: Response): Promise<void> {
   const usuarioId = (req as any).user?.id;
   const { moteId } = req.body;
 
   if (!usuarioId || !moteId) {
-    return res.status(400).json({ error: 'Faltan datos' });
+    res.status(400).json({ error: 'Faltan datos' });
   }
 
   try {
@@ -43,7 +43,7 @@ export async function seleccionarMote(req: Request, res: Response) {
     );
 
     if ((mote as any[]).length === 0) {
-      return res.status(403).json({ error: 'Este mote no está desbloqueado' });
+      res.status(403).json({ error: 'Este mote no está desbloqueado' });
     }
 
     // Actualizar el mote actual

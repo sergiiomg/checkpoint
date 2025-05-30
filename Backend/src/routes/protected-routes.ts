@@ -10,6 +10,7 @@ import { ComentariosController } from '../controllers/comentarios-controller';
 import { SeguimientosController } from '../controllers/seguimientos-controller';
 import { LogrosController } from '../controllers/logros-controller';
 import { obtenerMotesDesbloqueados } from '../controllers/motes-controller';
+import { seleccionarMote } from '../controllers/motes-controller';
 
 const router = express.Router();
 const controller = new TestController();
@@ -95,5 +96,8 @@ router.get('/logros/:id', authenticateToken, (req, res) => logrosController.obte
 
 //Llamada para obtener los motes desbloqueados del usuario que ha iniciado sesión
 router.get('/motes-desbloqueados/:id', obtenerMotesDesbloqueados);
+
+//Llamada para selecciones un mote
+router.post('/seleccionar', authenticateToken, seleccionarMote);
 
 export = router;
