@@ -4,24 +4,32 @@ import { obtenerDB } from '../db';
 import { RowDataPacket } from 'mysql2';
 import { registrarAccionDiaria } from '../utils/registrarActividadDiaria';
 
-export async function obtenerMotesDesbloqueados(req: Request, res: Response): Promise<void> {
-  const { id } = req.params;
+export async function obtenerTodosLosMotesConEstado(req: Request, res: Response) {
+  const usuarioId = (req as any).user?.id;
 
   try {
     const db = await obtenerDB();
 
-    const [rows] = await db.query<RowDataPacket[]>(
-      `SELECT m.id, m.nombre, m.nivel_minimo, mu.fecha_desbloqueo
-       FROM motes_usuarios mu
-       JOIN motes m ON mu.mote_id = m.id
-       WHERE mu.usuarios_id = ?`,
-      [id]
-    );
+    // Obtener mote actual
+    const [usuarioRow] = await db.query(`SELECT mote_actual FROM usuarios WHERE id = ?`, [usuarioId]);
+    const moteActual = (usuarioRow as any)[0]?.mote_actual;
 
-    res.status(200).json(rows);
-  } catch (error) {
-    console.error('Error obteniendo motes desbloqueados:', error);
-    res.status(500).json({ error: 'Error al obtener los motes desbloqueados' });
+    // Obtener todos los motes con estado
+    const [motes] = await db.query(`
+      SELECT m.id, m.nombre, m.nivel_minimo,
+        CASE
+          WHEN mu.usuario_id IS NOT NULL AND m.id = ? THEN 'Aplicado'
+          WHEN mu.usuario_id IS NOT NULL THEN 'Aplicar'
+          ELSE 'Bloqueado'
+        END AS estado
+      FROM motes m
+      LEFT JOIN motes_usuarios mu ON m.id = mu.mote_id AND mu.usuario_id = ?
+    `, [moteActual, usuarioId]);
+
+    res.status(200).json(motes);
+  } catch (err) {
+    console.error('Error al obtener motes con estado:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 }
 

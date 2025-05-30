@@ -9,8 +9,8 @@ import { authenticateToken } from '../middleware/auth';
 import { ComentariosController } from '../controllers/comentarios-controller';
 import { SeguimientosController } from '../controllers/seguimientos-controller';
 import { LogrosController } from '../controllers/logros-controller';
-import { obtenerMotesDesbloqueados } from '../controllers/motes-controller';
 import { seleccionarMote } from '../controllers/motes-controller';
+import { obtenerTodosLosMotesConEstado } from '../controllers/motes-controller';
 
 const router = express.Router();
 const controller = new TestController();
@@ -94,8 +94,8 @@ router.get('/usuarios/:id/amigos', authenticateToken, (req, res) =>seguimientosC
 //Llamada para obtener todos los logros
 router.get('/logros', authenticateToken, (req, res) => logrosController.obtenerTodosLosLogrosConEstado(req, res));
 
-//Llamada para obtener los motes del usuario que ha iniciado sesión
-router.get('/motes-desbloqueados/:id', obtenerMotesDesbloqueados);
+//Llamada para obtener todos los motes
+router.get('/motes', obtenerTodosLosMotesConEstado);
 
 //Llamada para selecciones un mote
 router.post('/seleccionar', authenticateToken, seleccionarMote);
