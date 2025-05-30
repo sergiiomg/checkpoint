@@ -25,9 +25,6 @@ const logrosController = new LogrosController();
 // Llamada GET genérica al controlador
 router.get('/', (req, res) => controller.getTestResponse(req, res));
 
-//Llamada GET para obtener un usuario
-router.get('/usuarios/:id', (req, res) => usuariosController.obtenerUsuarioPorId(req, res));
-
 //Llamada get para obtener el usuario propio
 router.get('/perfil', (req, res) => usuariosController.obtenerPerfil(req, res));
 
@@ -52,12 +49,6 @@ router.get('/publicaciones-guardadas', authenticateToken, (req, res) =>publicaci
 //Llamada para crear un comentario
 router.post('/publicaciones/:id/comentarios', authenticateToken, (req, res) =>comentariosController.crearComentario(req, res));
 
-//Llamada para obtener todos los comentarios raíz de una publicación
-router.get('/publicaciones/:id/comentarios', (req, res) =>comentariosController.obtenerComentariosDePublicacion(req, res));
-
-//Llamada para obtener todos los comentarios respuesta de un comentario
-router.get('/comentarios/:id/respuestas', (req, res) =>comentariosController.obtenerRespuestasDeComentario(req, res));
-
 //Llamada para eliminar un comentario 
 router.delete('/comentarios/:id', authenticateToken, (req, res) =>comentariosController.eliminarComentario(req, res));
 
@@ -67,20 +58,11 @@ router.put('/comentarios/:id', authenticateToken, (req, res) =>comentariosContro
 //Llamada para dar like a un comentario
 router.post('/comentarios/:id/like', authenticateToken, (req, res) => comentariosController.toggleLikeComentario(req, res));
 
-//Llamada para obtener el número de likes de un comentario
-router.get('/comentarios/:id/likes', (req, res) => comentariosController.obtenerLikes(req, res));
-
 //Llamada para seguir a un usuario
 router.post('/usuarios/:id/seguir', authenticateToken, (req, res) => seguimientosController.seguir(req, res));
 
 //Llamada para dejar de seguir a un usuario
 router.delete('/usuarios/:id/seguir', authenticateToken, (req, res) => seguimientosController.dejarDeSeguir(req, res));
-
-//Llamada para ver los seguidos de un usuario
-router.get('/usuarios/:id/siguiendo', authenticateToken, (req, res) =>seguimientosController.getSiguiendo(req, res));
-
-//Llamada para ver los seguidores de un usuario
-router.get('/usuarios/:id/seguidores', authenticateToken, (req, res) =>seguimientosController.getSeguidores(req, res));
 
 //Llamada para ver si sigo o no a un usuario
 router.get('/usuarios/:id/siguiendo/yo', authenticateToken, (req, res) =>seguimientosController.estoySiguiendo(req, res));
@@ -95,7 +77,7 @@ router.get('/usuarios/:id/amigos', authenticateToken, (req, res) =>seguimientosC
 router.get('/logros', authenticateToken, (req, res) => logrosController.obtenerTodosLosLogrosConEstado(req, res));
 
 //Llamada para obtener todos los motes
-router.get('/motes', obtenerTodosLosMotesConEstado);
+router.get('/motes',  authenticateToken, obtenerTodosLosMotesConEstado);
 
 //Llamada para selecciones un mote
 router.post('/seleccionar', authenticateToken, seleccionarMote);
