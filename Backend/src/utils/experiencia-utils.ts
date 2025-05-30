@@ -1,5 +1,6 @@
 import { obtenerDB } from '../db';
 import { RowDataPacket } from 'mysql2';
+import { desbloquearMotes } from './motes';
 
 export async function agregarExperiencia(usuarioId: number, cantidad: number) {
   const db = await obtenerDB();
@@ -31,6 +32,8 @@ export async function agregarExperiencia(usuarioId: number, cantidad: number) {
       break;
     }
   }
+
+  await desbloquearMotes(usuarioId, nivel);
 
   await db.query(
     'UPDATE usuarios SET nivel = ?, experiencia = ? WHERE id = ?',
