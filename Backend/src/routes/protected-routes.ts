@@ -91,10 +91,10 @@ router.get('/usuarios/:id/me-sigue', authenticateToken, (req, res) =>seguimiento
 //Llamada para ver si un usuario y tú os seguís mutuamente
 router.get('/usuarios/:id/amigos', authenticateToken, (req, res) =>seguimientosController.sonAmigos(req, res));
 
-//Llamada para obtener todos los logros del usuario que ha iniciado sesión
-router.get('/logros/:id', authenticateToken, (req, res) => logrosController.obtenerLogrosUsuario(req, res));
+//Llamada para obtener todos los logros
+router.get('/logros', authenticateToken, (req, res) => logrosController.obtenerTodosLosLogrosConEstado(req, res));
 
-//Llamada para obtener los motes desbloqueados del usuario que ha iniciado sesión
+//Llamada para obtener los motes del usuario que ha iniciado sesión
 router.get('/motes-desbloqueados/:id', obtenerMotesDesbloqueados);
 
 //Llamada para selecciones un mote
