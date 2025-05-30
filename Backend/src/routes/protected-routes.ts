@@ -8,6 +8,7 @@ import { PublicacionesGuardadasController } from '../controllers/publicaciones-g
 import { authenticateToken } from '../middleware/auth';
 import { ComentariosController } from '../controllers/comentarios-controller';
 import { SeguimientosController } from '../controllers/seguimientos-controller';
+import { LogrosController } from '../controllers/logros-controller';
 
 
 const router = express.Router();
@@ -18,7 +19,7 @@ const likesController = new LikesController();
 const publicacionesGuardadasController = new PublicacionesGuardadasController();
 const comentariosController = new ComentariosController();
 const seguimientosController = new SeguimientosController();
-
+const logrosController = new LogrosController();
 
 // Llamada GET genérica al controlador
 router.get('/', (req, res) => controller.getTestResponse(req, res));
@@ -88,5 +89,8 @@ router.get('/usuarios/:id/me-sigue', authenticateToken, (req, res) =>seguimiento
 
 //Llamada para ver si un usuario y tú os seguís mutuamente
 router.get('/usuarios/:id/amigos', authenticateToken, (req, res) =>seguimientosController.sonAmigos(req, res));
+
+//Llamada para obtener todos los logros del usuario que ha iniciado sesión
+router.get('/logros/:id', authenticateToken, (req, res) => logrosController.obtenerLogrosUsuario(req, res));
 
 export = router;

@@ -69,7 +69,6 @@ export class DashboardPageComponent implements OnInit {
 
   getMediaUrl(mediaUrl: string | null): string | null {
     const result = this.publicacionesService.getFullMediaUrl(mediaUrl);
-    console.log(`🔗 getMediaUrl: "${mediaUrl}" → "${result}"`);
     return result;
   }
 }
