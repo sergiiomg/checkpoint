@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { PublicacionesService } from '../services/publicaciones-service';
 import { agregarExperiencia } from '../utils/experiencia-utils';
 import { desbloquearLogro } from '../utils/logros';
+import { registrarAccionDiaria } from '../utils/registrarActividadDiaria';
 
 
 export class PublicacionesController {
@@ -53,6 +54,8 @@ export class PublicacionesController {
       });
 
       await agregarExperiencia(autor_id, 2);
+      await registrarAccionDiaria(autor_id, 'PUBLICAR');
+
 
       const publicacionesUsuario = await this.PublicacionesService.contarPublicacionesUsuario(autor_id);
       if (publicacionesUsuario === 1) {

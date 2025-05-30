@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { LikesService } from '../services/likes-services';
 import { desbloquearLogro } from '../utils/logros';
 import { agregarExperiencia } from '../utils/experiencia-utils';
+import { registrarAccionDiaria } from '../utils/registrarActividadDiaria';
 
 export class LikesController {
   private service = new LikesService();
@@ -27,6 +28,11 @@ export class LikesController {
       if (totalLikesLogro === 50) {
         await desbloquearLogro(usuarioId, 'CORAZON_ACTIVO');
       }
+
+      if (resultado.liked) {
+        await registrarAccionDiaria(usuarioId, 'LIKE');
+      }
+
       res.status(200).json({ liked: resultado.liked, totalLikes });
     } catch (err) {
       console.error(err);

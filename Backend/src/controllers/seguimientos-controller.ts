@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import { SeguimientosService } from '../services/seguimientos-service';
 import { desbloquearLogro } from '../utils/logros';
 import { verificarAmistadYDesbloquear } from '../utils/logros';
+import { registrarAccionDiaria } from '../utils/registrarActividadDiaria';
 
 export class SeguimientosController {
   private service = new SeguimientosService();
@@ -43,6 +44,10 @@ export class SeguimientosController {
       }
 
       await verificarAmistadYDesbloquear(seguidorId, seguidoId);
+      
+      if (seguidoId) {
+        await registrarAccionDiaria(seguidorId, 'SEGUIR');
+      }
 
       res.status(200).json({ mensaje: 'Ahora sigues a este usuario' });
     } catch (error) {

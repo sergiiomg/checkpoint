@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { ComentariosService } from '../services/comentarios-services';
 import { agregarExperiencia } from '../utils/experiencia-utils';
 import { desbloquearLogro } from '../utils/logros';
+import { registrarAccionDiaria } from '../utils/registrarActividadDiaria';
 
 
 export class ComentariosController {
@@ -26,6 +27,8 @@ export class ComentariosController {
       });
 
       await agregarExperiencia(usuario_id, 1);
+      await registrarAccionDiaria(usuario_id, 'COMENTAR');
+
 
       const comentariosUsuario = await this.comentariosService.contarComentariosUsuario(usuario_id);
       if (comentariosUsuario === 1) {
