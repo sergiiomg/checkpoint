@@ -3,7 +3,7 @@ import { PublicacionesService } from '../services/publicaciones-service';
 import { agregarExperiencia } from '../utils/experiencia-utils';
 import { desbloquearLogro } from '../utils/logros';
 import { registrarAccionDiaria } from '../utils/registrarActividadDiaria';
-
+import { obtenerDB } from '../db';
 
 export class PublicacionesController {
   private PublicacionesService = new PublicacionesService();
@@ -105,4 +105,23 @@ export class PublicacionesController {
         res.status(500).json({ error: 'Error al eliminar la publicación' });
     }
   }
+
+  async obtenerPublicacionesDeUsuario(req: Request, res: Response) {
+  const { id } = req.params;
+
+  try {
+    const db = await obtenerDB();
+
+    const [publicaciones] = await db.query(
+      `SELECT * FROM publicaciones WHERE autor_id = ? ORDER BY fecha_creacion DESC`,
+      [id]
+    );
+
+    res.status(200).json(publicaciones);
+  } catch (error) {
+    console.error('Error al obtener publicaciones del usuario:', error);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+}
+
 }
