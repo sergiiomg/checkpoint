@@ -5,11 +5,9 @@ import bcrypt from 'bcryptjs';
 import { UsuariosService } from '../services/usuarios-service';
 import { db } from '../db';
 import { desbloquearLogro } from '../utils/logros';
+import { RowDataPacket } from 'mysql2';
 
 const SECRET_KEY = JWT_SECRET_KEY;
-
-
-
 
 class AuthController {
   private usuariosService: UsuariosService;
@@ -61,6 +59,27 @@ class AuthController {
               SECRET_KEY,
               { expiresIn: '1h' }
             );
+
+            const hoy = new Date().toISOString().split('T')[0];
+
+            // Evita duplicados: asegura que no se registre el mismo día dos veces
+            await db!.query(
+              `INSERT IGNORE INTO inicios_sesion (usuario_id, fecha) VALUES (?, ?)`,
+              [usuario.id, hoy]
+            );
+            
+            // Contar los días únicos
+            const [rows] = await db!.query<RowDataPacket[]>(
+              `SELECT COUNT(DISTINCT fecha) AS totalDias FROM inicios_sesion WHERE usuario_id = ?`,
+              [usuario.id]
+            );
+            
+            const diasTotales = rows?.[0]?.totalDias || 0;
+            
+            if (diasTotales >= 30) {
+              console.log('Desbloqueando logro VETERANO');
+              await desbloquearLogro(usuario.id, 'VETERANO');
+            }
 
             res.status(200).json({token, usuario});
         } catch(error){
