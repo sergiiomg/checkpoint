@@ -16,7 +16,7 @@ export async function obtenerTodosLosMotesConEstado(req: Request, res: Response)
 
     // Obtener todos los motes con estado
     const [motes] = await db.query(`
-      SELECT m.id, m.nombre, m.nivel_minimo,
+      SELECT m.id, m.nombre, m.descripcion ,m.nivel_minimo,
         CASE
           WHEN mu.usuario_id IS NOT NULL AND m.id = ? THEN 'Aplicado'
           WHEN mu.usuario_id IS NOT NULL THEN 'Aplicar'
