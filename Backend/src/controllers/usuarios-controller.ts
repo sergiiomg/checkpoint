@@ -1,6 +1,7 @@
 import e, { Request, Response } from 'express';
 import { UsuariosService } from '../services/usuarios-service';
 import { DEFAULT_PROFILE_IMAGE, DEFAULT_BANNER_IMAGE } from '../models/usuarios';
+import { obtenerDB } from '../db';
 
 class UsuariosController {
     private usuariosService: UsuariosService;
@@ -90,6 +91,27 @@ class UsuariosController {
         } catch(error){
             res.status(500).json({error: 'Error al obtener el perfil del usuario'});
         }
+    }
+
+    async buscarUsuarios(req: Request, res: Response): Promise<void> {
+      const query = req.query.query as string;
+    
+      if (!query) {
+        res.status(400).json({ error: 'Falta el parámetro de búsqueda' });
+      }
+    
+      try {
+        const db = await obtenerDB();
+        const [usuarios] = await db.query(
+          `SELECT id, nombre_usuario, foto_perfil_url FROM usuarios WHERE nombre_usuario LIKE ? LIMIT 20`,
+          [`%${query}%`]
+        );
+    
+        res.status(200).json(usuarios);
+      } catch (error) {
+        console.error('Error al buscar usuarios:', error);
+        res.status(500).json({ error: 'Error del servidor' });
+      }
     }
 }
 

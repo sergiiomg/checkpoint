@@ -27,6 +27,9 @@ router.get('/usuarios/:id/publicaciones', (req, res) =>publicacionesController.o
 //Llamada para obtener el número de likes de un comentario
 router.get('/comentarios/:id/likes', (req, res) => comentariosController.obtenerLikes(req, res));
 
+//Llamada para buscar a un usuario en el buscador
+router.get('/usuarios/buscar', (req, res) => usuariosController.buscarUsuarios(req, res));
+
 //Llamada GET para obtener un usuario
 router.get('/usuarios/:id', (req, res) => usuariosController.obtenerUsuarioPorId(req, res));
 
@@ -41,5 +44,6 @@ router.get('/usuarios/:id/siguiendo', (req, res) =>seguimientosController.getSig
 
 //Llamada para ver los seguidores de un usuario
 router.get('/usuarios/:id/seguidores', (req, res) =>seguimientosController.getSeguidores(req, res));
+
 
 export = router;
