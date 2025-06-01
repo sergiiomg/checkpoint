@@ -1,0 +1,42 @@
+<div class="dashboard-layout">
+  <app-header></app-header>
+  <div class="dashboard-body">
+    <app-aside></app-aside>
+    <div class="publicaciones-container" *ngIf="publicaciones.length > 0; else sinGuardadas">
+      <div class="publicacion" *ngFor="let p of publicaciones">
+        <h3>{{ p.titulo }}</h3>
+        <p>{{ p.descripcion }}</p>
+
+        <div *ngIf="p.tipo_media === 'imagen' && p.media_url">
+          <img [src]="getMediaUrl(p.media_url)" class="media" />
+        </div>
+        <div *ngIf="p.tipo_media === 'video' && p.media_url">
+          <video class="media" controls>
+            <source [src]="getMediaUrl(p.media_url)" type="video/mp4" />
+          </video>
+        </div>
+
+        <div class="acciones">
+          <div class="grupo-izquierda">
+            <button class="btn comentar">
+              <i class="far fa-comment"></i>
+            </button>
+            <button class="btn like" (click)="toggleLike(p)">
+              <i class="{{ p.liked ? 'fas' : 'far' }} fa-heart"></i>
+              {{ p.likesCount || 0 }}
+            </button>
+          </div>
+          <div class="grupo-derecha">
+            <button class="btn guardar" (click)="toggleGuardado(p)">
+              <i class="fas fa-bookmark"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #sinGuardadas>
+      <p>No has guardado ninguna publicación aún.</p>
+    </ng-template>
+  </div>
+</div>

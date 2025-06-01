@@ -24,8 +24,13 @@ app.use(cors({
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+// Servir archivos estáticos
 console.log('📂 Servir imágenes desde:', path.join(__dirname, '../public/images/defaults'));
 app.use('/images', express.static(path.join(__dirname, '..', 'public', 'images')));
+
+// Servir archivos subidos por usuarios
+console.log('📂 Servir uploads desde:', path.join(__dirname, '../public/uploads'));
+app.use('/uploads', express.static(path.join(__dirname, '..', 'public', 'uploads')));
 
 // Rutas públicas
 app.use('/api/auth', authRoutes);

@@ -1,0 +1,78 @@
+.container{
+    background-color: #1A1A1D;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-container {
+    background-color: #1A1A1D;
+    padding: 10px 10px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: sans-serif;
+    margin-left: 1rem;
+}
+
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Estilos del logo */
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    margin-right: 0.5rem;
+}
+
+.site-name {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Estilos del buscador */
+.search-form {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.search-form input {
+    padding: 10px;
+    border: none;
+    border-radius: 15px;
+    width: 35%;
+    font-size: 16px;
+    background-color: #29292E;
+    color: white;
+    outline: none;
+    height: 50px;
+    margin-top: 0.5rem;
+    margin-right: 4rem;
+}
+
+.search-form input::placeholder {
+    color: #B0B0B5;
+}
+
+/* Estilos del perfil */
+.profile-link img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    margin-right: 1rem;
+}

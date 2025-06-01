@@ -9,7 +9,6 @@
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
   color: white;
   flex-direction: column;
-  margin-top: -300px;
 }
 
 .banner {
@@ -19,6 +18,7 @@
   margin-right: 87px;
   border-radius: 8px;
 }
+
 .imagenes {
   position: relative;
   display: flex;
