@@ -1,0 +1,119 @@
+.editar-perfil {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+input[type="file"] {
+  padding: 8px 0;
+}
+
+.botones {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.btn-guardar {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-guardar:hover {
+  background-color: #0069d9;
+}
+
+.btn-guardar:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.btn-cancelar {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-cancelar:hover {
+  background-color: #5a6268;
+}
+
+.mensaje {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #d4edda;
+  border-radius: 4px;
+  color: #155724;
+}
+
+.error {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f8d7da;
+  border-radius: 4px;
+  color: #721c24;
+}
+
+.imagen-campo {
+  margin-bottom: 15px;
+}
+
+.imagen-preview {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  background-color: white;
+}
+
+.preview-img {
+  max-width: 100%;
+  max-height: 200px;
+  display: block;
+  margin: 0 auto;
+}
+
+.banner-preview {
+  max-height: 150px;
+  width: 100%;
+  object-fit: cover;
+}

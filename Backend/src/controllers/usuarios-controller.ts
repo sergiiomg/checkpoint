@@ -93,24 +93,76 @@ class UsuariosController {
         }
     }
 
-    async buscarUsuarios(req: Request, res: Response): Promise<void> {
-      const query = req.query.query as string;
-    
-      if (!query) {
-        res.status(400).json({ error: 'Falta el parámetro de búsqueda' });
+async editarPerfil(req: Request, res: Response): Promise<void> {
+  try {
+    const userId = (req as any).user?.id;
+
+    if (!userId) {
+      res.status(401).json({ error: 'Usuario no encontrado' });
+      return;
+    }
+
+    console.log('Body recibido:', req.body);
+    console.log('Archivos recibidos:', (req as any).files);
+
+    const { nombre_usuario } = req.body;
+    const foto_perfil = (req as any).files?.foto_perfil?.[0];
+    const banner = (req as any).files?.banner?.[0];
+
+    if (!nombre_usuario && !foto_perfil && !banner) {
+      res.status(400).json({ error: 'No hay cambios para aplicar' });
+      return;
+    }
+
+    const cambios: any = {};
+    if (nombre_usuario) cambios.nombre_usuario = nombre_usuario;
+    if (foto_perfil) cambios.foto_perfil_url = `/uploads/${foto_perfil.filename}`;
+    if (banner) cambios.banner_url = `/uploads/${banner.filename}`;
+
+    console.log('Cambios a aplicar:', cambios);
+
+    const actualizado = await this.usuariosService.actualizarUsuario(userId, cambios);
+
+    if (!actualizado) {
+      res.status(404).json({ error: 'Usuario no encontrado' });
+      return;
+    }
+
+    res.status(200).json({ 
+      mensaje: 'Perfil actualizado correctamente', 
+      datos: {
+        ...actualizado,
+        foto_perfil_url: actualizado.foto_perfil_url ? `http://localhost:8080${actualizado.foto_perfil_url}` : null,
+        banner_url: actualizado.banner_url ? `http://localhost:8080${actualizado.banner_url}` : null
       }
-    
-      try {
-        const db = await obtenerDB();
-        const [usuarios] = await db.query(
-          `SELECT id, nombre_usuario, foto_perfil_url FROM usuarios WHERE nombre_usuario LIKE ? LIMIT 20`,
-          [`%${query}%`]
-        );
-    
-        res.status(200).json(usuarios);
-      } catch (error) {
-        console.error('Error al buscar usuarios:', error);
-        res.status(500).json({ error: 'Error del servidor' });
+    });
+  } catch (error) {
+    console.error('Error detallado al editar perfil:', error);
+    res.status(500).json({ error: 'Error al editar perfil', detalle: error instanceof Error ? error.message : error });
+  }
+}
+
+async buscarUsuarios(req: Request, res: Response): Promise<void> {
+  const query = req.query.query as string;
+
+  if (!query) {
+    res.status(400).json({ error: 'Falta el parámetro de búsqueda' });
+    return;
+  }
+
+  try {
+    const db = await obtenerDB();
+    const [usuarios] = await db.query(
+      `SELECT id, nombre_usuario, foto_perfil_url FROM usuarios WHERE nombre_usuario LIKE ? LIMIT 20`,
+      [`%${query}%`]
+    );
+
+    res.status(200).json(usuarios);
+  } catch (error) {
+    console.error('Error al buscar usuarios:', error);
+    res.status(500).json({ error: 'Error del servidor' });
+  }
+}
       }
     }
 }

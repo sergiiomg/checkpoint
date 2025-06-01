@@ -1,0 +1,40 @@
+<div class="editar-perfil">
+  <h2>Editar Perfil</h2>
+
+  <form (ngSubmit)="guardarCambios()" [formGroup]="formulario" enctype="multipart/form-data">
+    <div>
+      <label>Nombre de usuario:</label>
+      <input type="text" formControlName="nombre" />
+    </div>
+
+    <div class="imagen-campo">
+      <label>Foto de Perfil:</label>
+      <input type="file" (change)="onFotoPerfilSeleccionada($event)" accept="image/*" />
+      
+      <!-- Previsualización de la foto de perfil -->
+      <div class="imagen-preview" *ngIf="fotoPreviewUrl">
+        <img [src]="fotoPreviewUrl" alt="Vista previa de foto de perfil" class="preview-img" />
+      </div>
+    </div>
+
+    <div class="imagen-campo">
+      <label>Banner:</label>
+      <input type="file" (change)="onBannerSeleccionado($event)" accept="image/*" />
+      
+      <!-- Previsualización del banner -->
+      <div class="imagen-preview" *ngIf="bannerPreviewUrl">
+        <img [src]="bannerPreviewUrl" alt="Vista previa de banner" class="preview-img banner-preview" />
+      </div>
+    </div>
+
+    <div class="botones">
+      <button type="submit" [disabled]="formulario.invalid || cargando" class="btn-guardar">
+        {{ cargando ? 'Guardando...' : 'Guardar Cambios' }}
+      </button>
+      <button type="button" (click)="cancelar()" class="btn-cancelar">Cancelar</button>
+    </div>
+  </form>
+
+  <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
+  <div *ngIf="error" class="error">{{ error }}</div>
+</div>

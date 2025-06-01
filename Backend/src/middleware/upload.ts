@@ -14,18 +14,16 @@ const storage = multer.diskStorage({
     cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
-    // Generar nombre único: timestamp + nombre original
-    const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
+    const ext = path.extname(file.originalname);
+    const uniqueName = `${Date.now()}-${Math.round(Math.random() * 1E9)}${ext}`;
     cb(null, uniqueName);
   }
 });
 
-// Filtro para tipos de archivo permitidos
 const fileFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-  // Tipos MIME permitidos
   const allowedTypes = [
     'image/jpeg',
-    'image/jpg', 
+    'image/jpg',
     'image/png',
     'image/gif',
     'image/webp',
@@ -43,11 +41,11 @@ const fileFilter = (req: any, file: Express.Multer.File, cb: multer.FileFilterCa
   }
 };
 
-// Configuración de multer
+// Configuración final de multer
 export const upload = multer({
-  storage: storage,
+  storage,
   limits: {
     fileSize: 50 * 1024 * 1024, // 50MB máximo
   },
-  fileFilter: fileFilter
+  fileFilter
 });

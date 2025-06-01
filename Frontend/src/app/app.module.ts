@@ -9,6 +9,7 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './services/auth.interceptor';
 import { PerfilPageComponent } from './components/perfil-page/perfil-page.component';
+import { EditarPerfilComponent } from './components/editar-perfil/editar-perfil.component';
 import { AppHeaderComponent } from './components/app-header/app-header.component';
 import { AppAsideComponent } from './components/app-aside/app-aside.component';
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
@@ -22,6 +23,7 @@ import { PublicacionesGuardadasComponent } from './components/publicaciones-guar
     AppComponent,
     LoginPageComponent,
     PerfilPageComponent,
+    EditarPerfilComponent
     AppHeaderComponent,
     AppAsideComponent,
     DashboardPageComponent,
@@ -30,6 +32,7 @@ import { PublicacionesGuardadasComponent } from './components/publicaciones-guar
   ],
   imports: [
     BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,

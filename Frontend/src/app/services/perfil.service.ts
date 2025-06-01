@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -8,20 +9,38 @@ import { Observable } from 'rxjs';
 export class PerfilService {
   private apiUrl = 'http://localhost:8080/api/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.headers = new HttpHeaders();
+    this.headers = this.headers.set('content-type', 'application/json')
+                               .set('Authorization', "Bearer " + localStorage.getItem('token')!);
+   }
+
+  private headers: HttpHeaders;
 
   // Obtener el perfil del usuario logueado
   obtenerPerfil(): Observable<any> {
-    console.log('Solicitando perfil desde el PerfilService');
-    // Verificar si hay token antes de hacer la petición
-    const token = localStorage.getItem('token');
-    console.log('Token en PerfilService:', token ? 'Presente' : 'No encontrado');
-    
-    return this.http.get(`${this.apiUrl}perfil`);
+    // if (typeof window !== 'undefined') {
+    //   const token = localStorage.getItem('auth_token'); // Asegúrate de usar la misma clave que en el interceptor
+    //   console.log('Token en PerfilService:', token ? 'Presente' : 'No encontrado');
+    // }
+
+    return this.http.get(`${this.apiUrl}perfil`, {'headers': this.headers}).pipe(
+      tap(response => console.log('Perfil obtenido:', response))
+    );
   }
 
   // Obtener perfil de un usuario específico por ID
   obtenerUsuarioPorId(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}usuarios/${id}`);
+  }
+
+  editarPerfil(formData: FormData): Observable<any> {
+    // Validar que el FormData contiene datos
+    console.log('Datos a enviar:');
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value instanceof File ? value.name : value}`);
+    });
+    
+    return this.http.patch(`${this.apiUrl}perfil`, formData);
   }
 }
