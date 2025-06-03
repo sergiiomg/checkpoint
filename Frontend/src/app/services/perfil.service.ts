@@ -45,4 +45,9 @@ export class PerfilService {
     
     return this.http.patch(`${this.apiUrl}perfil/editar`, formData, {headers});
   }
+
+  obtenerPublicacionesDeUsuario(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}auth/usuarios/${id}/publicaciones`, { headers: this.headers });
+  }
+
 }

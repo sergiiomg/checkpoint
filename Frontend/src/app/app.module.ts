@@ -16,6 +16,7 @@ import { DashboardPageComponent } from './components/dashboard-page/dashboard-pa
 import { CrearPublicacionComponent } from './components/crear-publicacion/crear-publicacion.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PublicacionesGuardadasComponent } from './components/publicaciones-guardadas/publicaciones-guardadas.component';
+import { ComentariosComponent } from './components/comentarios/comentarios.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PublicacionesGuardadasComponent } from './components/publicaciones-guar
     AppAsideComponent,
     DashboardPageComponent,
     CrearPublicacionComponent,
-    PublicacionesGuardadasComponent
+    PublicacionesGuardadasComponent,
+    ComentariosComponent
   ],
   imports: [
     BrowserModule,
