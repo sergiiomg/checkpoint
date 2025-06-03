@@ -1,1 +1,12 @@
-<p>comentarios works!</p>
+<div class="comentarios">
+  <div *ngFor="let c of comentarios" class="comentario">
+    <strong>{{ c.usuario.nombre_usuario }}</strong>:
+    <p>{{ c.contenido }}</p>
+  </div>
+
+  <div class="nuevo-comentario">
+    <textarea [(ngModel)]="nuevoComentario" placeholder="Escribe un comentario..."></textarea>
+    <button (click)="enviarComentario()">Comentar</button>
+    <p *ngIf="error" class="error">{{ error }}</p>
+  </div>
+</div>

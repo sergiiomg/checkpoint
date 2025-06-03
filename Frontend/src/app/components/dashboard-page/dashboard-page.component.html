@@ -22,7 +22,7 @@
               <i class="{{ p.liked ? 'fas' : 'far' }} fa-heart"></i>
               {{ p.likesCount || 0 }}
             </button>
-            <button class="btn comentar">
+            <button class="btn comentar" (click)="toggleFormularioComentario(p.id)">
               <i class="far fa-comment"></i>
             </button>
           </div>
@@ -31,6 +31,10 @@
               <i class="{{ p.guardada ? 'fas' : 'far' }} fa-bookmark"></i>
             </button>
           </div>
+        </div>
+        <div *ngIf="publicacionComentandoId === p.id" class="formulario-comentario">
+          <textarea [(ngModel)]="nuevoComentario" placeholder="Escribe tu comentario..."></textarea>
+          <button (click)="enviarComentario(p.id)">Enviar</button>
         </div>
       </div>
     </div>

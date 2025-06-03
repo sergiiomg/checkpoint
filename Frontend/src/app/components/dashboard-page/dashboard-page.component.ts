@@ -3,7 +3,7 @@ import { PublicacionesService, Publicacion } from '../../services/publicaciones.
 import { UsuariosService } from '../../services/usuarios.service';
 import { PublicacionesGuardadasService } from '../../services/publicaciones-guardadas.service';
 import { isPlatformBrowser } from '@angular/common';
-
+import { ComentariosService } from '../../services/comentarios.service';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -12,12 +12,15 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class DashboardPageComponent implements OnInit {
   publicaciones: Publicacion[] = [];
+  publicacionComentandoId: number | null = null;
+  nuevoComentario: string = '';
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     public publicacionesService: PublicacionesService,
     private usuariosService: UsuariosService,
-    private publicacionesGuardadasService: PublicacionesGuardadasService
+    private publicacionesGuardadasService: PublicacionesGuardadasService,
+    private comentariosService: ComentariosService
   ) {}
 
   ngOnInit(): void {
@@ -77,5 +80,29 @@ export class DashboardPageComponent implements OnInit {
   getMediaUrl(mediaUrl: string | null): string | null {
     const result = this.publicacionesService.getFullMediaUrl(mediaUrl);
     return result;
+  }
+
+  toggleFormularioComentario(publicacionId: number): void {
+    if (this.publicacionComentandoId === publicacionId) {
+      this.publicacionComentandoId = null;
+    } else {
+      this.publicacionComentandoId = publicacionId;
+    }
+  }
+
+  enviarComentario(publicacionId: number) {
+    if (!this.nuevoComentario.trim()) return;
+  
+    this.comentariosService.crearComentario(publicacionId, this.nuevoComentario).subscribe({
+      next: (res) => {
+        console.log('✅ Comentario creado:', res);
+        this.nuevoComentario = '';
+        this.publicacionComentandoId = null; // Cierra el formulario
+        // (opcional) podrías recargar comentarios aquí si los muestras debajo
+      },
+      error: (err) => {
+        console.error('❌ Error al enviar comentario:', err);
+      }
+    });
   }
 }
