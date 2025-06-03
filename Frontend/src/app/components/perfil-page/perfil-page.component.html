@@ -1,21 +1,29 @@
-<div class="container" *ngIf="usuario; else cargando">
-  <div class="imagenes">
-    <img [src]="usuario.banner_url" alt="Banner" class="banner">
-    <img [src]="usuario.foto_perfil_url" alt="Foto de perfil" class="foto-perfil">
-  </div>
-
-  <div class="info">
-    <div>
-      <h2>{{usuario.nombre_usuario}}</h2>
-      <button routerLink="/editar-perfil" class="editar-perfil">Editar perfil</button>
-    </div>
-    <p>Nivel: {{ usuario.nivel }}</p>
-    <p>Seguidores:</p>
-    <p>Seguidos:</p>
+<div class="header">
+  <app-header></app-header>
+  <div class="aside">
+    <app-aside></app-aside>
   </div>
 </div>
+<div class="container">
+  <div class="informacion" *ngIf="usuario; else cargando">
+    <div class="imagenes">
+      <img [src]="usuario.banner_url" alt="Banner" class="banner">
+      <img [src]="usuario.foto_perfil_url" alt="Foto de perfil" class="foto-perfil">
+    </div>
 
-<ng-template #cargando>
-  <p *ngIf="error">{{ error }}</p>
-  <p *ngIf="!error">Cargando perfil...</p>
-</ng-template>
+    <div class="info">
+      <div>
+        <h2>{{usuario.nombre_usuario}}</h2>
+        <button routerLink="/editar-perfil" class="editar-perfil">Editar perfil</button>
+      </div>
+      <p>Nivel: {{ usuario.nivel }}</p>
+      <p>Seguidores:</p>
+      <p>Seguidos:</p>
+    </div>
+  </div>
+
+  <ng-template #cargando>
+    <p *ngIf="error">{{ error }}</p>
+    <p *ngIf="!error">Cargando perfil...</p>
+  </ng-template>
+</div>

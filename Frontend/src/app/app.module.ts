@@ -23,7 +23,7 @@ import { PublicacionesGuardadasComponent } from './components/publicaciones-guar
     AppComponent,
     LoginPageComponent,
     PerfilPageComponent,
-    EditarPerfilComponent
+    EditarPerfilComponent,
     AppHeaderComponent,
     AppAsideComponent,
     DashboardPageComponent,

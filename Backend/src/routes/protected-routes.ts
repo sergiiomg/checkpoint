@@ -28,6 +28,10 @@ router.get('/', (req, res) => controller.getTestResponse(req, res));
 //Llamada get para obtener el usuario propio
 router.get('/perfil', (req, res) => usuariosController.obtenerPerfil(req, res));
 
+//Llamada put para editar perfil
+router.patch('/perfil/editar', upload.fields([{ name: 'foto_perfil', maxCount: 1 },{ name: 'banner', maxCount: 1 }]), 
+(req, res) => usuariosController.editarPerfil(req, res));
+
 //Llamada post para crear una publicación
 router.post('/publicaciones', upload.single('media'), (req, res) => publicacionesController.crear(req, res));
 

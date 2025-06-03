@@ -1,119 +1,86 @@
+.container{
+  display: flex;
+  justify-content: center;
+  margin-top: 8rem;
+}
+
 .editar-perfil {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f8f9fa;
+  font-family: sans-serif;
+  background-color: #1A1A1D;
+  width: 600px;
+  padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  text-align: center;
-  margin-bottom: 25px;
-  color: #333;
-}
-
-form {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  color: white;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
 }
 
-label {
+.editar-perfil h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.editar-perfil label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #555;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-}
-
-input[type="file"] {
-  padding: 8px 0;
-}
-
-.botones {
-  display: flex;
-  gap: 15px;
+  margin-bottom: 5px;
   margin-top: 10px;
+  font-weight: bold;
 }
 
-button {
-  padding: 10px 20px;
-  border: none;
+.editar-perfil input[type="text"],
+.editar-perfil input[type="file"] {
+  width: 100%;
+  padding: 8px;
   border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: 600;
-  transition: background-color 0.3s;
-}
-
-.btn-guardar {
-  background-color: #007bff;
+  border: 1px solid rgb(0, 140, 255);
+  background-color: #333;
   color: white;
-}
-
-.btn-guardar:hover {
-  background-color: #0069d9;
-}
-
-.btn-guardar:disabled {
-  background-color: #6c757d;
-  cursor: not-allowed;
-}
-
-.btn-cancelar {
-  background-color: #6c757d;
-  color: white;
-}
-
-.btn-cancelar:hover {
-  background-color: #5a6268;
-}
-
-.mensaje {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #d4edda;
-  border-radius: 4px;
-  color: #155724;
-}
-
-.error {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #f8d7da;
-  border-radius: 4px;
-  color: #721c24;
 }
 
 .imagen-campo {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .imagen-preview {
   margin-top: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 5px;
-  background-color: white;
+  text-align: center;
 }
 
 .preview-img {
-  max-width: 100%;
-  max-height: 200px;
-  display: block;
-  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .banner-preview {
-  max-height: 150px;
+  width: 200px;
+  height: 100px;
+  border-radius: 8px;
+}
+
+.botones {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
   width: 100%;
-  object-fit: cover;
+}
+
+.btn-guardar, .btn-cancelar {
+  background-color: #1A1A1D;
+  border: 1px solid rgb(0, 140, 255);
+  color: rgb(0, 140, 255);
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+  height: 40px;
+  width: 140px;
+}
+
+.btn-guardar:hover, .btn-cancelar:hover {
+  background-color: rgb(0, 140, 255);
+  color: white;
 }

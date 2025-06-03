@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -9,35 +9,42 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-     if (request.url.includes('/api/perfil') || request.url.includes('/api/auth/usuarios')) {
-      return next.handle(request); // Do not modify request
+    if (request.url.includes('/api/perfil') || request.url.includes('/api/auth/usuarios')) {
+      return next.handle(request);
     }
+
     console.log(request.url);
-    // Obtenemos el token del localStorage
-    const token = localStorage.getItem('auth_token'); // Asegúrate de usar la clave correcta
+
+    let token: string | null = null;
+
+    // Solo accede a localStorage si estamos en el navegador
+    if (isPlatformBrowser(this.platformId)) {
+      token = localStorage.getItem('token');
+    }
+
     console.log('AuthInterceptor: Interceptando petición a', request.url);
-    
-    // Si existe un token, lo añadimos a las cabeceras
+
     if (token) {
       console.log('Token encontrado, añadiendo a la cabecera');
       const authRequest = request.clone({
         headers: request.headers.set('Authorization', `Bearer ${token}`)
       });
-      
-      // Continuamos con la petición modificada
+
       return next.handle(authRequest).pipe(
         catchError((error: HttpErrorResponse) => {
-          // Si es un error de autenticación (401), redirigimos al login
-          if (error.status === 401) {
+          if (error.status === 401 && isPlatformBrowser(this.platformId)) {
             console.log('Error 401: Token no válido o expirado');
-            localStorage.removeItem('auth_token'); // Eliminamos el token inválido
+            localStorage.removeItem('auth_token');
             this.router.navigate(['/login']);
           }
           console.error('Error en la petición HTTP:', error);
@@ -46,12 +53,10 @@ export class AuthInterceptor implements HttpInterceptor {
       );
     } else {
       console.log('No se encontró token de autenticación');
-      // Si no hay token y la ruta requiere autenticación, podríamos redirigir aquí
-      // Pero dejamos que sea el backend quien devuelva 401 para no interferir con rutas públicas
-      
+
       return next.handle(request).pipe(
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 401 && !request.url.includes('/login')) {
+          if (error.status === 401 && !request.url.includes('/login') && isPlatformBrowser(this.platformId)) {
             console.log('Error 401: Acceso no autorizado');
             this.router.navigate(['/login']);
           }

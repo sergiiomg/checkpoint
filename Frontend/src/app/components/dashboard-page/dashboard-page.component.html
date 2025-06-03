@@ -17,11 +17,11 @@
         </div>
 
         <div class="acciones">
-          <button class="btn like" (click)="toggleLike(p)">
-            <i class="{{ p.liked ? 'fas' : 'far' }} fa-heart"></i>
-            {{ p.likesCount || 0 }}
-          </button>
           <div class="grupo-izquierda">
+            <button class="btn like" (click)="toggleLike(p)">
+              <i class="{{ p.liked ? 'fas' : 'far' }} fa-heart"></i>
+              {{ p.likesCount || 0 }}
+            </button>
             <button class="btn comentar">
               <i class="far fa-comment"></i>
             </button>

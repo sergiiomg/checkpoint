@@ -37,10 +37,12 @@ export class PerfilService {
   editarPerfil(formData: FormData): Observable<any> {
     // Validar que el FormData contiene datos
     console.log('Datos a enviar:');
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({'Authorization': `Bearer ${token}`});
     formData.forEach((value, key) => {
       console.log(`${key}: ${value instanceof File ? value.name : value}`);
     });
     
-    return this.http.patch(`${this.apiUrl}perfil`, formData);
+    return this.http.patch(`${this.apiUrl}perfil/editar`, formData, {headers});
   }
 }
