@@ -1,0 +1,33 @@
+<div class="publicacion-detalle">
+  <!-- ✅ Publicación (ya renderizada) -->
+  <div class="contenido-publicacion">
+    <h2>{{ publicacion?.titulo }}</h2>
+    <p>{{ publicacion?.descripcion }}</p>
+    <img *ngIf="publicacion?.media_url && publicacion?.tipo_media === 'imagen'" 
+         [src]="publicacionesService.getFullMediaUrl(publicacion!.media_url)" alt="Imagen" />
+    <video *ngIf="publicacion?.media_url && publicacion?.tipo_media === 'video'" 
+           [src]="publicacionesService.getFullMediaUrl(publicacion!.media_url)" controls></video>
+  </div>
+
+  <!-- ✅ Botón para mostrar/ocultar formulario -->
+  <button class="btn comentar" (click)="toggleFormularioComentario()">
+    <i class="far fa-comment"></i> Comentar
+  </button>
+
+  <!-- ✅ Formulario de comentario (si visible) -->
+  <div *ngIf="formularioVisible" class="formulario-comentario">
+    <textarea [(ngModel)]="nuevoComentario" placeholder="Escribe tu comentario..."></textarea>
+    <button (click)="enviarComentario()">Enviar</button>
+  </div>
+
+  <!-- ✅ Lista de comentarios -->
+  <div class="comentarios">
+    <h4>Comentarios</h4>
+    <div *ngIf="comentarios.length === 0">
+      <p>No hay comentarios aún.</p>
+    </div>
+    <div *ngFor="let comentario of comentarios" class="comentario">
+      <p><strong>{{ comentario.autor_id }}</strong>: {{ comentario.contenido }}</p>
+    </div>
+  </div>
+</div>

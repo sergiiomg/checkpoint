@@ -26,8 +26,24 @@ export class PublicacionesRepository {
   async obtenerTodas(): Promise<Publicacion[]> {
     const db = await obtenerDB();
     const [rows] = await db.execute(
-        'SELECT * FROM publicaciones ORDER BY fecha_creacion ASC'
+      `SELECT p.*, u.nombre_usuario AS autor_nombre, u.foto_perfil_url AS autor_foto
+       FROM publicaciones p
+       JOIN usuarios u ON p.autor_id = u.id
+       ORDER BY p.fecha_creacion DESC`
     );
     return rows as Publicacion[];
+  }
+
+  async obtenerPorId(id: number): Promise<Publicacion | null> {
+    const db = await obtenerDB();
+    const [rows] = await db.execute(
+      `SELECT p.*, u.nombre_usuario AS autor_nombre, u.foto_perfil_url AS autor_foto
+       FROM publicaciones p
+       JOIN usuarios u ON p.autor_id = u.id
+       WHERE p.id = ?`,
+      [id]
+    );
+    const publicaciones = rows as Publicacion[];
+    return publicaciones.length > 0 ? publicaciones[0] : null;
   }
 }

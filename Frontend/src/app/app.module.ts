@@ -17,6 +17,7 @@ import { CrearPublicacionComponent } from './components/crear-publicacion/crear-
 import { ReactiveFormsModule } from '@angular/forms';
 import { PublicacionesGuardadasComponent } from './components/publicaciones-guardadas/publicaciones-guardadas.component';
 import { ComentariosComponent } from './components/comentarios/comentarios.component';
+import { PublicacionDetalleComponent } from './components/publicacion-detalle/publicacion-detalle.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ComentariosComponent } from './components/comentarios/comentarios.compo
     DashboardPageComponent,
     CrearPublicacionComponent,
     PublicacionesGuardadasComponent,
-    ComentariosComponent
+    ComentariosComponent,
+    PublicacionDetalleComponent
   ],
   imports: [
     BrowserModule,

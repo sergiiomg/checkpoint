@@ -56,4 +56,7 @@ export class PublicacionesService {
       return rows[0].total;
     }
 
+    async obtenerPorId(id: number): Promise<Publicacion | null> {
+      return await this.repo.obtenerPorId(id);
+    }
 }

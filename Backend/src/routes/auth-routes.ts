@@ -21,6 +21,9 @@ router.post('/login', (req, res) => controller.iniciarSesion(req, res));
 //Llamada GET para obtener todas las publicaciones
 router.get('/publicaciones', (req, res) => publicacionesController.obtenerTodas(req, res));
 
+//Llamada GET para obtener una publicación
+router.get('/publicaciones/:id', (req, res) => publicacionesController.obtenerPorId(req, res));
+
 //Llamada GET para obtener las publicaciones de un usuario cuando entras a su perfil
 router.get('/usuarios/:id/publicaciones', (req, res) =>publicacionesController.obtenerPublicacionesDeUsuario(req, res));
 

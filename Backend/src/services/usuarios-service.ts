@@ -75,7 +75,7 @@ class UsuariosService{
       const [rows] = await db.query('SELECT * FROM usuarios WHERE id = ?', [id]);
       const actualizado = (rows as Usuario[])[0];
       return actualizado;
-  }  
+  }
 }
 
 export { UsuariosService }

@@ -6,6 +6,8 @@ export interface Publicacion {
   media_url?: string | null;
   tipo_media?: 'imagen' | 'video' | null;
   fecha_creacion: number;
+  autor_nombre?: string;
+  autor_foto?: string;
   liked?: boolean;
   likesCount?: number;
 }

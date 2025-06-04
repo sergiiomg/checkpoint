@@ -10,6 +10,8 @@ export interface Publicacion {
   media_url: string | null;
   tipo_media: 'imagen' | 'video' | null;
   fecha_creacion: number;
+  autor_nombre?: string;
+  autor_foto?: string;
   liked?: boolean;
   likesCount?: number;
   guardada?: boolean;
@@ -59,5 +61,9 @@ export class PublicacionesService {
     console.log('🌐 URL completa generada:', fullUrl);
     
     return fullUrl;
+  }
+
+  getPublicacionPorId(id: number): Observable<Publicacion> {
+    return this.http.get<Publicacion>(`${this.apiUrl}publicaciones/${id}`);
   }
 }

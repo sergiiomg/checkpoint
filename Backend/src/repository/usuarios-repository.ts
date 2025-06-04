@@ -3,6 +3,7 @@ import mysql from 'mysql2/promise';
 import { obtenerDB } from '../db';
 import { Usuario, DEFAULT_PROFILE_IMAGE, DEFAULT_BANNER_IMAGE } from '../models/usuarios';
 import { db } from '../db';
+import { RowDataPacket } from 'mysql2';
 
 class UsuariosRepository{
     private connection;

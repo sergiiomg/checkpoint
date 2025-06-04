@@ -8,6 +8,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { DashboardPageComponent } from './components/dashboard-page/dashboard-page.component';
 import { CrearPublicacionComponent } from './components/crear-publicacion/crear-publicacion.component';
 import { PublicacionesGuardadasComponent } from './components/publicaciones-guardadas/publicaciones-guardadas.component';
+import { PublicacionDetalleComponent } from './components/publicacion-detalle/publicacion-detalle.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'perfil', component: PerfilPageComponent, canActivate: [AuthGuard]  },
   { path: 'editar-perfil', component: EditarPerfilComponent },
   { path: 'crear-publicacion', component: CrearPublicacionComponent },
+  {path: 'publicacion/:id',component: PublicacionDetalleComponent},
   {path: 'publicaciones-guardadas', component: PublicacionesGuardadasComponent},
   { path: '**', redirectTo: '' },
 ];

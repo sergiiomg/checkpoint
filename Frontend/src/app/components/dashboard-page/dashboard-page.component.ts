@@ -4,6 +4,7 @@ import { UsuariosService } from '../../services/usuarios.service';
 import { PublicacionesGuardadasService } from '../../services/publicaciones-guardadas.service';
 import { isPlatformBrowser } from '@angular/common';
 import { ComentariosService } from '../../services/comentarios.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -20,7 +21,8 @@ export class DashboardPageComponent implements OnInit {
     public publicacionesService: PublicacionesService,
     private usuariosService: UsuariosService,
     private publicacionesGuardadasService: PublicacionesGuardadasService,
-    private comentariosService: ComentariosService
+    private comentariosService: ComentariosService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -104,5 +106,9 @@ export class DashboardPageComponent implements OnInit {
         console.error('❌ Error al enviar comentario:', err);
       }
     });
+  }
+
+  verDetalle(id: number) {
+    this.router.navigate(['/publicacion', id]);
   }
 }

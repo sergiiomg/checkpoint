@@ -2,6 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface Comentario {
+  id: number;
+  publicacion_id: number;
+  autor_id: number;
+  contenido: string;
+  fecha_creacion: Date;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,5 +39,9 @@ export class ComentariosService {
   // (Opcional) Obtener comentarios de una publicación
   obtenerComentarios(publicacionId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/publicaciones/${publicacionId}/comentarios`);
+  }
+
+  getComentariosPorPublicacion(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/auth/publicaciones/${id}/comentarios`);
   }
 }

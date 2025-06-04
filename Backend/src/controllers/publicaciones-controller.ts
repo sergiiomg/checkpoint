@@ -107,21 +107,41 @@ export class PublicacionesController {
   }
 
   async obtenerPublicacionesDeUsuario(req: Request, res: Response) {
-  const { id } = req.params;
-
-  try {
-    const db = await obtenerDB();
-
-    const [publicaciones] = await db.query(
-      `SELECT * FROM publicaciones WHERE autor_id = ? ORDER BY fecha_creacion DESC`,
-      [id]
-    );
-
-    res.status(200).json(publicaciones);
-  } catch (error) {
-    console.error('Error al obtener publicaciones del usuario:', error);
-    res.status(500).json({ error: 'Error del servidor' });
+    const { id } = req.params;
+  
+    try {
+      const db = await obtenerDB();
+  
+      const [publicaciones] = await db.query(
+        `SELECT * FROM publicaciones WHERE autor_id = ? ORDER BY fecha_creacion DESC`,
+        [id]
+      );
+  
+      res.status(200).json(publicaciones);
+    } catch (error) {
+      console.error('Error al obtener publicaciones del usuario:', error);
+      res.status(500).json({ error: 'Error del servidor' });
+    }
   }
-}
+
+  async obtenerPorId(req: Request, res: Response): Promise<void> {
+    const id = Number(req.params.id);
+    if (isNaN(id)) {
+      res.status(400).json({ error: 'ID inválido' });
+      return;
+    }
+  
+    try {
+      const publicacion = await this.PublicacionesService.obtenerPorId(id);
+      if (!publicacion) {
+        res.status(404).json({ error: 'Publicación no encontrada' });
+        return;
+      }
+      res.status(200).json(publicacion);
+    } catch (error) {
+      console.error('Error al obtener publicación por ID:', error);
+      res.status(500).json({ error: 'Error al obtener la publicación' });
+    }
+  }
 
 }

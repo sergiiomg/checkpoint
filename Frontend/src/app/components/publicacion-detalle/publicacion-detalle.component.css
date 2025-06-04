@@ -1,0 +1,123 @@
+.publicacion-detalle {
+  display: flex;
+  flex-direction: column; /* Mantiene la publicación arriba y los comentarios debajo */
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #1A1A1D;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  font-family: sans-serif;
+}
+
+/* Publicación */
+.contenido-publicacion {
+  background-color: #242424;
+  padding: 1.5rem;
+  border-radius: 8px;
+  width: 100%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+}
+
+.contenido-publicacion h2 {
+  color: white;
+  font-size: 1.8rem;
+  margin-top: -0.6rem;
+}
+
+.contenido-publicacion p {
+  color: #c0c0c0;
+  font-size: 1rem;
+}
+
+.media {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+/* Botón comentar */
+.btn.comentar {
+  margin-top: 1rem;
+  background-color: transparent;
+  border: 1px solid #007BFF;
+  color: #007BFF;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+}
+
+.btn.comentar:hover {
+  background-color: #007BFF;
+  color: white;
+}
+
+/* Formulario de comentarios */
+.formulario-comentario {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: #1A1A1D;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+textarea {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #444;
+  border-radius: 6px;
+  padding: 0.5rem;
+  color: white;
+  font-size: 1rem;
+  background-color: #0F0F10;
+  resize: none;
+  font-family: sans-serif;
+}
+
+button {
+  background-color: rgb(0, 140, 255);
+  border: none;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 0.5rem;
+  width: 20%;
+}
+
+button:hover {
+  background-color: rgb(0, 110, 200);
+}
+
+/* Sección de comentarios */
+.comentarios {
+  background-color: #1A1A1D;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.comentarios h4 {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.comentario {
+  background-color: #242424;
+  padding: 0.8rem;
+  border-radius: 6px;
+  margin-bottom: 0.8rem;
+}
+
+.comentario p {
+  color: #c0c0c0;
+  font-size: 1rem;
+}
