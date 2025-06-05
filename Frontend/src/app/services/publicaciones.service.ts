@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 export interface Publicacion {
   id: number;
@@ -28,7 +30,18 @@ export class PublicacionesService {
   constructor(private http: HttpClient) {}
 
   getPublicaciones(): Observable<Publicacion[]> {
-    return this.http.get<Publicacion[]>(this.apiUrl + 'auth/publicaciones');
+    console.log('🌐 LLAMANDO A:', this.apiUrl + 'auth/publicaciones');
+    console.log('🔑 Headers de autenticación:', this.http);
+    
+    return this.http.get<Publicacion[]>(this.apiUrl + 'auth/publicaciones').pipe(
+      tap(response => {
+        console.log('✅ RESPUESTA RECIBIDA:', response);
+      }),
+      catchError(error => {
+        console.error('❌ ERROR EN LA LLAMADA:', error);
+        throw error;
+      })
+    );
   }
 
   likePublicacion(publicacionId: number): Observable<{ liked: boolean, totalLikes: number }> {
@@ -36,6 +49,12 @@ export class PublicacionesService {
       `${this.apiUrl}publicaciones/${publicacionId}/like`, 
       {}
     );
+  }
+
+  verificarMultiplesLikes(publicacionIds: number[]): Observable<{likes: {[key: number]: boolean}}> {
+    return this.http.post<{likes: {[key: number]: boolean}}>(`${this.baseUrl}/likes/verificar-multiples`, {
+      publicacionIds
+    });
   }
 
   crearPublicacion(data: FormData): Observable<any> {
@@ -64,6 +83,10 @@ export class PublicacionesService {
   }
 
   getPublicacionPorId(id: number): Observable<Publicacion> {
-    return this.http.get<Publicacion>(`${this.apiUrl}publicaciones/${id}`);
+    const token = localStorage.getItem('token'); // O donde tengas el token
+    const headers = {
+      'Authorization': `Bearer ${token}`
+    };
+    return this.http.get<Publicacion>(`${this.apiUrl}auth/publicaciones/${id}`, {headers});
   }
 }

@@ -28,6 +28,12 @@ router.get('/', (req, res) => controller.getTestResponse(req, res));
 //Llamada get para obtener el usuario propio
 router.get('/perfil', (req, res) => usuariosController.obtenerPerfil(req, res));
 
+//Llamada GET para obtener todas las publicaciones
+router.get('/publicaciones', authenticateToken, (req, res) => publicacionesController.obtenerTodas(req, res));
+
+//Llamada GET para obtener una publicación
+router.get('/publicaciones/:id', authenticateToken, (req, res) => publicacionesController.obtenerPorId(req, res));
+
 //Llamada put para editar perfil
 router.patch('/perfil/editar', upload.fields([{ name: 'foto_perfil', maxCount: 1 },{ name: 'banner', maxCount: 1 }]), 
 (req, res) => usuariosController.editarPerfil(req, res));
@@ -39,7 +45,7 @@ router.post('/publicaciones', upload.single('media'), (req, res) => publicacione
 router.delete('/publicaciones/:id', authenticateToken, (req, res) =>publicacionesController.eliminar(req, res));
 
 //Llamada para dar o quitar like
-router.post('/publicaciones/:id/like', (req, res) => likesController.toggleLike(req, res));
+router.post('/publicaciones/:id/like', authenticateToken, (req, res) => likesController.toggleLike(req, res));
 
 //Llamada para guardar publicación
 router.post('/publicaciones/:id/guardar', authenticateToken, (req, res) =>publicacionesGuardadasController.guardar(req, res));

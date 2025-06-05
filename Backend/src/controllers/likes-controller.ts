@@ -39,4 +39,22 @@ export class LikesController {
       res.status(500).json({ error: 'Error al dar me gusta' });
     }
   }
+
+  async verificarMultiplesLikes(req: Request, res: Response): Promise<void> {
+    const usuarioId = (req as any).user?.id;
+    const { publicacionIds } = req.body;
+  
+    if (!usuarioId || !publicacionIds || !Array.isArray(publicacionIds)) {
+      res.status(400).json({ error: 'Faltan datos o formato incorrecto' });
+      return;
+    }
+  
+    try {
+      const likes = await this.service.verificarMultiplesLikes(usuarioId, publicacionIds);
+      res.status(200).json({ likes });
+    } catch (error) {
+      console.error('Error al verificar múltiples likes:', error);
+      res.status(500).json({ error: 'Error al verificar likes' });
+    }
+  }
 }

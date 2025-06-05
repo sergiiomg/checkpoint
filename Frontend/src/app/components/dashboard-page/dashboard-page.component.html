@@ -15,14 +15,14 @@
           <img [src]="getMediaUrl(p.media_url)" class="media" />
         </div>
         <div *ngIf="p.tipo_media === 'video' && p.media_url">
-          <video class="media" controls>
+          <video class="media" controls (click)="$event.stopPropagation()">
             <source [src]="getMediaUrl(p.media_url)" type="video/mp4" />
           </video>
         </div>
 
-        <div class="acciones">
+        <div class="acciones" (click)="$event.stopPropagation()">
           <div class="grupo-izquierda">
-            <button class="btn like" (click)="toggleLike(p)">
+            <button class="btn like" [class.liked]="p.liked" (click)="toggleLike(p)">
               <i class="{{ p.liked ? 'fas' : 'far' }} fa-heart"></i>
               {{ p.likesCount || 0 }}
             </button>
@@ -31,12 +31,12 @@
             </button>
           </div>
           <div class="grupo-derecha">
-            <button class="btn guardar" (click)="toggleGuardado(p)">
+            <button class="btn guardar" [class.guardada]="p.guardada" (click)="toggleGuardado(p)">
               <i class="{{ p.guardada ? 'fas' : 'far' }} fa-bookmark"></i>
             </button>
           </div>
         </div>
-        <div *ngIf="publicacionComentandoId === p.id" class="formulario-comentario">
+        <div *ngIf="publicacionComentandoId === p.id" class="formulario-comentario" (click)="$event.stopPropagation()">
           <textarea [(ngModel)]="nuevoComentario" placeholder="Escribe tu comentario..."></textarea>
           <button (click)="enviarComentario(p.id)">Enviar</button>
         </div>

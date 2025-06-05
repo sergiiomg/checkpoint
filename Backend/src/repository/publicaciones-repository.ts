@@ -1,3 +1,4 @@
+import { RowDataPacket } from 'mysql2';
 import { obtenerDB } from '../db';
 import { Publicacion } from '../models/publicacion';
 
@@ -23,17 +24,7 @@ export class PublicacionesRepository {
     };
   }
 
-  async obtenerTodas(): Promise<Publicacion[]> {
-    const db = await obtenerDB();
-    const [rows] = await db.execute(
-      `SELECT p.*, u.nombre_usuario AS autor_nombre, u.foto_perfil_url AS autor_foto
-       FROM publicaciones p
-       JOIN usuarios u ON p.autor_id = u.id
-       ORDER BY p.fecha_creacion DESC`
-    );
-    return rows as Publicacion[];
-  }
-
+  // ✅ MANTÉN SOLO ESTE método básico para obtener por ID
   async obtenerPorId(id: number): Promise<Publicacion | null> {
     const db = await obtenerDB();
     const [rows] = await db.execute(

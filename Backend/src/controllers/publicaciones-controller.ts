@@ -82,9 +82,24 @@ export class PublicacionesController {
 
   async obtenerTodas(req: Request, res: Response): Promise<void> {
     try {
-      const publicaciones = await this.PublicacionesService.obtenerTodasPublicaciones();
+      // Obtener el ID del usuario autenticado del middleware
+      const usuarioId = (req as any).user?.id;
+      
+      console.log('👤 Usuario ID para likes:', usuarioId); // Para debugging
+      
+      // Pasar el usuarioId al servicio para incluir info de likes
+      const publicaciones = await this.PublicacionesService.obtenerTodasPublicaciones(usuarioId);
+      
+      console.log('📊 Primera publicación con likes:', {
+        id: publicaciones[0]?.id,
+        titulo: publicaciones[0]?.titulo,
+        likesCount: publicaciones[0]?.likesCount,
+        liked: publicaciones[0]?.liked
+      }); // Para debugging
+      
       res.status(200).json(publicaciones);
     } catch (error) {
+      console.error('❌ Error al obtener publicaciones:', error);
       res.status(500).json({ error: 'Error al obtener las publicaciones' });
     }
   }
@@ -132,11 +147,24 @@ export class PublicacionesController {
     }
   
     try {
-      const publicacion = await this.PublicacionesService.obtenerPorId(id);
+      // Obtener el ID del usuario autenticado
+      const usuarioId = (req as any).user?.id;
+      
+      console.log('👤 Usuario ID para publicación detalle:', usuarioId); // Para debugging
+      
+      const publicacion = await this.PublicacionesService.obtenerPorId(id, usuarioId);
       if (!publicacion) {
         res.status(404).json({ error: 'Publicación no encontrada' });
         return;
       }
+      
+      console.log('📊 Publicación detalle con likes:', {
+        id: publicacion.id,
+        titulo: publicacion.titulo,
+        likesCount: publicacion.likesCount,
+        liked: publicacion.liked
+      }); // Para debugging
+      
       res.status(200).json(publicacion);
     } catch (error) {
       console.error('Error al obtener publicación por ID:', error);

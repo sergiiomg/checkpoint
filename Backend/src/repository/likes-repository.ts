@@ -41,4 +41,15 @@ export class LikesRepository {
     );
     return rows[0].total;
   }
+
+  async verificarMultiplesLikes(usuarioId: number, publicacionIds: number[]): Promise<number[]> {
+    const db = await obtenerDB();
+    const placeholders = publicacionIds.map(() => '?').join(',');
+    const [rows] = await db.query<RowDataPacket[]>(
+      `SELECT publicacion_id FROM likes WHERE usuario_id = ? AND publicacion_id IN (${placeholders})`,
+      [usuarioId, ...publicacionIds]
+    );
+    
+    return rows.map(row => row.publicacion_id);
+  }
 }

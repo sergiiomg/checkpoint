@@ -37,11 +37,13 @@ export class DashboardPageComponent implements OnInit {
             titulo: pub.titulo,
             media_url: pub.media_url,
             tipo_media: pub.tipo_media,
+            liked: pub.liked,
             fullUrl: this.getMediaUrl(pub.media_url)
           });
         });
-
+        console.log('✅ Publicaciones recibidas:', this.publicaciones[0]);
         this.publicaciones = data;
+        this.verificarLikesUsuario();
       },
       error: (err) => {
         console.error('❌ Error cargando publicaciones:', err);
@@ -52,6 +54,22 @@ export class DashboardPageComponent implements OnInit {
   }
 }
 
+  verificarLikesUsuario() {
+    if (this.publicaciones.length === 0) return;
+    
+    const publicacionIds = this.publicaciones.map(p => p.id);
+    
+    this.publicacionesService.verificarMultiplesLikes(publicacionIds).subscribe(
+      response => {
+        this.publicaciones.forEach(publicacion => {
+          publicacion.liked = response.likes[publicacion.id] || false;
+        });
+      },
+      error => {
+        console.error('Error al verificar likes:', error);
+      }
+    );
+  }
 
   toggleLike(publicacion: Publicacion) {
     this.publicacionesService.likePublicacion(publicacion.id).subscribe({

@@ -116,22 +116,33 @@ app-header{
   transition: color 0.3s;
 }
 
+.btn.like.liked {
+  color: #FF0000 !important;
+}
 
-/* Efecto de color al pasar el cursor */
-.btn.comentar:hover {
-  color: #007BFF;
+.btn.like.liked i {
+  color: #FF0000 !important;
+}
+
+/* Botón de guardar activo (opcional) */
+.btn.guardar.guardada {
+  color: #ff8800 !important;
+}
+
+.btn.guardar.guardada i {
+  color: #ff8800 !important;
 }
 
 .btn.like:hover {
   color: #FF0000;
 }
 
-.btn.guardar:hover {
-  color: #ff8800;
+.btn.comentar:hover {
+  color: #007BFF;
 }
 
-.liked {
-  color: red;
+.btn.guardar:hover {
+  color: #ff8800;
 }
 
 .formulario-comentario {

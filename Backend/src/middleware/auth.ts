@@ -20,6 +20,8 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
             res.status(403).json({error: 'Token invalido'});
             return;
         }
+        console.log("👤 JWT Payload completo:", user); // 🔍 AGREGA ESTA LÍNEA
+        console.log("👤 Usuario ID del token:", (user as any)?.id); // 🔍 Y ESTA
         (req as any).user = user;
         next();
     });

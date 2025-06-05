@@ -1,15 +1,23 @@
+<!-- HTML LIMPIO -->
 <div class="publicacion-detalle">
-  <!-- ✅ Publicación (ya renderizada) -->
-  <div class="contenido-publicacion">
-    <h2>{{ publicacion?.titulo }}</h2>
-    <p>{{ publicacion?.descripcion }}</p>
-    <img *ngIf="publicacion?.media_url && publicacion?.tipo_media === 'imagen'" 
-         [src]="publicacionesService.getFullMediaUrl(publicacion!.media_url)" alt="Imagen" />
-    <video *ngIf="publicacion?.media_url && publicacion?.tipo_media === 'video'" 
-           [src]="publicacionesService.getFullMediaUrl(publicacion!.media_url)" controls></video>
-  </div>
+  <!-- ✅ Publicación directamente en el contenedor principal -->
+  <h2>{{ publicacion?.titulo }}</h2>
+  <p>{{ publicacion?.descripcion }}</p>
+  
+  <img *ngIf="publicacion?.media_url && publicacion?.tipo_media === 'imagen'" 
+       [src]="publicacionesService.getFullMediaUrl(publicacion!.media_url)" 
+       alt="Imagen"
+       class="media" />
+  
+  <video *ngIf="publicacion?.media_url && publicacion?.tipo_media === 'video'" 
+         [src]="publicacionesService.getFullMediaUrl(publicacion!.media_url)" 
+         controls
+         class="media"></video>
 
-  <!-- ✅ Botón para mostrar/ocultar formulario -->
+  <!-- ✅ Separador después de la publicación -->
+  <hr class="separador">
+
+  <!-- ✅ Botón para comentar -->
   <button class="btn comentar" (click)="toggleFormularioComentario()">
     <i class="far fa-comment"></i> Comentar
   </button>
@@ -20,14 +28,22 @@
     <button (click)="enviarComentario()">Enviar</button>
   </div>
 
-  <!-- ✅ Lista de comentarios -->
-  <div class="comentarios">
+  <!-- ✅ Separador antes de comentarios -->
+  <hr class="separador" *ngIf="comentarios.length > 0">
+
+  <!-- ✅ Lista de comentarios sin contenedor adicional -->
+  <div class="seccion-comentarios" *ngIf="comentarios.length > 0">
     <h4>Comentarios</h4>
-    <div *ngIf="comentarios.length === 0">
-      <p>No hay comentarios aún.</p>
-    </div>
-    <div *ngFor="let comentario of comentarios" class="comentario">
+    
+    <div *ngFor="let comentario of comentarios; let last = last" class="comentario-item">
       <p><strong>{{ comentario.autor_id }}</strong>: {{ comentario.contenido }}</p>
+      <!-- ✅ HR entre comentarios, pero no después del último -->
+      <hr class="separador-comentario" *ngIf="!last">
     </div>
+  </div>
+
+  <!-- ✅ Mensaje cuando no hay comentarios -->
+  <div *ngIf="comentarios.length === 0" class="sin-comentarios">
+    <p>No hay comentarios aún. ¡Sé el primero en comentar!</p>
   </div>
 </div>

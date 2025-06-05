@@ -23,20 +23,38 @@ export class LikesService {
   }
 
   async contarLikesTotales(usuarioId: number): Promise<number> {
-  if (!this.db) this.db = await obtenerDB();
+    if (!this.db) this.db = await obtenerDB();
+  
+      const [likesPublicaciones] = await this.db.query<RowDataPacket[]>(
+      'SELECT COUNT(*) AS total FROM likes WHERE usuario_id = ?',
+      [usuarioId]
+    );
+  
+    const [likesComentarios] = await this.db.query<RowDataPacket[]>(
+      'SELECT COUNT(*) AS total FROM likes_comentarios WHERE usuario_id = ?',
+      [usuarioId]
+    );
+  
+    const totalLikesLogro = likesPublicaciones[0].total + likesComentarios[0].total;
+    return totalLikesLogro;
+  }
 
-    const [likesPublicaciones] = await this.db.query<RowDataPacket[]>(
-    'SELECT COUNT(*) AS total FROM likes WHERE usuario_id = ?',
-    [usuarioId]
-  );
-
-  const [likesComentarios] = await this.db.query<RowDataPacket[]>(
-    'SELECT COUNT(*) AS total FROM likes_comentarios WHERE usuario_id = ?',
-    [usuarioId]
-  );
-
-  const totalLikesLogro = likesPublicaciones[0].total + likesComentarios[0].total;
-  return totalLikesLogro;
-}
-
+  async verificarMultiplesLikes(usuarioId: number, publicacionIds: number[]): Promise<{[key: number]: boolean}> {
+    if (publicacionIds.length === 0) {
+      return {};
+    }
+  
+    const publicacionesConLike = await this.repo.verificarMultiplesLikes(usuarioId, publicacionIds);
+    
+    // Crear mapa con todos los IDs como false inicialmente
+    const likesMap: {[key: number]: boolean} = {};
+    publicacionIds.forEach(id => likesMap[id] = false);
+    
+    // Marcar como true los que sí tienen like
+    publicacionesConLike.forEach(publicacionId => {
+      likesMap[publicacionId] = true;
+    });
+    
+    return likesMap;
+  }
 }
