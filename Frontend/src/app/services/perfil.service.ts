@@ -58,15 +58,15 @@ export class PerfilService {
     return this.http.get<any[]>(`${this.apiUrl}auth/usuarios/${id}/siguiendo`, { headers: this.headers });
   }
 
+  estoySiguiendo(id: number): Observable<{ siguiendo: boolean }> {
+    return this.http.get<{ siguiendo: boolean }>(`${this.apiUrl}usuarios/${id}/siguiendo/yo`);
+  }
+
   seguirUsuario(id: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}usuarios/${id}/seguir`, {}, { headers: this.headers });
+    return this.http.post(`${this.apiUrl}usuarios/${id}/seguir`, {});
   }
-  
-  dejarDeSeguirUsuario(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}usuarios/${id}/seguir`, { headers: this.headers });
-  }
-  
-  comprobarSiSigo(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}usuarios/${id}/sigo`, { headers: this.headers });
+
+  dejarDeSeguir(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}usuarios/${id}/seguir`);
   }
 }

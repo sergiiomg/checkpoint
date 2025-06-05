@@ -54,7 +54,7 @@
   justify-content: space-between;
 }
 
-.editar-perfil {
+.btn-seguir {
   background-color: #1A1A1D;
   border: 1px solid rgb(0, 140, 255);
   color: rgb(0, 140, 255);
@@ -68,9 +68,9 @@
   width: 100px;
 }
 
-.editar-perfil:hover {
-  background-color: rgb(0, 140, 255);
-  color: white;
+.btn-seguir:hover { 
+    background-color: rgb(0, 140, 255); 
+    color: white; 
 }
 
 .publicaciones-container {

@@ -1,10 +1,7 @@
-// perfil-user.component.ts
-
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PerfilService } from '../../services/perfil.service';
-import { PublicacionesService } from '../../services/publicaciones.service';
-import { Publicacion } from '../../services/publicaciones.service';
+import { PublicacionesService, Publicacion } from '../../services/publicaciones.service';
 import { PublicacionesGuardadasService } from '../../services/publicaciones-guardadas.service';
 
 @Component({
@@ -14,13 +11,15 @@ import { PublicacionesGuardadasService } from '../../services/publicaciones-guar
 })
 export class PerfilUserComponent implements OnInit {
   usuario: any = null;
-  publicaciones: any[] = [];
-  estaSiguiendo: boolean = false;
+  publicaciones: Publicacion[] = [];
   seguidoresCount = 0;
   seguidosCount = 0;
-  publicacion: Publicacion[] = []
   error: string | null = null;
   
+  @Input() usuarioId?: number; // puede venir de afuera
+
+  siguiendo: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private perfilService: PerfilService,
@@ -29,70 +28,92 @@ export class PerfilUserComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    // Prioridad a usuarioId recibido por Input, si no existe, tomar de ruta
+    const id = this.usuarioId ?? Number(this.route.snapshot.paramMap.get('id'));
+
     if (id) {
-      this.perfilService.obtenerUsuarioPorId(id).subscribe(user => this.usuario = user);
-      this.perfilService.obtenerPublicacionesDeUsuario(id).subscribe(posts => this.publicaciones = posts);
-      this.perfilService.obtenerSeguidores(id).subscribe(followers => this.seguidoresCount = followers.length);
-      this.perfilService.obtenerSeguidos(id).subscribe(following => this.seguidosCount = following.length);
-      this.perfilService.comprobarSiSigo(id).subscribe(res => this.estaSiguiendo = res.sigue);
+      this.usuarioId = id;
+      this.cargarDatosUsuario(id);
+      this.cargarPublicaciones(id);
+      this.cargarSeguidoresYSeguidos(id);
+      this.cargarEstadoSeguimiento(id);
+    } else {
+      this.error = 'ID de usuario no válido';
     }
   }
 
-  seguir(): void {
-    this.perfilService.seguirUsuario(this.usuario.id).subscribe(() => {
-      this.estaSiguiendo = true;
-      this.seguidoresCount++;
+  cargarDatosUsuario(id: number) {
+    this.perfilService.obtenerUsuarioPorId(id).subscribe({
+      next: user => this.usuario = user,
+      error: () => this.error = 'No se pudo cargar el usuario'
     });
   }
 
-  dejarDeSeguir(): void {
-    this.perfilService.dejarDeSeguirUsuario(this.usuario.id).subscribe(() => {
-      this.estaSiguiendo = false;
-      this.seguidoresCount--;
+  cargarPublicaciones(id: number) {
+    this.perfilService.obtenerPublicacionesDeUsuario(id).subscribe({
+      next: posts => this.publicaciones = posts,
+      error: () => this.error = 'No se pudieron cargar las publicaciones'
+    });
+  }
+
+  cargarSeguidoresYSeguidos(id: number) {
+    this.perfilService.obtenerSeguidores(id).subscribe({
+      next: data => this.seguidoresCount = data.length,
+      error: err => console.error('Error al obtener seguidores:', err)
+    });
+
+    this.perfilService.obtenerSeguidos(id).subscribe({
+      next: data => this.seguidosCount = data.length,
+      error: err => console.error('Error al obtener seguidos:', err)
+    });
+  }
+
+  cargarEstadoSeguimiento(id: number) {
+    this.perfilService.estoySiguiendo(id).subscribe({
+      next: data => this.siguiendo = data.siguiendo,
+      error: () => this.siguiendo = false
+    });
+  }
+
+  toggleSeguir() {
+    const accion = this.siguiendo
+      ? this.perfilService.dejarDeSeguir(this.usuarioId!)
+      : this.perfilService.seguirUsuario(this.usuarioId!);
+
+    accion.subscribe({
+      next: () => {
+        this.siguiendo = !this.siguiendo;
+        // Actualizar contadores de seguidores localmente
+        this.seguidoresCount += this.siguiendo ? 1 : -1;
+      },
+      error: (err) => alert(err.error?.error || 'Error al cambiar estado de seguimiento')
     });
   }
 
   toggleLike(publicacion: Publicacion) {
-        this.publicacionesService.likePublicacion(publicacion.id).subscribe({
-          next: (res) => {
-            publicacion.liked = res.liked;
-            publicacion.likesCount = res.totalLikes;
-          },
-          error: (err: any) => {
-            console.error('Error al dar me gusta:', err);
-          }
-        });
-      }
-
-      cargarSeguidoresYSeguidos(id: number): void {
-    this.perfilService.obtenerSeguidores(id).subscribe({
-      next: (data) => this.seguidoresCount = data.length,
-      error: (err) => console.error('❌ Error al obtener seguidores:', err)
-    });
-
-    this.perfilService.obtenerSeguidos(id).subscribe({
-      next: (data) => this.seguidosCount = data.length,
-      error: (err) => console.error('❌ Error al obtener seguidos:', err)
+    this.publicacionesService.likePublicacion(publicacion.id).subscribe({
+      next: (res) => {
+        publicacion.liked = res.liked;
+        publicacion.likesCount = res.totalLikes;
+      },
+      error: (err) => console.error('Error al dar me gusta:', err)
     });
   }
-  
-    isGuardada(publicacion: Publicacion): boolean {
-      return publicacion.guardada === true;
-    }
-  
-     toggleGuardado(publicacion: Publicacion) {
-      this.publicacionesGuardadasService.toggleGuardado(publicacion.id).subscribe({
-        next: (res) => {
-          // Cambiar estado guardado localmente para actualizar el icono
-          publicacion.guardada = !this.isGuardada(publicacion);
-        },
-        error: (err) => console.error('Error al togglear guardado:', err)
-      });
-    }
-  
-    getMediaUrl(mediaUrl: string | null): string | null {
-      const result = this.publicacionesService.getFullMediaUrl(mediaUrl);
-      return result;
-    }
+
+  isGuardada(publicacion: Publicacion): boolean {
+    return publicacion.guardada === true;
+  }
+
+  toggleGuardado(publicacion: Publicacion) {
+    this.publicacionesGuardadasService.toggleGuardado(publicacion.id).subscribe({
+      next: () => {
+        publicacion.guardada = !this.isGuardada(publicacion);
+      },
+      error: (err) => console.error('Error al togglear guardado:', err)
+    });
+  }
+
+  getMediaUrl(mediaUrl: string | null): string | null {
+    return this.publicacionesService.getFullMediaUrl(mediaUrl);
+  }
 }

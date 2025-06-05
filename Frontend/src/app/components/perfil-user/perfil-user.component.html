@@ -15,8 +15,7 @@
     <div class="info">
       <div>
         <h2>{{usuario.nombre_usuario}}</h2>
-        <button *ngIf="!estaSiguiendo" (click)="seguir()">Seguir</button>
-        <button *ngIf="estaSiguiendo" (click)="dejarDeSeguir()">Dejar de seguir</button>
+        <button class="btn-seguir" (click)="toggleSeguir()">{{ siguiendo ? 'Dejar de seguir' : 'Seguir' }}</button>
       </div>
       <p>Nivel: {{ usuario.nivel }}</p>
       <p>{{seguidoresCount}} seguidores</p>
