@@ -31,7 +31,7 @@ export class PerfilService {
 
   // Obtener perfil de un usuario específico por ID
   obtenerUsuarioPorId(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}usuarios/${id}`);
+    return this.http.get(`${this.apiUrl}auth/usuarios/${id}`);
   }
 
   editarPerfil(formData: FormData): Observable<any> {
@@ -56,5 +56,17 @@ export class PerfilService {
   
   obtenerSeguidos(id: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}auth/usuarios/${id}/siguiendo`, { headers: this.headers });
+  }
+
+  seguirUsuario(id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}usuarios/${id}/seguir`, {}, { headers: this.headers });
+  }
+  
+  dejarDeSeguirUsuario(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}usuarios/${id}/seguir`, { headers: this.headers });
+  }
+  
+  comprobarSiSigo(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}usuarios/${id}/sigo`, { headers: this.headers });
   }
 }

@@ -38,6 +38,18 @@ class UsuariosController {
         this.seguimientosService.contarUsuariosSeguidos(id)
       ]);
 
+      if (!usuario.foto_perfil_url) {
+              usuario.foto_perfil_url = DEFAULT_PROFILE_IMAGE;
+          }
+          
+          if (!usuario.banner_url) {
+              usuario.banner_url = DEFAULT_BANNER_IMAGE;
+          }
+  
+          const baseUrl = 'http://localhost:8080';
+          usuario.foto_perfil_url = baseUrl + usuario.foto_perfil_url;
+          usuario.banner_url = baseUrl + usuario.banner_url;
+
       // Crear respuesta con información completa del usuario
       const usuarioCompleto = {
         ...usuario,
