@@ -18,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PublicacionesGuardadasComponent } from './components/publicaciones-guardadas/publicaciones-guardadas.component';
 import { ComentariosComponent } from './components/comentarios/comentarios.component';
 import { PublicacionDetalleComponent } from './components/publicacion-detalle/publicacion-detalle.component';
+import { PerfilUserComponent } from './components/perfil-user/perfil-user.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { PublicacionDetalleComponent } from './components/publicacion-detalle/pu
     CrearPublicacionComponent,
     PublicacionesGuardadasComponent,
     ComentariosComponent,
-    PublicacionDetalleComponent
+    PublicacionDetalleComponent,
+    PerfilUserComponent
   ],
   imports: [
     BrowserModule,

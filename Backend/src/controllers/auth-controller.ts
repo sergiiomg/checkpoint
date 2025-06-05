@@ -55,7 +55,7 @@ class AuthController {
             }
 
             const token = jwt.sign(
-              { id: usuario.id, nombre_usuario: usuario.nombre },
+              { id: usuario.id, nombre_usuario: usuario.nombre_usuario },
               SECRET_KEY,
               { expiresIn: '1h' }
             );

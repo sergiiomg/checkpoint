@@ -1,13 +1,16 @@
 import { UsuariosRepository } from '../repository/usuarios-repository';
+import { SeguimientosService } from './seguimientos-service'; // Importar el service de seguimientos
 import bcrypt from 'bcryptjs';
 import { Usuario } from '../models/usuarios';
 import { obtenerDB } from '../db';
 
 class UsuariosService{
     private usuariosRepository: UsuariosRepository;
+    private seguimientosService: SeguimientosService; // Añadir esta línea
 
     constructor(){
         this.usuariosRepository = new UsuariosRepository();
+        this.seguimientosService = new SeguimientosService(); // Añadir esta línea
     }
 
     /**
@@ -43,7 +46,7 @@ class UsuariosService{
 
     if(!usuario) return null;
 
-      const coincide = await bcrypt.compare(contrasena, usuario.contrasena_hash);
+    const coincide = await bcrypt.compare(contrasena, usuario.contrasena_hash);
 
     if(!coincide) return null;
 
@@ -55,6 +58,28 @@ class UsuariosService{
 
     async obtenerUsuarioPorId(id: number) {
       return await this.usuariosRepository.obtenerUsuarioPorId(id);
+    }
+
+    // Nuevo método para obtener usuario con contadores de seguimientos
+    async obtenerUsuarioConContadores(id: number) {
+      const usuario = await this.usuariosRepository.obtenerUsuarioPorId(id);
+      
+      if (!usuario) return null;
+
+      // Obtener contadores de seguimientos
+      const [seguidores, seguidos] = await Promise.all([
+        this.seguimientosService.contarSeguidores(id),
+        this.seguimientosService.contarUsuariosSeguidos(id)
+      ]);
+
+      // Excluir la contraseña hash de la respuesta
+      const { contrasena_hash, ...usuarioSinPassword } = usuario;
+
+      return {
+        ...usuarioSinPassword,
+        seguidores_count: seguidores,
+        seguidos_count: seguidos
+      };
     }
 
     async actualizarUsuario(id: number, cambios: Partial<Usuario>) {

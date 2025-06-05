@@ -14,6 +14,9 @@ export class PerfilPageComponent implements OnInit {
   publicaciones: Publicacion[] = [];
   error: string | null = null;
 
+  seguidoresCount: number = 0;
+  seguidosCount: number = 0;
+
   constructor(
     private perfilService: PerfilService,
     public publicacionesService: PublicacionesService,
@@ -33,6 +36,7 @@ export class PerfilPageComponent implements OnInit {
         console.log('✅ Perfil cargado:', this.usuario);
 
         this.cargarPublicaciones(this.usuario.id);
+        this.cargarSeguidoresYSeguidos(this.usuario.id);
       },
       error: (err) => {
         this.error = 'Error al cargar el perfil';
@@ -65,6 +69,18 @@ export class PerfilPageComponent implements OnInit {
         }
       });
     }
+
+  cargarSeguidoresYSeguidos(id: number): void {
+    this.perfilService.obtenerSeguidores(id).subscribe({
+      next: (data) => this.seguidoresCount = data.length,
+      error: (err) => console.error('❌ Error al obtener seguidores:', err)
+    });
+
+    this.perfilService.obtenerSeguidos(id).subscribe({
+      next: (data) => this.seguidosCount = data.length,
+      error: (err) => console.error('❌ Error al obtener seguidos:', err)
+    });
+  }
   
     isGuardada(publicacion: Publicacion): boolean {
       return publicacion.guardada === true;

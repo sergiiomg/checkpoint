@@ -9,6 +9,7 @@ import { DashboardPageComponent } from './components/dashboard-page/dashboard-pa
 import { CrearPublicacionComponent } from './components/crear-publicacion/crear-publicacion.component';
 import { PublicacionesGuardadasComponent } from './components/publicaciones-guardadas/publicaciones-guardadas.component';
 import { PublicacionDetalleComponent } from './components/publicacion-detalle/publicacion-detalle.component';
+import { PerfilUserComponent } from './components/perfil-user/perfil-user.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
@@ -16,10 +17,11 @@ const routes: Routes = [
   { path: 'usuarios', component: SignUpComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'perfil', component: PerfilPageComponent, canActivate: [AuthGuard]  },
+  { path: 'usuarios/:id',component: PerfilUserComponent},
   { path: 'editar-perfil', component: EditarPerfilComponent },
   { path: 'crear-publicacion', component: CrearPublicacionComponent },
-  {path: 'publicacion/:id',component: PublicacionDetalleComponent},
-  {path: 'publicaciones-guardadas', component: PublicacionesGuardadasComponent},
+  { path: 'publicacion/:id',component: PublicacionDetalleComponent},
+  { path: 'publicaciones-guardadas', component: PublicacionesGuardadasComponent},
   { path: '**', redirectTo: '' },
 ];
 

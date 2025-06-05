@@ -50,4 +50,11 @@ export class PerfilService {
     return this.http.get<any[]>(`${this.apiUrl}auth/usuarios/${id}/publicaciones`, { headers: this.headers });
   }
 
+  obtenerSeguidores(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}auth/usuarios/${id}/seguidores`, { headers: this.headers });
+  }
+  
+  obtenerSeguidos(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}auth/usuarios/${id}/siguiendo`, { headers: this.headers });
+  }
 }
