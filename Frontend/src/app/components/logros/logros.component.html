@@ -1,0 +1,17 @@
+<div class="logros-wrapper">
+  <div class="logros-container">
+    <h2>Mis Logros</h2>
+    <div *ngIf="error">No se pudieron cargar los logros.</div>
+
+    <div class="logros-grid">
+      <div *ngFor="let logro of logros" class="logro-card">
+        <h3>{{ logro.nombre }}</h3>
+        <p>{{ logro.descripcion }}</p>
+        <p>Experiencia: {{ logro.experiencia }}</p>
+        <p [ngClass]="{'completado': logro.estado === 'Completado', 'pendiente': logro.estado !== 'Completado'}">
+          {{ logro.estado }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

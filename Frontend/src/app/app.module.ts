@@ -20,6 +20,7 @@ import { ComentariosComponent } from './components/comentarios/comentarios.compo
 import { PublicacionDetalleComponent } from './components/publicacion-detalle/publicacion-detalle.component';
 import { PerfilUserComponent } from './components/perfil-user/perfil-user.component';
 import { AmigosComponent } from './components/amigos/amigos.component';
+import { LogrosComponent } from './components/logros/logros.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AmigosComponent } from './components/amigos/amigos.component';
     ComentariosComponent,
     PublicacionDetalleComponent,
     PerfilUserComponent,
-    AmigosComponent
+    AmigosComponent,
+    LogrosComponent
   ],
   imports: [
     BrowserModule,
