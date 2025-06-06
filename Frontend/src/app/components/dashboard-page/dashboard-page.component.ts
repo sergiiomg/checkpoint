@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID  } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { PublicacionesService, Publicacion } from '../../services/publicaciones.service';
 import { UsuariosService } from '../../services/usuarios.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -24,39 +24,42 @@ export class DashboardPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-  if (isPlatformBrowser(this.platformId)) {
-    this.publicacionesService.getPublicaciones().subscribe({
-      next: (data) => {
-        console.log('🔄 Publicaciones recibidas:', data);
-        
-        data.forEach((pub, index) => {
-          console.log(`📄 Publicación ${index + 1}:`, {
-            id: pub.id,
-            titulo: pub.titulo,
-            media_url: pub.media_url,
-            tipo_media: pub.tipo_media,
-            liked: pub.liked,
-            fullUrl: this.getMediaUrl(pub.media_url)
+    if (isPlatformBrowser(this.platformId)) {
+      this.publicacionesService.getPublicaciones().subscribe({
+        next: (data) => {
+          this.publicaciones = data;
+          this.verificarLikesUsuario();
+          this.verificarGuardadasUsuario();
+
+          console.log('🔄 Publicaciones recibidas:', data);
+
+          data.forEach((pub, index) => {
+            console.log(`📄 Publicación ${index + 1}:`, {
+              id: pub.id,
+              titulo: pub.titulo,
+              media_url: pub.media_url,
+              tipo_media: pub.tipo_media,
+              liked: pub.liked,
+              fullUrl: this.getMediaUrl(pub.media_url)
+            });
           });
-        });
-        console.log('✅ Publicaciones recibidas:', this.publicaciones[0]);
-        this.publicaciones = data;
-        this.verificarLikesUsuario();
-      },
-      error: (err) => {
-        console.error('❌ Error cargando publicaciones:', err);
-      }
-    });
-  } else {
-    console.log('🧠 Renderizando en el servidor: no se carga publicaciones todavía');
+
+          console.log('✅ Publicaciones recibidas:', this.publicaciones[0]);
+        },
+        error: (err) => {
+          console.error('❌ Error cargando publicaciones:', err);
+        }
+      });
+    } else {
+      console.log('🧠 Renderizando en el servidor: no se carga publicaciones todavía');
+    }
   }
-}
 
   verificarLikesUsuario() {
     if (this.publicaciones.length === 0) return;
-    
+
     const publicacionIds = this.publicaciones.map(p => p.id);
-    
+
     this.publicacionesService.verificarMultiplesLikes(publicacionIds).subscribe(
       response => {
         this.publicaciones.forEach(publicacion => {
@@ -67,6 +70,32 @@ export class DashboardPageComponent implements OnInit {
         console.error('Error al verificar likes:', error);
       }
     );
+  }
+
+  verificarGuardadasUsuario() {
+    this.publicacionesService.obtenerPublicacionesGuardadas().subscribe(
+      guardadas => {
+        const guardadasIds = guardadas.map(p => p.id);
+        this.publicaciones.forEach(pub => {
+          pub.guardada = guardadasIds.includes(pub.id);
+        });
+      },
+      error => {
+        console.error('Error al verificar publicaciones guardadas:', error);
+      }
+    );
+  }
+
+  toggleGuardar(pub: any) {
+    if (pub.guardada) {
+      this.publicacionesService.desguardarPublicacion(pub.id).subscribe(() => {
+        pub.guardada = false;
+      });
+    } else {
+      this.publicacionesService.guardarPublicacion(pub.id).subscribe(() => {
+        pub.guardada = true;
+      });
+    }
   }
 
   toggleLike(publicacion: Publicacion) {
@@ -96,13 +125,12 @@ export class DashboardPageComponent implements OnInit {
 
   enviarComentario(publicacionId: number) {
     if (!this.nuevoComentario.trim()) return;
-  
+
     this.comentariosService.crearComentario(publicacionId, this.nuevoComentario).subscribe({
       next: (res) => {
         console.log('✅ Comentario creado:', res);
         this.nuevoComentario = '';
-        this.publicacionComentandoId = null; // Cierra el formulario
-        // (opcional) podrías recargar comentarios aquí si los muestras debajo
+        this.publicacionComentandoId = null;
       },
       error: (err) => {
         console.error('❌ Error al enviar comentario:', err);

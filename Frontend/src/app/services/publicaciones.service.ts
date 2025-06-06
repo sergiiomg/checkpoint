@@ -16,7 +16,7 @@ export interface Publicacion {
   autor_foto?: string;
   liked?: boolean;
   likesCount?: number;
-  guardada?: boolean;
+  guardada: boolean;
 }
 
 @Injectable({
@@ -88,5 +88,17 @@ export class PublicacionesService {
       'Authorization': `Bearer ${token}`
     };
     return this.http.get<Publicacion>(`${this.apiUrl}auth/publicaciones/${id}`, {headers});
+  }
+
+  guardarPublicacion(id: number) {
+    return this.http.post(`${this.apiUrl}publicaciones/${id}/guardar`, {});
+  }
+
+  desguardarPublicacion(id: number) {
+    return this.http.delete(`${this.apiUrl}publicaciones/${id}/guardar`);
+  }
+
+  obtenerPublicacionesGuardadas(): Observable<Publicacion[]> {
+    return this.http.get<Publicacion[]>(`${this.apiUrl}publicaciones-guardadas`);
   }
 }
