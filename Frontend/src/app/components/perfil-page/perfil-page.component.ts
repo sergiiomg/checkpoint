@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PerfilService } from '../../services/perfil.service';
 import { PublicacionesService, Publicacion } from '../../services/publicaciones.service';
-import { PublicacionesGuardadasService } from '../../services/publicaciones-guardadas.service';
 
 @Component({
   selector: 'app-perfil-page',
@@ -20,7 +19,6 @@ export class PerfilPageComponent implements OnInit {
   constructor(
     private perfilService: PerfilService,
     public publicacionesService: PublicacionesService,
-    private publicacionesGuardadasService: PublicacionesGuardadasService
   ) {}
 
   ngOnInit(): void {
@@ -81,20 +79,6 @@ export class PerfilPageComponent implements OnInit {
       error: (err) => console.error('❌ Error al obtener seguidos:', err)
     });
   }
-  
-    isGuardada(publicacion: Publicacion): boolean {
-      return publicacion.guardada === true;
-    }
-  
-     toggleGuardado(publicacion: Publicacion) {
-      this.publicacionesGuardadasService.toggleGuardado(publicacion.id).subscribe({
-        next: (res) => {
-          // Cambiar estado guardado localmente para actualizar el icono
-          publicacion.guardada = !this.isGuardada(publicacion);
-        },
-        error: (err) => console.error('Error al togglear guardado:', err)
-      });
-    }
   
     getMediaUrl(mediaUrl: string | null): string | null {
       const result = this.publicacionesService.getFullMediaUrl(mediaUrl);

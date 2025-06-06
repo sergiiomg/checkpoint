@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject, PLATFORM_ID  } from '@angular/core';
 import { PublicacionesService, Publicacion } from '../../services/publicaciones.service';
 import { UsuariosService } from '../../services/usuarios.service';
-import { PublicacionesGuardadasService } from '../../services/publicaciones-guardadas.service';
 import { isPlatformBrowser } from '@angular/common';
 import { ComentariosService } from '../../services/comentarios.service';
 import { Router } from '@angular/router';
@@ -20,7 +19,6 @@ export class DashboardPageComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: Object,
     public publicacionesService: PublicacionesService,
     private usuariosService: UsuariosService,
-    private publicacionesGuardadasService: PublicacionesGuardadasService,
     private comentariosService: ComentariosService,
     private router: Router
   ) {}
@@ -80,20 +78,6 @@ export class DashboardPageComponent implements OnInit {
       error: (err: any) => {
         console.error('Error al dar me gusta:', err);
       }
-    });
-  }
-
-  isGuardada(publicacion: Publicacion): boolean {
-    return publicacion.guardada === true;
-  }
-
-   toggleGuardado(publicacion: Publicacion) {
-    this.publicacionesGuardadasService.toggleGuardado(publicacion.id).subscribe({
-      next: (res) => {
-        // Cambiar estado guardado localmente para actualizar el icono
-        publicacion.guardada = !this.isGuardada(publicacion);
-      },
-      error: (err) => console.error('Error al togglear guardado:', err)
     });
   }
 
