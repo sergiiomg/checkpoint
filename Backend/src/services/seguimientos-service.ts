@@ -124,6 +124,21 @@ export class SeguimientosService {
     'SELECT COUNT(*) AS total FROM seguimientos WHERE seguidor_id = ?',
     [usuarioId]
   );
-  return resultado[0].total;
-}
+    return resultado[0].total;
+  }
+
+  async obtenerAmigos(usuarioId: number) {
+    if (!this.db) this.db = await obtenerDB();
+  
+    const [rows] = await this.db.query(
+      `SELECT u.id, u.nombre_usuario, u.foto_perfil_url
+       FROM usuarios u
+       JOIN seguimientos s1 ON s1.seguido_id = u.id AND s1.seguidor_id = ?
+       JOIN seguimientos s2 ON s2.seguidor_id = u.id AND s2.seguido_id = ?
+       WHERE u.id != ?`,
+      [usuarioId, usuarioId, usuarioId]
+    );
+  
+    return rows;
+  }
 }

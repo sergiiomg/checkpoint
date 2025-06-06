@@ -1,0 +1,19 @@
+<div *ngIf="cargando">Cargando amigos...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="!cargando && !error">
+    <div class="amigos-wrapper">
+        <div class="amigos-container">
+            <h2>Mis Amigos</h2>
+            <div *ngIf="amigos.length === 0">No tienes amigos aún</div>
+            
+            <div *ngFor="let amigo of amigos" class="amigo-card">
+                <div class="perfil-info">
+                    <img [src]="'http://localhost:8080' + amigo.foto_perfil_url" alt="Foto de perfil" class="foto-perfil">
+                    <span class="nombre">{{ amigo.nombre_usuario }}</span>
+                </div>
+                <button class="btn-perfil" (click)="verPerfil(amigo.id)">Ver Perfil</button>
+            </div>
+        </div>
+    </div>
+</div>

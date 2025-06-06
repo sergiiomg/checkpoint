@@ -19,6 +19,7 @@ import { PublicacionesGuardadasComponent } from './components/publicaciones-guar
 import { ComentariosComponent } from './components/comentarios/comentarios.component';
 import { PublicacionDetalleComponent } from './components/publicacion-detalle/publicacion-detalle.component';
 import { PerfilUserComponent } from './components/perfil-user/perfil-user.component';
+import { AmigosComponent } from './components/amigos/amigos.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { PerfilUserComponent } from './components/perfil-user/perfil-user.compon
     PublicacionesGuardadasComponent,
     ComentariosComponent,
     PublicacionDetalleComponent,
-    PerfilUserComponent
+    PerfilUserComponent,
+    AmigosComponent
   ],
   imports: [
     BrowserModule,

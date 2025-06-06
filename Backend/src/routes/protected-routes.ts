@@ -92,4 +92,7 @@ router.get('/motes',  authenticateToken, obtenerTodosLosMotesConEstado);
 //Llamada para selecciones un mote
 router.post('/seleccionar', authenticateToken, seleccionarMote);
 
+//Llamada para listar los usuarios con los que te sigues mutuamente.
+router.get('/amigos', authenticateToken, seguimientosController.obtenerAmigos.bind(seguimientosController));
+
 export = router;

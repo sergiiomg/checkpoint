@@ -141,4 +141,15 @@ export class SeguimientosController {
       }
     }
 
+    async obtenerAmigos(req: Request, res: Response) {
+      const usuarioId = (req as any).user.id;
+    
+      try {
+        const amigos = await this.service.obtenerAmigos(usuarioId);
+        res.status(200).json(amigos);
+      } catch (error) {
+        console.error('❌ Error al obtener amigos:', error);
+        res.status(500).json({ error: 'Error al obtener amigos' });
+      }
+    }
 }

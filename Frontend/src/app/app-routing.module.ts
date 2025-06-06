@@ -10,6 +10,7 @@ import { CrearPublicacionComponent } from './components/crear-publicacion/crear-
 import { PublicacionesGuardadasComponent } from './components/publicaciones-guardadas/publicaciones-guardadas.component';
 import { PublicacionDetalleComponent } from './components/publicacion-detalle/publicacion-detalle.component';
 import { PerfilUserComponent } from './components/perfil-user/perfil-user.component';
+import { AmigosComponent } from './components/amigos/amigos.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'usuarios', component: SignUpComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'perfil', component: PerfilPageComponent, canActivate: [AuthGuard]  },
+  {path: 'amigos', component: AmigosComponent},
   { path: 'usuarios/:id',component: PerfilUserComponent},
   { path: 'editar-perfil', component: EditarPerfilComponent },
   { path: 'crear-publicacion', component: CrearPublicacionComponent },

@@ -1,0 +1,80 @@
+.amigos-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh; /* Asegura que ocupe toda la altura */
+}
+
+.amigos-container {
+  background-color: #1A1A1D;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+  width: 800px;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+
+.amigos-container h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.amigo-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  background-color: #252526;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s;
+}
+
+.amigo-card:hover {
+  background-color: #333;
+}
+
+.perfil-info {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Espacio entre la imagen y el nombre */
+}
+
+.foto-perfil {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.info-amigo {
+  flex-grow: 1;
+  margin-left: 15px;
+}
+
+.nombre {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.btn-perfil {
+  background-color: #252526;
+  border: 1px solid #0099ff;
+  color: #0099ff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+
+.btn-perfil:hover {
+  background-color: #0099ff;
+  color: white;
+}
