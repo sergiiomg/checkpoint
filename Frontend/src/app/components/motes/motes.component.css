@@ -156,7 +156,7 @@ div[ng-if*="cargando"] {
 .mote-card {
   background-color: #1A1A1D;
   border: 1px solid #1d1d1d;
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 1.5rem;
   color: #f1f1f1;
   font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
@@ -301,7 +301,7 @@ div[ng-if*="cargando"] {
   border: 1px solid #0099ff;
   color: #0099ff;
   padding: 0.7rem 1rem;
-  border-radius: 8px;
+  border-radius: 6px;
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.3s;

@@ -59,22 +59,36 @@ class UsuariosRepository{
         return resultados.length > 0 ? resultados[0] : null;
      }
 
-     async obtenerUsuarioPorId(id: number): Promise<Usuario | null>{
-        const [rows] = await db!.execute('SELECT * FROM usuarios WHERE id = ?', [id]);
-        const usuarios = rows as Usuario[];
-
-        if(usuarios.length === 0) return null;
-
-        if (!usuarios[0].foto_perfil_url) {
-            usuarios[0].foto_perfil_url = DEFAULT_PROFILE_IMAGE;
+     async obtenerUsuarioPorId(id: number): Promise<Usuario | null> {
+        const [rows] = await db!.execute(
+            `SELECT u.*, m.nombre AS mote_nombre
+             FROM usuarios u
+             LEFT JOIN motes m ON u.mote_actual = m.id
+             WHERE u.id = ?`,
+            [id]
+        );
+    
+        const usuarios = rows as any[];
+    
+        if (usuarios.length === 0) return null;
+    
+        const usuario = usuarios[0];
+    
+        // Reemplazamos el ID por el nombre del mote en la propiedad mote_actual
+        usuario.mote_actual = usuario.mote_nombre;
+        delete usuario.mote_nombre;
+    
+        if (!usuario.foto_perfil_url) {
+            usuario.foto_perfil_url = DEFAULT_PROFILE_IMAGE;
         }
-        
-        if (!usuarios[0].banner_url) {
-            usuarios[0].banner_url = DEFAULT_BANNER_IMAGE;
+    
+        if (!usuario.banner_url) {
+            usuario.banner_url = DEFAULT_BANNER_IMAGE;
         }
+    
+        return usuario;
+    }
 
-        return usuarios[0];
-     }
 }
 
 export { UsuariosRepository }

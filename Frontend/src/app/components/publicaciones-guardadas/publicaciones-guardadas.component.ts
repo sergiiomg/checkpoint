@@ -27,7 +27,6 @@ export class PublicacionesGuardadasComponent implements OnInit {
     this.publicacionesService.obtenerPublicacionesGuardadas().subscribe({
       next: (data: Publicacion[]) => {
         this.publicacionesGuardadas = data;
-        console.log('📦 Publicaciones guardadas:', this.publicacionesGuardadas);
       },
       error: (err) => {
         console.error('❌ Error cargando publicaciones guardadas:', err);

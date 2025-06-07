@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UsuariosService, UsuarioRegistro } from '../../services/usuarios.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'signup-page',
@@ -15,7 +16,10 @@ export class SignUpComponent {
   mensaje = '';
   error = '';
 
-  constructor(private usuariosService: UsuariosService) {}
+  constructor(
+    private usuariosService: UsuariosService,
+    private router: Router
+  ) {}
 
   registrar() {
     const nuevoUsuario: UsuarioRegistro = {
@@ -25,9 +29,19 @@ export class SignUpComponent {
     };
 
     this.usuariosService.registrarUsuario(nuevoUsuario).subscribe({
-      next: (res) => {
-        this.mensaje = '¡Usuario registrado con éxito!';
-        this.error = '';
+      next: (respuesta) => {
+        console.log('✅ Usuario autenticado, has iniciado sesión!');
+        
+        if (respuesta && respuesta.token) {
+          localStorage.setItem('token', respuesta.token);
+          console.log('🔐 Token guardado en localStorage');
+        } else {
+          console.warn('⚠️ La respuesta no contiene un token válido');
+          this.error = 'No se pudo obtener el token de autenticación';
+          return;
+        }
+  
+        this.router.navigate(['/perfil']);
       },
       error: (err) => {
         this.error = 'Error al registrar usuario.';

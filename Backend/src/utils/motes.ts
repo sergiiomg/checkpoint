@@ -15,14 +15,14 @@ export async function desbloquearMotes(usuarioId: number, nivelActual: number): 
   for (const mote of motes) {
     // Comprobar si ya lo tiene
     const [existe] = await db.query<RowDataPacket[]>(
-      `SELECT 1 FROM motes_usuarios WHERE usuarios_id = ? AND mote_id = ?`,
+      `SELECT 1 FROM motes_usuarios WHERE usuario_id = ? AND mote_id = ?`,
       [usuarioId, mote.id]
     );
 
     if (existe.length === 0) {
       // Insertar
       await db.query(
-        `INSERT INTO motes_usuarios (usuarios_id, mote_id, fecha_desbloqueo)
+        `INSERT INTO motes_usuarios (usuario_id, mote_id, fecha_desbloqueo)
          VALUES (?, ?, NOW())`,
         [usuarioId, mote.id]
       );

@@ -14,7 +14,10 @@
 
     <div class="info">
       <div>
-        <h2>{{usuario.nombre_usuario}}</h2>
+        <div class="nombres">
+          <h2>{{usuario.nombre_usuario}}</h2>
+          <p>{{usuario.mote_actual}}</p>
+        </div>
         <button class="btn-seguir" (click)="toggleSeguir()">{{ siguiendo ? 'Dejar de seguir' : 'Seguir' }}</button>
       </div>
       <p>Nivel: {{ usuario.nivel }}</p>

@@ -28,23 +28,7 @@ export class DashboardPageComponent implements OnInit {
       this.publicacionesService.getPublicaciones().subscribe({
         next: (data) => {
           this.publicaciones = data;
-          this.verificarLikesUsuario();
           this.verificarGuardadasUsuario();
-
-          console.log('🔄 Publicaciones recibidas:', data);
-
-          data.forEach((pub, index) => {
-            console.log(`📄 Publicación ${index + 1}:`, {
-              id: pub.id,
-              titulo: pub.titulo,
-              media_url: pub.media_url,
-              tipo_media: pub.tipo_media,
-              liked: pub.liked,
-              fullUrl: this.getMediaUrl(pub.media_url)
-            });
-          });
-
-          console.log('✅ Publicaciones recibidas:', this.publicaciones[0]);
         },
         error: (err) => {
           console.error('❌ Error cargando publicaciones:', err);
@@ -53,23 +37,6 @@ export class DashboardPageComponent implements OnInit {
     } else {
       console.log('🧠 Renderizando en el servidor: no se carga publicaciones todavía');
     }
-  }
-
-  verificarLikesUsuario() {
-    if (this.publicaciones.length === 0) return;
-
-    const publicacionIds = this.publicaciones.map(p => p.id);
-
-    this.publicacionesService.verificarMultiplesLikes(publicacionIds).subscribe(
-      response => {
-        this.publicaciones.forEach(publicacion => {
-          publicacion.liked = response.likes[publicacion.id] || false;
-        });
-      },
-      error => {
-        console.error('Error al verificar likes:', error);
-      }
-    );
   }
 
   verificarGuardadasUsuario() {

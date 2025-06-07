@@ -55,12 +55,6 @@ export class PublicacionesService {
     );
   }
 
-  verificarMultiplesLikes(publicacionIds: number[]): Observable<{likes: {[key: number]: boolean}}> {
-    return this.http.post<{likes: {[key: number]: boolean}}>(`${this.baseUrl}/likes/verificar-multiples`, {
-      publicacionIds
-    });
-  }
-
   crearPublicacion(data: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}publicaciones`, data);
   }
@@ -71,7 +65,6 @@ export class PublicacionesService {
       return null;
     }
     
-    console.log('🔗 URL original recibida:', mediaUrl);
     
     // Si ya es una URL completa, devolverla tal como está
     if (mediaUrl.startsWith('http://') || mediaUrl.startsWith('https://')) {
@@ -81,7 +74,6 @@ export class PublicacionesService {
     
     // Si es una ruta relativa, construir la URL completa
     const fullUrl = `${this.baseUrl}${mediaUrl}`;
-    console.log('🌐 URL completa generada:', fullUrl);
     
     return fullUrl;
   }

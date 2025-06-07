@@ -15,8 +15,10 @@ class AuthController {
     constructor(){
         this.usuariosService = new UsuariosService();
     }
+    
 
     async crearUsuario(req: Request, res: Response): Promise<void>{
+        console.log('REQ.BODY:', req.body);
         try{
             const { nombre_usuario, email, contrasena } = req.body;
 
@@ -33,8 +35,9 @@ class AuthController {
             } else{
                 res.status(500).json({ error: 'Error al crear el usuario.' });
             }
-        } catch{
-            res.status(500).json({ error: 'Hubo un error inesperado.' });
+        } catch(error){
+            console.error('Error en crearUsuario:', error);
+              res.status(500).json({ error: 'Hubo un error inesperado.' });
         }
     }
 
