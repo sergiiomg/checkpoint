@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface Logro {
   id: number;
@@ -16,14 +17,20 @@ export interface Logro {
 })
 export class LogrosService {
   private apiUrl = 'http://localhost:8080/api/';
+  private headers: HttpHeaders = new HttpHeaders();
 
-  constructor(private http: HttpClient) {
-    this.headers = new HttpHeaders();
-    this.headers = this.headers.set('content-type', 'application/json')
-                               .set('Authorization', "Bearer " + localStorage.getItem('token')!);
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        this.headers = this.headers.set('content-type', 'application/json')
+                                   .set('Authorization', `Bearer ${token}`);
+      }
+    }
   }
-
-  private headers: HttpHeaders;
 
   obtenerLogros(): Observable<Logro[]> {
     return this.http.get<Logro[]>(`${this.apiUrl}logros`, { headers: this.headers });

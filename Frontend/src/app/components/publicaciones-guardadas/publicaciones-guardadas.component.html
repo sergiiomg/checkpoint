@@ -1,0 +1,21 @@
+<h2 class="titulo-seccion">Publicaciones guardadas</h2>
+
+<div *ngIf="publicacionesGuardadas.length === 0" class="mensaje-vacio">
+  <p>No has guardado ninguna publicación todavía.</p>
+</div>
+
+<div *ngFor="let pub of publicacionesGuardadas" class="publicacion" (click)="verDetalle(pub.id)">
+  <h3>{{ pub.titulo }}</h3>
+  <p>{{ pub.descripcion }}</p>
+
+  <div *ngIf="pub.tipo_media === 'imagen' && pub.media_url">
+    <img [src]="getMediaUrl(pub.media_url)" class="media" />
+  </div>
+  <div *ngIf="pub.tipo_media === 'video' && pub.media_url">
+    <video class="media" controls (click)="$event.stopPropagation()">
+      <source [src]="getMediaUrl(pub.media_url)" type="video/mp4" />
+    </video>
+  </div>
+
+  <button class="btn-ver-mas" (click)="verDetalle(pub.id); $event.stopPropagation()">Ver más</button>
+</div>

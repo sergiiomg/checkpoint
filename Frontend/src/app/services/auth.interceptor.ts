@@ -19,48 +19,47 @@ export class AuthInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (request.url.includes('/api/perfil') || request.url.includes('/api/auth/usuarios')) {
+    // Si no estamos en el navegador, continuar sin modificar
+    if (!isPlatformBrowser(this.platformId)) {
       return next.handle(request);
     }
 
-    console.log(request.url);
+    console.log('Interceptando petición a:', request.url);
 
-    let token: string | null = null;
-
-    // Solo accede a localStorage si estamos en el navegador
-    if (isPlatformBrowser(this.platformId)) {
-      token = localStorage.getItem('token');
+    const excludedUrls = ['/api/perfil', '/api/auth/usuarios', '/login'];
+    if (excludedUrls.some(url => request.url.includes(url))) {
+      return next.handle(request);
     }
 
-    console.log('AuthInterceptor: Interceptando petición a', request.url);
+    const token = localStorage.getItem('token'); // Usa siempre la misma clave
 
     if (token) {
-      console.log('Token encontrado, añadiendo a la cabecera');
+      console.log('✅ Token encontrado, añadiendo a la cabecera');
       const authRequest = request.clone({
         headers: request.headers.set('Authorization', `Bearer ${token}`)
       });
 
       return next.handle(authRequest).pipe(
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 401 && isPlatformBrowser(this.platformId)) {
-            console.log('Error 401: Token no válido o expirado');
-            localStorage.removeItem('auth_token');
+          if (error.status === 401) {
+            console.log('⚠️ Token no válido o expirado, redirigiendo al login');
+            localStorage.removeItem('token');
             this.router.navigate(['/login']);
           }
-          console.error('Error en la petición HTTP:', error);
+          console.error('❌ Error en la petición HTTP:', error);
           return throwError(() => error);
         })
       );
     } else {
-      console.log('No se encontró token de autenticación');
+      console.warn('⚠️ No se encontró token de autenticación');
 
       return next.handle(request).pipe(
         catchError((error: HttpErrorResponse) => {
-          if (error.status === 401 && !request.url.includes('/login') && isPlatformBrowser(this.platformId)) {
-            console.log('Error 401: Acceso no autorizado');
+          if (error.status === 401) {
+            console.log('⚠️ Acceso no autorizado, redirigiendo al login');
             this.router.navigate(['/login']);
           }
-          console.error('Error en la petición HTTP:', error);
+          console.error('❌ Error en la petición HTTP:', error);
           return throwError(() => error);
         })
       );

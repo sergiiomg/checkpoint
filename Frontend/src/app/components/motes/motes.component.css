@@ -1,0 +1,421 @@
+/* Contenedor principal de motes */
+.motes-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+  width: 100%;
+  margin: auto;
+  max-width: 1200px;
+}
+
+/* Título principal */
+.titulo-seccion {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+/* Descripción de la sección */
+.descripcion-seccion {
+  font-size: 1.1rem;
+  color: #c0c0c0;
+  text-align: center;
+  margin-bottom: 2rem;
+  max-width: 600px;
+}
+
+/* Spinner de carga */
+.mensaje-carga {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  color: #c0c0c0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #1d1d1d;
+  border-top: 4px solid #0099ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mensaje de carga */
+div[ng-if*="cargando"] {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #c0c0c0;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+  padding: 2rem;
+}
+
+/* Mensaje de error */
+.error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background-color: #2d1b1b;
+  border: 1px solid #ff4444;
+  border-radius: 10px;
+  color: #ff6b6b;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+  margin: 1rem 0;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 6px rgba(255, 68, 68, 0.3);
+}
+
+.icon-error {
+  font-size: 1.2rem;
+}
+
+/* Mensaje cuando no hay motes */
+.mensaje-vacio {
+  text-align: center;
+  padding: 3rem 2rem;
+  background-color: #1A1A1D;
+  border: 1px solid #1d1d1d;
+  border-radius: 10px;
+  margin: 2rem 0;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 500px;
+}
+
+.icono-vacio {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.mensaje-vacio h3 {
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.mensaje-vacio p {
+  color: #c0c0c0;
+  margin: 0;
+}
+
+/* Grid de motes */
+.motes-grid {
+  width: 100%;
+}
+
+.grid-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.grid-header h3 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.estadisticas {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat {
+  color: #c0c0c0;
+  font-size: 0.9rem;
+}
+
+.stat strong {
+  color: #0099ff;
+}
+
+/* Fila de motes (2 columnas) */
+.motes-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Tarjeta de cada mote */
+.mote-card {
+  background-color: #1A1A1D;
+  border: 1px solid #1d1d1d;
+  border-radius: 10px;
+  padding: 1.5rem;
+  color: #f1f1f1;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.mote-card:hover {
+  background-color: #0F0F10;
+  border-color: #0F0F10;
+  box-shadow: none;
+}
+
+.mote-card.bloqueado {
+  opacity: 0.7;
+  border-color: #666;
+}
+
+.mote-card.aplicado {
+  border-color: #28a745;
+  background-color: rgba(40, 167, 69, 0.05);
+}
+
+/* Header de la tarjeta */
+.mote-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.mote-icono {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.mote-info {
+  flex: 1;
+}
+
+.mote-info h4 {
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.nivel-badge {
+  background-color: rgba(102, 102, 102, 0.2);
+  color: #666;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  border: 1px solid #666;
+}
+
+.nivel-badge.desbloqueado {
+  background-color: rgba(0, 153, 255, 0.1);
+  color: #0099ff;
+  border-color: #0099ff;
+}
+
+.estado-badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.estado-badge.disponible {
+  background-color: rgba(0, 153, 255, 0.1);
+  color: #0099ff;
+  border: 1px solid #0099ff;
+}
+
+.estado-badge.aplicado {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  border: 1px solid #28a745;
+}
+
+.estado-badge.bloqueado {
+  background-color: rgba(102, 102, 102, 0.1);
+  color: #666;
+  border: 1px solid #666;
+}
+
+/* Descripción del mote */
+.mote-descripcion {
+  font-size: 0.95rem;
+  color: #c0c0c0;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* Detalles adicionales */
+.mote-detalles {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.detalle-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.detalle-item:last-child {
+  margin-bottom: 0;
+}
+
+.etiqueta {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.valor {
+  color: #c0c0c0;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Acciones */
+.mote-acciones {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+.btn-mote {
+  flex: 1;
+  background: none;
+  border: 1px solid #0099ff;
+  color: #0099ff;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+}
+
+.btn-mote:hover:not(:disabled) {
+  background-color: #0099ff;
+  color: white;
+}
+
+.btn-mote:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-mote.aplicado {
+  border-color: #28a745;
+  color: #28a745;
+  background-color: rgba(40, 167, 69, 0.1);
+}
+
+.btn-mote.bloqueado {
+  border-color: #666;
+  color: #666;
+}
+
+.btn-preview {
+  background: none;
+  border: 1px solid #666;
+  color: #666;
+  padding: 0.7rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.btn-preview:hover {
+  border-color: #888;
+  color: #888;
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+  .motes-container {
+    padding: 0.5rem;
+  }
+  
+  .estadisticas {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .motes-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .titulo-seccion {
+    font-size: 1.75rem;
+  }
+  
+  .descripcion-seccion {
+    font-size: 1rem;
+  }
+  
+  .estadisticas {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .mote-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .estado-badge {
+    align-self: flex-start;
+  }
+  
+  .mote-acciones {
+    flex-direction: column;
+  }
+  
+  .btn-preview {
+    padding: 0.7rem 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .motes-container {
+    padding: 0.25rem;
+  }
+  
+  .titulo-seccion {
+    font-size: 1.5rem;
+  }
+  
+  .mote-card {
+    padding: 1rem;
+  }
+  
+  .mote-icono {
+    font-size: 1.5rem;
+  }
+  
+  .mote-info h4 {
+    font-size: 1.1rem;
+  }
+  
+  .mote-descripcion {
+    font-size: 0.9rem;
+  }
+}

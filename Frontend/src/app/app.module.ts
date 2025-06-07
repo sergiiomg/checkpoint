@@ -21,6 +21,7 @@ import { PublicacionDetalleComponent } from './components/publicacion-detalle/pu
 import { PerfilUserComponent } from './components/perfil-user/perfil-user.component';
 import { AmigosComponent } from './components/amigos/amigos.component';
 import { LogrosComponent } from './components/logros/logros.component';
+import { MotesComponent } from './components/motes/motes.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { LogrosComponent } from './components/logros/logros.component';
     PublicacionDetalleComponent,
     PerfilUserComponent,
     AmigosComponent,
-    LogrosComponent
+    LogrosComponent,
+    MotesComponent
   ],
   imports: [
     BrowserModule,

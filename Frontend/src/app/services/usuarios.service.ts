@@ -21,10 +21,10 @@ export class UsuariosService {
     return this.http.post(this.apiUrl + 'auth/usuarios', usuario);
   }
 
-  loginUsuario(nombre_usuario: string, contrasena: string) {
-    return this.http.post(this.apiUrl + 'auth/login', {
-      nombre_usuario,
-      contrasena
+  loginUsuario(username: string, password: string): Observable<{ token: string }> {
+    return this.http.post<{ token: string }>('http://localhost:8080/api/auth/login', {
+      nombre_usuario: username,
+      contrasena: password
     });
   }
 

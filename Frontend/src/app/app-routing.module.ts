@@ -11,6 +11,8 @@ import { PublicacionDetalleComponent } from './components/publicacion-detalle/pu
 import { PerfilUserComponent } from './components/perfil-user/perfil-user.component';
 import { AmigosComponent } from './components/amigos/amigos.component';
 import { LogrosComponent } from './components/logros/logros.component';
+import { PublicacionesGuardadasComponent } from './components/publicaciones-guardadas/publicaciones-guardadas.component';
+import { MotesComponent } from './components/motes/motes.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
@@ -23,7 +25,9 @@ const routes: Routes = [
   { path: 'usuarios/:id',component: PerfilUserComponent},
   { path: 'editar-perfil', component: EditarPerfilComponent },
   { path: 'crear-publicacion', component: CrearPublicacionComponent },
-  { path: 'publicacion/:id',component: PublicacionDetalleComponent},
+  { path: 'publicacion/:id', component: PublicacionDetalleComponent},
+  { path: 'publicaciones-guardadas', component: PublicacionesGuardadasComponent},
+  { path: 'motes', component: MotesComponent},
   { path: '**', redirectTo: '' },
 ];
 

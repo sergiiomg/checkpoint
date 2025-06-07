@@ -29,7 +29,7 @@ export async function obtenerTodosLosMotesConEstado(req: Request, res: Response)
     res.status(200).json(motes);
   } catch (err) {
     console.error('Error al obtener motes con estado:', err);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Error interno del servidor' });
   }
 }
 

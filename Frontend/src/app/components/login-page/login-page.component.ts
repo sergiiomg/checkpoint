@@ -19,23 +19,27 @@ export class LoginPageComponent {
   ) {}
 
   login() {
-    // Verificar que hemos completado los campos
     if (!this.nombre_usuario || !this.contrasena) {
       this.error = "Por favor completa todos los campos";
       return;
     }
-
+  
     this.error = null;
     console.log('⌛ Intentando iniciar sesión con:', this.nombre_usuario);
-    
+  
     this.authService.loginUsuario(this.nombre_usuario, this.contrasena).subscribe({
       next: (respuesta) => {
         console.log('✅ Usuario autenticado, has iniciado sesión!');
         
-        // Verificar que el token existe antes de navegar
-        const token = localStorage.getItem('token');
-        console.log('Token almacenado después del login:', token ? 'Presente' : 'No encontrado');
-        
+        if (respuesta && respuesta.token) {
+          localStorage.setItem('token', respuesta.token);
+          console.log('🔐 Token guardado en localStorage');
+        } else {
+          console.warn('⚠️ La respuesta no contiene un token válido');
+          this.error = 'No se pudo obtener el token de autenticación';
+          return;
+        }
+  
         this.router.navigate(['/perfil']);
       },
       error: (error) => {
@@ -44,4 +48,5 @@ export class LoginPageComponent {
       }
     });
   }
+
 }

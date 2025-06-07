@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
@@ -27,7 +28,10 @@ export class PublicacionesService {
   private apiUrl = 'http://localhost:8080/api/';
    private baseUrl = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   getPublicaciones(): Observable<Publicacion[]> {
     console.log('🌐 LLAMANDO A:', this.apiUrl + 'auth/publicaciones');
@@ -99,6 +103,8 @@ export class PublicacionesService {
   }
 
   obtenerPublicacionesGuardadas(): Observable<Publicacion[]> {
+    console.log('🔁 Llamada REAL a obtenerPublicacionesGuardadas');
     return this.http.get<Publicacion[]>(`${this.apiUrl}publicaciones-guardadas`);
   }
+
 }
