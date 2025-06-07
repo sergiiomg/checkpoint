@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PublicacionesService, Publicacion } from '../../services/publicaciones.service';
 import { Router } from '@angular/router';
+import { ComentariosService } from '../../services/comentarios.service';
 
 @Component({
   selector: 'app-publicaciones-guardadas',
@@ -16,6 +17,7 @@ export class PublicacionesGuardadasComponent implements OnInit {
 
   constructor(
     private publicacionesService: PublicacionesService,
+    private comentariosService: ComentariosService,
     private router: Router
   ) {}
 
@@ -26,7 +28,10 @@ export class PublicacionesGuardadasComponent implements OnInit {
   cargarPublicacionesGuardadas(): void {
     this.publicacionesService.obtenerPublicacionesGuardadas().subscribe({
       next: (data: Publicacion[]) => {
-        this.publicacionesGuardadas = data;
+        this.publicacionesGuardadas = data.map(pub => ({
+          ...pub,
+          guardada: true
+        }));
       },
       error: (err) => {
         console.error('❌ Error cargando publicaciones guardadas:', err);
@@ -41,4 +46,53 @@ export class PublicacionesGuardadasComponent implements OnInit {
   verDetalle(id: number): void {
     this.router.navigate(['/publicacion', id]);
   }
+
+  toggleLike(publicacion: Publicacion) {
+    this.publicacionesService.likePublicacion(publicacion.id).subscribe({
+      next: (res) => {
+        publicacion.liked = res.liked;
+        publicacion.likesCount = res.totalLikes;
+      },
+      error: (err) => {
+        console.error('Error al dar me gusta:', err);
+      }
+    });
+  }
+  
+  toggleGuardar(pub: Publicacion) {
+    if (pub.guardada) {
+      this.publicacionesService.desguardarPublicacion(pub.id).subscribe(() => {
+        pub.guardada = false;
+      });
+    } else {
+      this.publicacionesService.guardarPublicacion(pub.id).subscribe(() => {
+        pub.guardada = true;
+      });
+    }
+  }
+  
+  toggleFormularioComentario(publicacionId: number): void {
+    if (this.publicacionComentandoId === publicacionId) {
+      this.publicacionComentandoId = null;
+    } else {
+      this.publicacionComentandoId = publicacionId;
+    }
+  }
+  
+  enviarComentario(publicacionId: number) {
+    if (!this.nuevoComentario.trim()) return;
+  
+    // Esto requiere que tengas ComentariosService también importado e inyectado
+    this.comentariosService.crearComentario(publicacionId, this.nuevoComentario).subscribe({
+      next: (res) => {
+        console.log('✅ Comentario creado:', res);
+        this.nuevoComentario = '';
+        this.publicacionComentandoId = null;
+      },
+      error: (err) => {
+        console.error('❌ Error al enviar comentario:', err);
+      }
+    });
+  }
+
 }

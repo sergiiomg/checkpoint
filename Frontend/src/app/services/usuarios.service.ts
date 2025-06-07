@@ -29,8 +29,7 @@ export class UsuariosService {
   }
 
   getUsuarioActualId(): number | null {
-  // Por ejemplo: si guardas token con payload o id en localStorage
-  const usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
-  return usuario?.id || null;
-}
+    const usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
+    return usuario?.id || null;
+  }
 }
