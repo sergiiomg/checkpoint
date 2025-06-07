@@ -30,6 +30,7 @@ export class PerfilUserComponent implements OnInit {
   ngOnInit(): void {
     // Prioridad a usuarioId recibido por Input, si no existe, tomar de ruta
     const id = this.usuarioId ?? Number(this.route.snapshot.paramMap.get('id'));
+    console.log('📦 ID del usuario desde ruta:', id);
 
     if (id) {
       this.usuarioId = id;
@@ -43,9 +44,17 @@ export class PerfilUserComponent implements OnInit {
   }
 
   cargarDatosUsuario(id: number) {
+    console.log('🔍 Cargando perfil del usuario con ID:', id);
+
     this.perfilService.obtenerUsuarioPorId(id).subscribe({
-      next: user => this.usuario = user,
-      error: () => this.error = 'No se pudo cargar el usuario'
+      next: user => {
+        console.log('✅ Usuario cargado:', user);
+        this.usuario = user;
+      },
+      error: err => {
+        console.error('❌ Error al obtener el usuario:', err);
+        this.error = 'No se pudo cargar el usuario';
+      }
     });
   }
 

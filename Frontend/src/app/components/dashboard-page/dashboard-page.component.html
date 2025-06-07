@@ -4,7 +4,7 @@
     <app-aside></app-aside>
     <div class="publicaciones-container" *ngIf="publicaciones.length > 0; else sinPublicaciones">
       <div class="publicacion" *ngFor="let p of publicaciones" (click)="verDetalle(p.id)">
-        <div class="autor">
+        <div class="autor"  [routerLink]="['/usuario', p.autor_id]" (click)="irAlPerfil(p.autor_id)">
           <img [src]="'http://localhost:8080' + p.autor_foto" alt="Foto perfil" class="foto-perfil">
           <span class="nombre-autor">{{ p.autor_nombre }}</span>
         </div>

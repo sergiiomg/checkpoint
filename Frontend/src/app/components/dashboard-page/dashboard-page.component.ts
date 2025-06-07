@@ -77,6 +77,10 @@ export class DashboardPageComponent implements OnInit {
     });
   }
 
+  irAlPerfil(usuarioId: number) {
+    this.router.navigate(['/usuarios', usuarioId]);
+  }
+
   getMediaUrl(mediaUrl: string | null): string | null {
     const result = this.publicacionesService.getFullMediaUrl(mediaUrl);
     return result;
