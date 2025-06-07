@@ -1,16 +1,45 @@
 <div class="logros-wrapper">
   <div class="logros-container">
+    <!-- Título principal -->
     <h2>Mis Logros</h2>
-    <div *ngIf="error">No se pudieron cargar los logros.</div>
+    <p class="descripcion-logros">
+      Desbloquea logros únicos participando en nuestra comunidad. Cada logro te otorga experiencia y reconocimiento especial.
+    </p>
 
-    <div class="logros-grid">
-      <div *ngFor="let logro of logros" class="logro-card">
-        <h3>{{ logro.nombre }}</h3>
+
+    <div *ngIf="error">No se pudieron cargar los logros. Inténtalo más tarde.</div>
+
+    <!-- Mensaje cuando no hay logros -->
+    <div *ngIf="logros.length === 0" class="mensaje-vacio">
+      <div class="icono-vacio">🏆</div>
+      <h3>¡Empieza tu aventura!</h3>
+      <p>Aún no has desbloqueado ningún logro. Participa en la comunidad para obtener tus primeros reconocimientos.</p>
+    </div>
+
+    <!-- Lista de logros -->
+    <div *ngIf="logros.length > 0" class="logros-grid">
+      <div *ngFor="let logro of logros" class="logro-card"
+           [class.completado]="logro.estado === 'Completado'"
+           [class.pendiente]="logro.estado !== 'Completado'">
+        
+        <!-- Header de la tarjeta -->
+        <div class="logro-header">
+          <div class="logro-icono">🏆</div>
+          <div class="logro-info">
+            <h3>{{ logro.nombre }}</h3>
+          </div>
+          <div class="estado-badge"
+               [class.completado]="logro.estado === 'Completado'"
+               [class.pendiente]="logro.estado !== 'Completado'">
+            {{ logro.estado }}
+          </div>
+        </div>
+
+        <!-- Descripción -->
         <p>{{ logro.descripcion }}</p>
-        <p>Experiencia: {{ logro.experiencia }}</p>
-        <p [ngClass]="{'completado': logro.estado === 'Completado', 'pendiente': logro.estado !== 'Completado'}">
-          {{ logro.estado }}
-        </p>
+        
+        <!-- Experiencia -->
+        <div class="experiencia-texto">Experiencia: {{ logro.experiencia }}</div>
       </div>
     </div>
   </div>

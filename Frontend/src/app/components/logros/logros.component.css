@@ -1,76 +1,326 @@
+/* Contenedor principal de logros */
 .logros-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .logros-container {
-  background-color: #1A1A1D;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
-  width: 850px;
-  color: white;
-  font-family: sans-serif;
-  text-align: center;
-}
-
-.logros-container h2{
-    margin-top: -0.5rem;
-    font-size: 30px;
-    color: white;
-}
-
-.logros-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-top: 15px;
-}
-
-.logro-card {
-  background: #2E2E30;
-  border-radius: 6px;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s;
-  color: white;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  cursor: pointer;
+  justify-content: center;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+  width: 100%;
 }
 
-.logro-card:hover{
-    background: #232327;
+/* Título principal */
+.logros-container h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
-.logro-card h3 {
-  font-size: 25px;
-  color: rgb(180, 200, 255);
+/* Descripción de la sección */
+.descripcion-logros {
+  font-size: 1.1rem;
+  color: #c0c0c0;
+  text-align: center;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+/* Spinner de carga */
+.mensaje-carga {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3rem;
+  color: #c0c0c0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #1d1d1d;
+  border-top: 4px solid #0099ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Mensaje de carga */
+div[ng-if*="cargando"] {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #c0c0c0;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+  padding: 2rem;
+}
+
+/* Mensaje de error */
+.logros-container > div[ng-if*="error"] {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background-color: #2d1b1b;
+  border: 1px solid #ff4444;
+  border-radius: 10px;
+  color: #ff6b6b;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+  margin: 1rem 0;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 6px rgba(255, 68, 68, 0.3);
+}
+
+.logros-container > div[ng-if*="error"]::before {
+  content: "⚠️";
+  font-size: 1.2rem;
+}
+
+/* Mensaje cuando no hay logros */
+.mensaje-vacio {
+  text-align: center;
+  padding: 3rem 2rem;
+  background-color: #1A1A1D;
+  border: 1px solid #1d1d1d;
+  border-radius: 10px;
+  margin: 2rem 0;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  width: 100%;
+  max-width: 500px;
+}
+
+.icono-vacio {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.mensaje-vacio h3 {
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.mensaje-vacio p {
+  color: #c0c0c0;
+  margin: 0;
+}
+
+/* Header del grid */
+.grid-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+.grid-header h3 {
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.estadisticas {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.stat {
+  color: #c0c0c0;
+  font-size: 0.9rem;
+}
+
+.stat strong {
+  color: #0099ff;
+}
+
+/* Grid de logros (2 columnas) */
+.logros-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Tarjeta de cada logro */
+.logro-card {
+  background-color: #1A1A1D;
+  border: 1px solid #1d1d1d;
+  border-radius: 10px;
+  padding: 1.5rem;
+  color: #f1f1f1;
+  font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s;
+  cursor: default;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.logro-card:hover {
+  background-color: #0F0F10;
+  border-color: #0F0F10;
+  box-shadow: none;
+}
+
+.logro-card.completado {
+  border-color: #28a745;
+  background-color: rgba(40, 167, 69, 0.05);
+}
+
+.logro-card.pendiente {
+  opacity: 0.7;
+  border-color: #666;
+}
+
+/* Header de la tarjeta */
+.logro-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.logro-icono {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.logro-info {
+  flex: 1;
+}
+
+.logro-info h3 {
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
   font-weight: bold;
 }
 
+.estado-badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.estado-badge.completado {
+  background-color: rgba(40, 167, 69, 0.1);
+  color: #28a745;
+  border: 1px solid #28a745;
+}
+
+.estado-badge.pendiente {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #ffc107;
+  border: 1px solid #ffc107;
+}
+
+/* Descripción del logro */
 .logro-card p {
-  color: #d0d0d0;
-  font-size: 15px;
+  font-size: 0.95rem;
+  color: #c0c0c0;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+  flex: 1;
 }
 
-.completado {
-  background-color: rgba(40, 167, 69, 0.7); /* Verde más tenue */
-  color: white;
+/* Experiencia */
+.experiencia-texto {
+  font-size: 0.9rem;
+  color: #0099ff;
   font-weight: bold;
-  padding: 8px;
-  border-radius: 6px;
-  width: 50%;
+  margin-bottom: 0.5rem;
 }
 
-.pendiente {
-  background-color: rgba(255, 115, 0, 0.815); /* Naranja más sutil */
-  color: white;
+/* Estados específicos de Angular */
+.logro-card p.completado {
+  color: #28a745;
   font-weight: bold;
-  padding: 8px;
-  border-radius: 6px;
-  width: 50%;
+}
+
+.logro-card p.pendiente {
+  color: #ffc107;
+  font-weight: bold;
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+  .logros-container {
+    padding: 0.5rem;
+  }
+  
+  .estadisticas {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .logros-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .logros-container h2 {
+    font-size: 1.75rem;
+  }
+  
+  .descripcion-logros {
+    font-size: 1rem;
+  }
+  
+  .estadisticas {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .logro-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .estado-badge {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .logros-container {
+    padding: 0.25rem;
+  }
+  
+  .logros-container h2 {
+    font-size: 1.5rem;
+  }
+  
+  .logro-card {
+    padding: 1rem;
+  }
+  
+  .logro-icono {
+    font-size: 1.5rem;
+  }
+  
+  .logro-info h3 {
+    font-size: 1.1rem;
+  }
+  
+  .logro-card p {
+    font-size: 0.9rem;
+  }
 }
