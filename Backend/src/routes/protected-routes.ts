@@ -97,4 +97,7 @@ router.get('/amigos', authenticateToken, seguimientosController.obtenerAmigos.bi
 //Llamada para verificar si el usuario está autenticado
 router.get('/check-auth', authenticateToken, (req, res) => authController.checkAuth(req, res));
 
+//Llamada para obtener el nivel y la experiencia actual del usuario autenticado
+router.get('/nivel', authenticateToken, (req, res) => usuariosController.obtenerMiNivel(req, res));
+
 export = router;

@@ -101,6 +101,31 @@ class UsuariosService{
       const actualizado = (rows as Usuario[])[0];
       return actualizado;
   }
+
+  async obtenerDatosNivelUsuario(id: number) {
+    const usuario = await this.usuariosRepository.obtenerUsuarioPorId(id);
+    if (!usuario) return null;
+  
+    const nivelActual = usuario.nivel;
+    const experienciaActual = usuario.experiencia;
+  
+    const db = await obtenerDB();
+    const [filaSiguiente]: any = await db.query(
+      'SELECT * FROM niveles WHERE nivel = ?',
+      [nivelActual + 1]
+    );
+  
+    const siguienteNivel = filaSiguiente[0]?.nivel ?? null;
+    const experienciaSiguienteNivel = filaSiguiente[0]?.experiencia_necesaria ?? null;
+  
+    return {
+      nivel_actual: nivelActual,
+      experiencia_actual: experienciaActual,
+      nivel_siguiente: siguienteNivel,
+      experiencia_siguiente_nivel: experienciaSiguienteNivel
+    };
+  }
+
 }
 
 export { UsuariosService }

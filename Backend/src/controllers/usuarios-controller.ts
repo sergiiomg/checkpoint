@@ -187,6 +187,30 @@ class UsuariosController {
       res.status(500).json({ error: 'Error del servidor' });
     }
   }
+
+  async obtenerMiNivel(req: Request, res: Response): Promise<void> {
+    try {
+      const idUsuario = (req as any).user?.id;
+  
+      if (!idUsuario) {
+        res.status(401).json({ error: 'Usuario no autenticado' });
+        return;
+      }
+  
+      const datosNivel = await this.usuariosService.obtenerDatosNivelUsuario(idUsuario);
+  
+      if (!datosNivel) {
+        res.status(404).json({ error: 'Usuario no encontrado' });
+        return;
+      }
+  
+      res.status(200).json(datosNivel);
+    } catch (error) {
+      console.error('❌ Error al obtener nivel del usuario autenticado:', error);
+      res.status(500).json({ error: 'Error al obtener nivel' });
+    }
+  }
+
 }
 
 export { UsuariosController };
