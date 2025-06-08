@@ -94,7 +94,7 @@ router.post('/seleccionar', authenticateToken, seleccionarMote);
 //Llamada para listar los usuarios con los que te sigues mutuamente.
 router.get('/amigos', authenticateToken, seguimientosController.obtenerAmigos.bind(seguimientosController));
 
-// Ruta para verificar si el usuario está autenticado
+//Llamada para verificar si el usuario está autenticado
 router.get('/check-auth', authenticateToken, (req, res) => authController.checkAuth(req, res));
 
 export = router;
