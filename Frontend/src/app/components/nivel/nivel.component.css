@@ -43,8 +43,8 @@
         /* Contenedor de información del nivel */
         .nivel-info-container {
             background: linear-gradient(145deg, #1A1A1D, #16161A);
-            border: 1px solid #2a2a2d;
-            border-radius: 20px;
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            border-radius: 6px;
             padding: 3rem;
             margin-bottom: 4rem;
             width: 100%;
@@ -63,7 +63,6 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.4), transparent);
         }
 
         .nivel-info {
@@ -74,14 +73,13 @@
         }
 
         .nivel {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #22c55e;
             min-width: 80px;
             text-align: center;
-            background: linear-gradient(145deg, rgba(34, 197, 94, 0.1), rgba(34, 197, 94, 0.05));
-            border: 2px solid rgba(34, 197, 94, 0.3);
-            border-radius: 16px;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 8px;
             padding: 1rem;
             position: relative;
             box-shadow: 
@@ -91,7 +89,7 @@
 
         .barra-experiencia {
             flex: 1;
-            height: 12px;
+            height: 20px;
             background: linear-gradient(145deg, #1a1a1a, #0f0f0f);
             border-radius: 20px;
             overflow: hidden;
@@ -180,9 +178,9 @@
         /* Sección de cómo subir de nivel */
         .como-subir-nivel {
             background: linear-gradient(145deg, #1A1A1D, #16161A);
-            border: 1px solid #2a2a2d;
-            border-radius: 20px;
-            padding: 3rem;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 8px;
+            padding: 2rem;
             width: 100%;
             max-width: 750px;
             box-shadow: 
@@ -199,13 +197,12 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.4), transparent);
         }
 
         .como-subir-nivel h3 {
             color: #ffffff;
             font-size: 1.6rem;
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
             text-align: center;
             font-weight: 600;
             background: linear-gradient(135deg, #ffffff, #e0e0e0);
@@ -229,7 +226,7 @@
             padding: 1.5rem 2rem;
             background: linear-gradient(145deg, rgba(168, 85, 247, 0.03), rgba(168, 85, 247, 0.01));
             border: 1px solid rgba(168, 85, 247, 0.15);
-            border-radius: 16px;
+            border-radius: 8px;
             color: #f1f1f1;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
@@ -250,7 +247,7 @@
             background: linear-gradient(145deg, #a855f7, #9333ea);
             color: #ffffff;
             padding: 0.6rem 1.2rem;
-            border-radius: 20px;
+            border-radius: 6px;
             font-size: 0.9rem;
             font-weight: 600;
             flex-shrink: 0;
