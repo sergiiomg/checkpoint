@@ -37,4 +37,10 @@ export class UsuariosService {
     const params = new HttpParams().set('query', query);
     return this.http.get<any[]>(`${this.apiUrl}auth/usuarios/buscar`, { params });
   }
+
+  obtenerNivelUsuario() {
+    return this.http.get<any>(`${this.apiUrl}nivel`, {
+      withCredentials: true
+    });
+  }
 }

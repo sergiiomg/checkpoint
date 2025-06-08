@@ -1,0 +1,42 @@
+<div class="nivel-wrapper">
+        <div class="nivel-container">
+            <h2>Tu Nivel</h2>
+            <p class="descripcion-nivel">
+                Aquí puedes comprobar tu progreso actual, cuánta experiencia te falta para el siguiente nivel y qué puedes hacer para subir de nivel más rápidamente.
+            </p>
+
+            <div *ngIf="!cargando" class="nivel-info-container">
+                <div class="nivel-info">
+                    <span class="nivel">{{ nivelActual }}</span>
+                    <div class="barra-experiencia">
+                        <div class="relleno" [style.width.%]="porcentaje"></div>
+                    </div>
+                    <span class="nivel">{{ nivelSiguiente }}</span>
+                </div>
+                <div class="exp-detalle">{{ experienciaActual }} / {{ experienciaSiguiente }} XP</div>
+            </div>
+
+            <div *ngIf="cargando" class="nivel-cargando">
+                <div class="spinner"></div>
+                Cargando nivel...
+            </div>
+
+            <div class="como-subir-nivel">
+                <h3>¿Cómo puedo subir de nivel?</h3>
+                <ul class="metodos-exp">
+                    <li>
+                        Creando publicaciones
+                        <span class="exp-valor">+2 XP</span>
+                    </li>
+                    <li>
+                        Creando comentarios
+                        <span class="exp-valor">+1 XP</span>
+                    </li>
+                    <li>
+                        Completando los diferentes logros disponibles
+                        <span class="exp-valor">Variable</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>

@@ -14,6 +14,7 @@ import { LogrosComponent } from './components/logros/logros.component';
 import { PublicacionesGuardadasComponent } from './components/publicaciones-guardadas/publicaciones-guardadas.component';
 import { MotesComponent } from './components/motes/motes.component';
 import { BuscadorComponent } from './components/buscador/buscador.component';
+import { NivelComponent } from './components/nivel/nivel.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'publicaciones-guardadas', component: PublicacionesGuardadasComponent},
   { path: 'motes', component: MotesComponent},
   { path: 'buscar', component: BuscadorComponent },
+  { path: 'nivel', component: NivelComponent },
   { path: '**', redirectTo: '' },
 ];
 

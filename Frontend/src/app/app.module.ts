@@ -24,6 +24,7 @@ import { LogrosComponent } from './components/logros/logros.component';
 import { MotesComponent } from './components/motes/motes.component';
 import { BuscadorComponent } from './components/buscador/buscador.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NivelComponent } from './components/nivel/nivel.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { HttpClientModule } from '@angular/common/http';
     AmigosComponent,
     LogrosComponent,
     MotesComponent,
-    BuscadorComponent
+    BuscadorComponent,
+    NivelComponent
   ],
   imports: [
     BrowserModule,
