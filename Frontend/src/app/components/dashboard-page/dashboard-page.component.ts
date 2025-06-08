@@ -14,6 +14,7 @@ export class DashboardPageComponent implements OnInit {
   publicaciones: Publicacion[] = [];
   publicacionComentandoId: number | null = null;
   nuevoComentario: string = '';
+  usuarioActualId: number = 0;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -24,6 +25,7 @@ export class DashboardPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.usuarioActualId = this.usuariosService.getUsuarioActualId() ?? 0;
     if (isPlatformBrowser(this.platformId)) {
       this.publicacionesService.getPublicaciones().subscribe({
         next: (data) => {
@@ -37,6 +39,20 @@ export class DashboardPageComponent implements OnInit {
     } else {
       console.log('🧠 Renderizando en el servidor: no se carga publicaciones todavía');
     }
+  }
+
+  eliminarPublicacion(pub: Publicacion) {
+    if (!confirm('¿Estás seguro de que deseas eliminar esta publicación?')) return;
+  
+    this.publicacionesService.eliminarPublicacion(pub.id).subscribe({
+      next: () => {
+        this.publicaciones = this.publicaciones.filter(p => p.id !== pub.id);
+        console.log('✅ Publicación eliminada');
+      },
+      error: (err) => {
+        console.error('❌ Error al eliminar publicación:', err);
+      }
+    });
   }
 
   verificarGuardadasUsuario() {

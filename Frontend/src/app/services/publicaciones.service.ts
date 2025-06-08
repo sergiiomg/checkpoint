@@ -99,4 +99,7 @@ export class PublicacionesService {
     return this.http.get<Publicacion[]>(`${this.apiUrl}publicaciones-guardadas`);
   }
 
+  eliminarPublicacion(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}publicaciones/${id}`);
+  }
 }

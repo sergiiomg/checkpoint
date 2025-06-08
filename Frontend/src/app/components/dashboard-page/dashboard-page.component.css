@@ -116,6 +116,11 @@ app-header{
   transition: color 0.3s;
 }
 
+.btn.eliminar:hover {
+  color: rgb(255, 81, 0);
+}
+
+
 .btn.like.liked {
   color: #FF0000 !important;
 }

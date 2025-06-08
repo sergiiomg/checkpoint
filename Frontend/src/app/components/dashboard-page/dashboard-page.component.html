@@ -4,7 +4,7 @@
     <app-aside></app-aside>
     <div class="publicaciones-container" *ngIf="publicaciones.length > 0; else sinPublicaciones">
       <div class="publicacion" *ngFor="let p of publicaciones" (click)="verDetalle(p.id)">
-        <div class="autor"  [routerLink]="['/usuario', p.autor_id]" (click)="irAlPerfil(p.autor_id)">
+        <div class="autor" [routerLink]="['/usuario', p.autor_id]" (click)="irAlPerfil(p.autor_id)">
           <img [src]="'http://localhost:8080' + p.autor_foto" alt="Foto perfil" class="foto-perfil">
           <span class="nombre-autor">{{ p.autor_nombre }}</span>
         </div>
@@ -34,9 +34,16 @@
             <button class="btn guardar" (click)="toggleGuardar(p)" [class.guardada]="p.guardada">
               <i class="{{ p.guardada ? 'fas' : 'far' }} fa-bookmark"></i>
             </button>
-            
+
+            <button
+              *ngIf="p.autor_id === usuarioActualId"
+              class="btn eliminar"
+              (click)="eliminarPublicacion(p); $event.stopPropagation();">
+              <i class="fas fa-trash-alt"></i>
+            </button>
           </div>
         </div>
+
         <div *ngIf="publicacionComentandoId === p.id" class="formulario-comentario" (click)="$event.stopPropagation()">
           <textarea [(ngModel)]="nuevoComentario" placeholder="Escribe tu comentario..."></textarea>
           <button (click)="enviarComentario(p.id)">Enviar</button>
