@@ -89,6 +89,15 @@ class AuthController {
             res.status(500).json({error: 'Error en el servidor'});
         }
     }
+
+    async checkAuth(req: Request, res: Response): Promise<void> {
+    const user = (req as any).user;
+    res.status(200).json({
+        message: 'Usuario autenticado',
+        user
+    });
+}
+
 }
 
 export { AuthController };

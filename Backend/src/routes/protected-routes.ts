@@ -11,6 +11,7 @@ import { SeguimientosController } from '../controllers/seguimientos-controller';
 import { LogrosController } from '../controllers/logros-controller';
 import { seleccionarMote } from '../controllers/motes-controller';
 import { obtenerTodosLosMotesConEstado } from '../controllers/motes-controller';
+import { AuthController } from '../controllers/auth-controller';
 
 const router = express.Router();
 const controller = new TestController();
@@ -21,6 +22,7 @@ const publicacionesGuardadasController = new PublicacionesGuardadasController();
 const comentariosController = new ComentariosController();
 const seguimientosController = new SeguimientosController();
 const logrosController = new LogrosController();
+const authController = new AuthController();
 
 // Llamada GET genérica al controlador
 router.get('/', (req, res) => controller.getTestResponse(req, res));
@@ -91,5 +93,8 @@ router.post('/seleccionar', authenticateToken, seleccionarMote);
 
 //Llamada para listar los usuarios con los que te sigues mutuamente.
 router.get('/amigos', authenticateToken, seguimientosController.obtenerAmigos.bind(seguimientosController));
+
+// Ruta para verificar si el usuario está autenticado
+router.get('/check-auth', authenticateToken, (req, res) => authController.checkAuth(req, res));
 
 export = router;
