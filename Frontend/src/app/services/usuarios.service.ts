@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 export interface UsuarioRegistro {
   nombre_usuario: string;
@@ -31,5 +31,10 @@ export class UsuariosService {
   getUsuarioActualId(): number | null {
     const usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
     return usuario?.id || null;
+  }
+
+  buscarUsuarios(query: string): Observable<any[]> {
+    const params = new HttpParams().set('query', query);
+    return this.http.get<any[]>(`${this.apiUrl}auth/usuarios/buscar`, { params });
   }
 }

@@ -13,6 +13,7 @@ import { AmigosComponent } from './components/amigos/amigos.component';
 import { LogrosComponent } from './components/logros/logros.component';
 import { PublicacionesGuardadasComponent } from './components/publicaciones-guardadas/publicaciones-guardadas.component';
 import { MotesComponent } from './components/motes/motes.component';
+import { BuscadorComponent } from './components/buscador/buscador.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'publicacion/:id', component: PublicacionDetalleComponent},
   { path: 'publicaciones-guardadas', component: PublicacionesGuardadasComponent},
   { path: 'motes', component: MotesComponent},
+  { path: 'buscar', component: BuscadorComponent },
   { path: '**', redirectTo: '' },
 ];
 

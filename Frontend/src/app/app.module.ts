@@ -22,6 +22,8 @@ import { PerfilUserComponent } from './components/perfil-user/perfil-user.compon
 import { AmigosComponent } from './components/amigos/amigos.component';
 import { LogrosComponent } from './components/logros/logros.component';
 import { MotesComponent } from './components/motes/motes.component';
+import { BuscadorComponent } from './components/buscador/buscador.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -40,10 +42,12 @@ import { MotesComponent } from './components/motes/motes.component';
     PerfilUserComponent,
     AmigosComponent,
     LogrosComponent,
-    MotesComponent
+    MotesComponent,
+    BuscadorComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     ReactiveFormsModule,
     AppRoutingModule,
     FormsModule,

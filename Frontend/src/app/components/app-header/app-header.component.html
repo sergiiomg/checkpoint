@@ -6,9 +6,16 @@
                 <span class="site-name">CheckPoint</span>
             </a>
 
-            <form action="/buscar" method="GET" class="search-form">
-                <input type="text" name="q" placeholder="Buscar...">
+            <form (submit)="redirigirABuscador()" class="search-form">
+                <input
+                    type="text"
+                    name="q"
+                    [(ngModel)]="query"
+                    placeholder="Buscar..."
+                    required
+                >
             </form>
+
 
             <a href="/perfil" class="profile-link">
                 <img src="assets/images/perfil.png" alt="Tu perfil" class="profile-pic">

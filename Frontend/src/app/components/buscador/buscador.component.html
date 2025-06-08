@@ -1,0 +1,19 @@
+<div class="dashboard-layout">
+  <app-header></app-header>
+  <div class="dashboard-body">
+    <app-aside></app-aside>
+
+    <div class="buscador">
+    <div *ngIf="cargando">Buscando...</div>
+        <div *ngFor="let usuario of usuarios" class="amigo-card">
+            <div class="perfil-info">
+                    <img [src]="'http://localhost:8080' + usuario.foto_perfil_url" alt="Foto de perfil" class="foto-perfil">
+                    <span class="nombre">{{ usuario.nombre_usuario }}</span>
+            </div>
+            <button class="btn-perfil" (click)="verPerfil(usuario.id)">Ver Perfil</button>
+        </div>
+
+        <div *ngIf="!cargando && usuarios.length === 0 && query">No se encontraron usuarios</div>
+    </div>
+  </div>
+</div>
