@@ -1,3 +1,16 @@
+.dashboard-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+app-header{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
 .container {
   display: flex;
   flex-direction: column; /* Asegura disposición vertical */
@@ -154,6 +167,10 @@
   transition: color 0.3s;
 }
 
+.btn.eliminar:hover{
+  color: #ff5100;
+}
+
 
 /* Efecto de color al pasar el cursor */
 .btn.comentar:hover {
@@ -170,4 +187,8 @@
 
 .liked {
   color: red;
+}
+
+.guardada{
+  color: #ff8800;
 }

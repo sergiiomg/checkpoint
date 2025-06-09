@@ -31,17 +31,9 @@ export class SignUpComponent {
     this.usuariosService.registrarUsuario(nuevoUsuario).subscribe({
       next: (respuesta) => {
         console.log('✅ Usuario autenticado, has iniciado sesión!');
-        
-        if (respuesta && respuesta.token) {
-          localStorage.setItem('token', respuesta.token);
-          console.log('🔐 Token guardado en localStorage');
-        } else {
-          console.warn('⚠️ La respuesta no contiene un token válido');
-          this.error = 'No se pudo obtener el token de autenticación';
-          return;
-        }
+        localStorage.setItem('token', respuesta.token);
   
-        this.router.navigate(['/perfil']);
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         this.error = 'Error al registrar usuario.';

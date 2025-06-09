@@ -128,7 +128,22 @@ export class PublicacionesController {
       const db = await obtenerDB();
   
       const [publicaciones] = await db.query(
-        `SELECT * FROM publicaciones WHERE autor_id = ? ORDER BY fecha_creacion DESC`,
+        `
+          SELECT 
+            p.id,
+            p.autor_id,
+            p.titulo,
+            p.descripcion,
+            p.media_url,
+            p.tipo_media,
+            p.fecha_creacion,
+            COUNT(l.id) AS likesCount
+          FROM publicaciones p
+          LEFT JOIN likes l ON p.id = l.publicacion_id
+          WHERE p.autor_id = ?
+          GROUP BY p.id
+          ORDER BY p.fecha_creacion DESC
+        `,
         [id]
       );
   

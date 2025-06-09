@@ -40,7 +40,7 @@ export class LoginPageComponent {
           return;
         }
   
-        this.router.navigate(['/perfil']);
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         console.error('❌ Error al iniciar sesión:', error);
