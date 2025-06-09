@@ -22,7 +22,7 @@
 
         <div class="acciones" (click)="$event.stopPropagation()">
           <div class="grupo-izquierda">
-            <button class="btn like" [class.liked]="p.liked">
+            <button class="btn like" [class.liked]="p.liked" (click)="toggleLike(p)">
               <i class="{{ p.liked ? 'fas' : 'far' }} fa-heart"></i>
               {{ p.likesCount || 0 }}
             </button>

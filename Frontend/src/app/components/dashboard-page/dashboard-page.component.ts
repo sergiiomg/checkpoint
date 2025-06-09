@@ -31,6 +31,7 @@ export class DashboardPageComponent implements OnInit {
         next: (data) => {
           this.publicaciones = data;
           this.verificarGuardadasUsuario();
+          this.verificarLikeadasUsuario();
         },
         error: (err) => {
           console.error('❌ Error cargando publicaciones:', err);
@@ -53,6 +54,31 @@ export class DashboardPageComponent implements OnInit {
         console.error('❌ Error al eliminar publicación:', err);
       }
     });
+  }
+
+  verificarLikeadasUsuario() {
+    this.publicacionesService.obtenerPublicacionesLikeadas().subscribe(
+      likeadas => {
+        this.publicaciones.forEach(pub => {
+          pub.liked = likeadas.includes(pub.id);
+        });
+      },
+      error => {
+        console.error('Error al verificar publicaciones likeadas:', error);
+      }
+    );
+  }
+
+  toggleLike(publicacion: Publicacion): void {
+    this.publicacionesService.toggleLike(publicacion.id).subscribe(
+      (res) => {
+        publicacion.liked = res.liked;
+        publicacion.likesCount = res.totalLikes;
+      },
+      (error) => {
+        console.error('Error al dar like:', error);
+      }
+    );
   }
 
   verificarGuardadasUsuario() {

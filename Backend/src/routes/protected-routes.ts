@@ -11,7 +11,7 @@ import { LogrosController } from '../controllers/logros-controller';
 import { seleccionarMote } from '../controllers/motes-controller';
 import { obtenerTodosLosMotesConEstado } from '../controllers/motes-controller';
 import { AuthController } from '../controllers/auth-controller';
-import { toggleLikeController } from "../controllers/likes-controller";
+import { obtenerPublicacionesLikeadas, toggleLikeController } from "../controllers/likes-controller";
 
 const router = express.Router();
 const controller = new TestController();
@@ -41,6 +41,8 @@ router.delete('/publicaciones/:id', authenticateToken, (req, res) =>publicacione
 
 //Llamada para dar o quitar like
 router.post("/like/:publicacionId", authenticateToken, toggleLikeController);
+
+router.get('/publicaciones-likeadas', authenticateToken, obtenerPublicacionesLikeadas);
 
 //Llamada para guardar publicación
 router.post('/publicaciones/:id/guardar', authenticateToken, (req, res) =>publicacionesGuardadasController.guardar(req, res));

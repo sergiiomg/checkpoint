@@ -56,18 +56,6 @@ export class PerfilPageComponent implements OnInit {
     });
   }
 
-  toggleLike(publicacion: Publicacion) {
-      this.publicacionesService.likePublicacion(publicacion.id).subscribe({
-        next: (res) => {
-          publicacion.liked = res.liked;
-          publicacion.likesCount = res.totalLikes;
-        },
-        error: (err: any) => {
-          console.error('Error al dar me gusta:', err);
-        }
-      });
-    }
-
   cargarSeguidoresYSeguidos(id: number): void {
     this.perfilService.obtenerSeguidores(id).subscribe({
       next: (data) => this.seguidoresCount = data.length,
