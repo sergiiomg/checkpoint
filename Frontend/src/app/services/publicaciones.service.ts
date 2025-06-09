@@ -48,11 +48,12 @@ export class PublicacionesService {
     );
   }
 
-  likePublicacion(publicacionId: number): Observable<{ liked: boolean, totalLikes: number }> {
-    return this.http.post<{ liked: boolean, totalLikes: number }>(
-      `${this.apiUrl}publicaciones/${publicacionId}/like`, 
-      {}
-    );
+  toggleLike(publicacionId: number): Observable<{ liked: boolean; totalLikes: number }> {
+    return this.http.post<{ liked: boolean; totalLikes: number }>(this.apiUrl + `like/${publicacionId}`,{});
+  }
+
+  obtenerPublicacionesLikeadas(): Observable<number[]> {
+    return this.http.get<number[]>(`${this.apiUrl}publicaciones-likeadas`);
   }
 
   crearPublicacion(data: FormData): Observable<any> {

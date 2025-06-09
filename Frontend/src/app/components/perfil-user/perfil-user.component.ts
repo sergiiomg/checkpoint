@@ -99,16 +99,6 @@ export class PerfilUserComponent implements OnInit {
     });
   }
 
-  toggleLike(publicacion: Publicacion) {
-    this.publicacionesService.likePublicacion(publicacion.id).subscribe({
-      next: (res) => {
-        publicacion.liked = res.liked;
-        publicacion.likesCount = res.totalLikes;
-      },
-      error: (err) => console.error('Error al dar me gusta:', err)
-    });
-  }
-
   isGuardada(publicacion: Publicacion): boolean {
     return publicacion.guardada === true;
   }

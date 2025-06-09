@@ -46,18 +46,6 @@ export class PublicacionesGuardadasComponent implements OnInit {
   verDetalle(id: number): void {
     this.router.navigate(['/publicacion', id]);
   }
-
-  toggleLike(publicacion: Publicacion) {
-    this.publicacionesService.likePublicacion(publicacion.id).subscribe({
-      next: (res) => {
-        publicacion.liked = res.liked;
-        publicacion.likesCount = res.totalLikes;
-      },
-      error: (err) => {
-        console.error('Error al dar me gusta:', err);
-      }
-    });
-  }
   
   toggleGuardar(pub: Publicacion) {
     if (pub.guardada) {
