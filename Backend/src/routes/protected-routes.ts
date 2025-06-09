@@ -2,7 +2,6 @@ import express from 'express';
 import { TestController } from '../controllers/test-controller';
 import { UsuariosController } from '../controllers/usuarios-controller';
 import { PublicacionesController } from '../controllers/publicaciones-controller';
-import { LikesController } from '../controllers/likes-controller';
 import { upload } from '../middleware/upload';
 import { PublicacionesGuardadasController } from '../controllers/publicaciones-guardadas-controller';
 import { authenticateToken } from '../middleware/auth';
@@ -12,12 +11,12 @@ import { LogrosController } from '../controllers/logros-controller';
 import { seleccionarMote } from '../controllers/motes-controller';
 import { obtenerTodosLosMotesConEstado } from '../controllers/motes-controller';
 import { AuthController } from '../controllers/auth-controller';
+import { toggleLikeController } from "../controllers/likes-controller";
 
 const router = express.Router();
 const controller = new TestController();
 const usuariosController = new UsuariosController();
 const publicacionesController = new PublicacionesController();
-const likesController = new LikesController();
 const publicacionesGuardadasController = new PublicacionesGuardadasController();
 const comentariosController = new ComentariosController();
 const seguimientosController = new SeguimientosController();
@@ -41,7 +40,7 @@ router.post('/publicaciones', upload.single('media'), (req, res) => publicacione
 router.delete('/publicaciones/:id', authenticateToken, (req, res) =>publicacionesController.eliminar(req, res));
 
 //Llamada para dar o quitar like
-router.post('/publicaciones/:id/like', authenticateToken, (req, res) => likesController.toggleLike(req, res));
+router.post("/like/:publicacionId", authenticateToken, toggleLikeController);
 
 //Llamada para guardar publicación
 router.post('/publicaciones/:id/guardar', authenticateToken, (req, res) =>publicacionesGuardadasController.guardar(req, res));
@@ -60,9 +59,6 @@ router.delete('/comentarios/:id', authenticateToken, (req, res) =>comentariosCon
 
 //Llamada para editar un comentario
 router.put('/comentarios/:id', authenticateToken, (req, res) =>comentariosController.editar(req, res));
-
-//Llamada para dar like a un comentario
-router.post('/comentarios/:id/like', authenticateToken, (req, res) => comentariosController.toggleLikeComentario(req, res));
 
 //Llamada para seguir a un usuario
 router.post('/usuarios/:id/seguir', authenticateToken, (req, res) => seguimientosController.seguir(req, res));
@@ -84,9 +80,6 @@ router.get('/logros', authenticateToken, (req, res) => logrosController.obtenerT
 
 //Llamada para obtener todos los motes
 router.get('/motes',  authenticateToken, obtenerTodosLosMotesConEstado);
-
-//Llamada para obtener las publicaciones a las que el usuario ha dado like
-router.get('/usuario/likes', authenticateToken, (req, res) =>likesController.obtenerLikesDelUsuario(req, res));
 
 //Llamada para selecciones un mote
 router.post('/seleccionar', authenticateToken, seleccionarMote);

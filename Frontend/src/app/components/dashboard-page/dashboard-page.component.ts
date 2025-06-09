@@ -81,18 +81,6 @@ export class DashboardPageComponent implements OnInit {
     }
   }
 
-  toggleLike(publicacion: Publicacion) {
-    this.publicacionesService.likePublicacion(publicacion.id).subscribe({
-      next: (res) => {
-        publicacion.liked = res.liked;
-        publicacion.likesCount = res.totalLikes;
-      },
-      error: (err: any) => {
-        console.error('Error al dar me gusta:', err);
-      }
-    });
-  }
-
   irAlPerfil(usuarioId: number) {
     this.router.navigate(['/usuarios', usuarioId]);
   }

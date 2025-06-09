@@ -31,10 +31,5 @@ export class PublicacionesGuardadasService {
   toggleGuardado(publicacionId: number): Observable<any> {
     return this.http.delete(this.apiUrl + `publicaciones/${publicacionId}/guardar`);
   }
-
-  toggleLike(publicacionId: number): Observable<any> {
-    return this.http.post(this.apiUrl + `publicaciones/${publicacionId}/like`, {});
-  }
-
   
 }

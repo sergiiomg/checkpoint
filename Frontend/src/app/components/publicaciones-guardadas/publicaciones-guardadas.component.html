@@ -23,7 +23,7 @@
     <!-- 🔘 Botones de interacción -->
     <div class="acciones" (click)="$event.stopPropagation()">
       <div class="grupo-izquierda">
-        <button class="btn like" [class.liked]="pub.liked" (click)="toggleLike(pub)">
+        <button class="btn like" [class.liked]="pub.liked">
           <i class="{{ pub.liked ? 'fas' : 'far' }} fa-heart"></i>
           {{ pub.likesCount || 0 }}
         </button>
