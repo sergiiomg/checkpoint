@@ -40,21 +40,21 @@ export class LikesController {
     }
   }
 
-  async verificarMultiplesLikes(req: Request, res: Response): Promise<void> {
+  async obtenerLikesDelUsuario(req: Request, res: Response): Promise<void> {
     const usuarioId = (req as any).user?.id;
-    const { publicacionIds } = req.body;
   
-    if (!usuarioId || !publicacionIds || !Array.isArray(publicacionIds)) {
-      res.status(400).json({ error: 'Faltan datos o formato incorrecto' });
+    if (!usuarioId) {
+      res.status(400).json({ error: 'Usuario no autenticado' });
       return;
     }
   
     try {
-      const likes = await this.service.verificarMultiplesLikes(usuarioId, publicacionIds);
-      res.status(200).json({ likes });
+      const publicaciones = await this.service.obtenerPublicacionesConLike(Number(usuarioId));
+      res.status(200).json({ publicaciones });
     } catch (error) {
-      console.error('Error al verificar múltiples likes:', error);
-      res.status(500).json({ error: 'Error al verificar likes' });
+      console.error('Error al obtener publicaciones con like:', error);
+      res.status(500).json({ error: 'Error del servidor' });
     }
   }
+
 }

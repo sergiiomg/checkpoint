@@ -42,14 +42,17 @@ export class LikesRepository {
     return rows[0].total;
   }
 
-  async verificarMultiplesLikes(usuarioId: number, publicacionIds: number[]): Promise<number[]> {
+  async obtenerPublicacionesConLike(usuarioId: number) {
     const db = await obtenerDB();
-    const placeholders = publicacionIds.map(() => '?').join(',');
     const [rows] = await db.query<RowDataPacket[]>(
-      `SELECT publicacion_id FROM likes WHERE usuario_id = ? AND publicacion_id IN (${placeholders})`,
-      [usuarioId, ...publicacionIds]
+      `SELECT p.*
+       FROM publicaciones p
+       JOIN likes l ON p.id = l.publicacion_id
+       WHERE l.usuario_id = ? 
+       ORDER BY l.id DESC`,
+      [usuarioId]
     );
-    
-    return rows.map(row => row.publicacion_id);
+    return rows;
   }
+
 }

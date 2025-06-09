@@ -23,7 +23,6 @@ export class PublicacionesRepository {
     };
   }
 
-  // ✅ MANTÉN SOLO ESTE método básico para obtener por ID
   async obtenerPorId(id: number): Promise<Publicacion | null> {
     const db = await obtenerDB();
     const [rows] = await db.execute(

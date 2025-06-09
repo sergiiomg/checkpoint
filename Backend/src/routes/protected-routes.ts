@@ -85,8 +85,8 @@ router.get('/logros', authenticateToken, (req, res) => logrosController.obtenerT
 //Llamada para obtener todos los motes
 router.get('/motes',  authenticateToken, obtenerTodosLosMotesConEstado);
 
-//Llamada pare verificar likes
-router.get('likes/verificar-multiples', authenticateToken, likesController.verificarMultiplesLikes);
+//Llamada para obtener las publicaciones a las que el usuario ha dado like
+router.get('/usuario/likes', authenticateToken, (req, res) =>likesController.obtenerLikesDelUsuario(req, res));
 
 //Llamada para selecciones un mote
 router.post('/seleccionar', authenticateToken, seleccionarMote);

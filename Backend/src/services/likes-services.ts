@@ -39,22 +39,9 @@ export class LikesService {
     return totalLikesLogro;
   }
 
-  async verificarMultiplesLikes(usuarioId: number, publicacionIds: number[]): Promise<{[key: number]: boolean}> {
-    if (publicacionIds.length === 0) {
-      return {};
-    }
-  
-    const publicacionesConLike = await this.repo.verificarMultiplesLikes(usuarioId, publicacionIds);
-    
-    // Crear mapa con todos los IDs como false inicialmente
-    const likesMap: {[key: number]: boolean} = {};
-    publicacionIds.forEach(id => likesMap[id] = false);
-    
-    // Marcar como true los que sí tienen like
-    publicacionesConLike.forEach(publicacionId => {
-      likesMap[publicacionId] = true;
-    });
-    
-    return likesMap;
+  async obtenerPublicacionesConLike(usuarioId: number) {
+    const publicaciones = await this.repo.obtenerPublicacionesConLike(usuarioId);
+    return publicaciones;
   }
+
 }
