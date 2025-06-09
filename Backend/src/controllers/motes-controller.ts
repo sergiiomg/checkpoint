@@ -7,6 +7,7 @@ export const obtenerMotes = async (req: Request, res: Response): Promise<void> =
 
   if (!usuarioId) {
      res.status(401).json({ message: 'No autorizado' });
+     return;
   }
 
   try {
@@ -20,6 +21,7 @@ export const obtenerMotes = async (req: Request, res: Response): Promise<void> =
 
     if (!Array.isArray(usuarios) || usuarios.length === 0) {
        res.status(404).json({ message: 'Usuario no encontrado' });
+       return;
     }
 
     const usuario = (usuarios as any[])[0];
@@ -44,9 +46,11 @@ export const obtenerMotes = async (req: Request, res: Response): Promise<void> =
     }));
 
     res.status(200).json(motesFormateados);
+    return;
   } catch (err) {
     console.error('Error al obtener motes:', err);
     res.status(500).json({ message: 'Error interno del servidor' });
+    return;
   }
 };
 
@@ -57,6 +61,7 @@ export const seleccionarMote = async (req: Request, res: Response): Promise<void
 
   if (!usuarioId) {
      res.status(401).json({ message: 'No autorizado' });
+     return;
   }
 
   const db = await obtenerDB();
@@ -65,6 +70,7 @@ export const seleccionarMote = async (req: Request, res: Response): Promise<void
   if (moteId === null || isNaN(moteId)) {
     await db.execute('UPDATE usuarios SET mote_actual = NULL WHERE id = ?', [usuarioId]);
      res.status(200).json({ message: '✅ Mote quitado correctamente' });
+     return;
   }
 
   // Obtener datos del usuario (nivel)
@@ -75,6 +81,7 @@ export const seleccionarMote = async (req: Request, res: Response): Promise<void
   const usuario = (usuariosResult as RowDataPacket[])[0];
   if (!usuario) {
      res.status(404).json({ message: 'Usuario no encontrado' });
+     return;
   }
 
   // Obtener info del mote
@@ -85,19 +92,23 @@ export const seleccionarMote = async (req: Request, res: Response): Promise<void
   const mote = (motesResult as RowDataPacket[])[0];
   if (!mote) {
      res.status(404).json({ message: 'Mote no encontrado' });
+     return;
   }
 
   if (usuario.nivel < mote.nivel_minimo) {
      res.status(403).json({ message: 'No tienes el nivel necesario para este mote' });
+     return;
   }
 
-  // ✅ Actualizar mote_actual (ahora con ID del mote, no nombre)
+  // ✅ Actualizar mote_actual
   await db.execute(
     'UPDATE usuarios SET mote_actual = ? WHERE id = ?',
     [mote.nombre, usuarioId]
   );
 
    res.status(200).json({ message: '✅ Mote actualizado correctamente', mote_actual: mote.nombre });
+   return;
 };
+
 
 

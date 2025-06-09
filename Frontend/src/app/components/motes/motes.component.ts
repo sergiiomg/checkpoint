@@ -19,6 +19,7 @@ export class MotesPageComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
+    this.cargarPerfil();
     this.cargarMotes();
   }
 
@@ -66,18 +67,36 @@ export class MotesPageComponent implements OnInit {
     });
   }
 
-    aplicarMote(mote: any) {
-      if (mote.estado !== 'Aplicar') return;
-    
-      this.perfilService.seleccionarMote(mote.id).subscribe({
-        next: (res) => {
-          alert('✅ Mote aplicado correctamente');
-          this.cargarMotes();
-          this.perfilEventsService.emitirMoteCambiado();
+  aplicarMote(mote: any) {
+    if (mote.estado !== 'Aplicar') return;
+  
+    this.perfilService.seleccionarMote(mote.id).subscribe({
+      next: (res) => {
+        console.log('Respuesta al aplicar mote:', res);
+        alert('✅ Mote aplicado correctamente');
+        // Actualizar usuario con el mote actual que devuelve la API
+        if (res.mote_actual) {
+          this.usuario.mote_actual = res.mote_actual;
+        }
+        this.cargarMotes();
+        this.perfilEventsService.emitirMoteCambiado();
+      },
+      error: (err) => {
+        console.error('❌ Error al aplicar mote:', err);
+        alert('No se pudo aplicar el mote');
+      }
+    });
+  }
+
+
+    cargarPerfil() {
+      this.perfilService.obtenerPerfil().subscribe({
+        next: (perfil) => {
+          this.usuario = perfil;
+          this.cargarMotes();  // Recargar motes para reflejar el mote actual
         },
         error: (err) => {
-          console.error('❌ Error al aplicar mote:', err);
-          alert('No se pudo aplicar el mote');
+          console.error('Error al obtener perfil:', err);
         }
       });
     }

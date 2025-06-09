@@ -20,11 +20,15 @@ export class PerfilService {
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
-    this.headers = this.headers.set('content-type', 'application/json')
-                               .set('Authorization', "Bearer " + localStorage.getItem('token')!);
+
    }
 
   private headers: HttpHeaders;
+  private getHeaders(): HttpHeaders {
+  return new HttpHeaders()
+    .set('content-type', 'application/json')
+    .set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+}
 
   // Obtener el perfil del usuario logueado
   obtenerPerfil(): Observable<any> {
@@ -33,7 +37,7 @@ export class PerfilService {
     //   console.log('Token en PerfilService:', token ? 'Presente' : 'No encontrado');
     // }
 
-    return this.http.get(`${this.apiUrl}perfil`, {'headers': this.headers}).pipe(
+    return this.http.get(`${this.apiUrl}perfil`, {'headers': this.getHeaders()}).pipe(
       tap(response => console.log('Perfil obtenido:', response))
     );
   }
@@ -80,10 +84,10 @@ export class PerfilService {
   }
   
   seleccionarMote(id: number | null) {
-    return this.http.put<{ message: string; mote_actual: string }>(`${this.apiUrl}seleccionar-mote/${id}`, {headers: this.headers});
-   }
+    return this.http.put<{ message: string; mote_actual: string }>(`${this.apiUrl}seleccionar-mote/${id}`, {}, { headers: this.headers });
+  }
 
-   getMotes() {
+  getMotes() {
     return this.http.get<any[]>(`${this.apiUrl}motes`);
   }
 }
