@@ -8,10 +8,9 @@ import { authenticateToken } from '../middleware/auth';
 import { ComentariosController } from '../controllers/comentarios-controller';
 import { SeguimientosController } from '../controllers/seguimientos-controller';
 import { LogrosController } from '../controllers/logros-controller';
-import { seleccionarMote } from '../controllers/motes-controller';
-import { obtenerTodosLosMotesConEstado } from '../controllers/motes-controller';
 import { AuthController } from '../controllers/auth-controller';
 import { obtenerPublicacionesLikeadas, toggleLikeController } from "../controllers/likes-controller";
+import { obtenerMotes } from '../controllers/motes-controller';
 
 const router = express.Router();
 const controller = new TestController();
@@ -80,11 +79,8 @@ router.get('/usuarios/:id/amigos', authenticateToken, (req, res) =>seguimientosC
 //Llamada para obtener todos los logros
 router.get('/logros', authenticateToken, (req, res) => logrosController.obtenerTodosLosLogrosConEstado(req, res));
 
-//Llamada para obtener todos los motes
-router.get('/motes',  authenticateToken, obtenerTodosLosMotesConEstado);
-
-//Llamada para selecciones un mote
-router.post('/seleccionar', authenticateToken, seleccionarMote);
+//Llamada para obtener todos los motes con su estado
+router.get('/motes', authenticateToken, obtenerMotes);
 
 //Llamada para listar los usuarios con los que te sigues mutuamente.
 router.get('/amigos', authenticateToken, seguimientosController.obtenerAmigos.bind(seguimientosController));
