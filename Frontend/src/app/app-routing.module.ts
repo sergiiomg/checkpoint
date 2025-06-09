@@ -12,7 +12,7 @@ import { PerfilUserComponent } from './components/perfil-user/perfil-user.compon
 import { AmigosComponent } from './components/amigos/amigos.component';
 import { LogrosComponent } from './components/logros/logros.component';
 import { PublicacionesGuardadasComponent } from './components/publicaciones-guardadas/publicaciones-guardadas.component';
-import { MotesComponent } from './components/motes/motes.component';
+import { MotesPageComponent } from './components/motes/motes.component';
 import { BuscadorComponent } from './components/buscador/buscador.component';
 import { NivelComponent } from './components/nivel/nivel.component';
 
@@ -29,7 +29,7 @@ const routes: Routes = [
   { path: 'crear-publicacion', component: CrearPublicacionComponent },
   { path: 'publicacion/:id', component: PublicacionDetalleComponent},
   { path: 'publicaciones-guardadas', component: PublicacionesGuardadasComponent},
-  { path: 'motes', component: MotesComponent},
+  { path: 'motes', component: MotesPageComponent},
   { path: 'buscar', component: BuscadorComponent },
   { path: 'nivel', component: NivelComponent },
   { path: '**', redirectTo: '' },

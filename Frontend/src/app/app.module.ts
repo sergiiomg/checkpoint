@@ -21,10 +21,10 @@ import { PublicacionDetalleComponent } from './components/publicacion-detalle/pu
 import { PerfilUserComponent } from './components/perfil-user/perfil-user.component';
 import { AmigosComponent } from './components/amigos/amigos.component';
 import { LogrosComponent } from './components/logros/logros.component';
-import { MotesComponent } from './components/motes/motes.component';
 import { BuscadorComponent } from './components/buscador/buscador.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NivelComponent } from './components/nivel/nivel.component';
+import { MotesPageComponent } from './components/motes/motes.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +43,7 @@ import { NivelComponent } from './components/nivel/nivel.component';
     PerfilUserComponent,
     AmigosComponent,
     LogrosComponent,
-    MotesComponent,
+    MotesPageComponent,
     BuscadorComponent,
     NivelComponent
   ],

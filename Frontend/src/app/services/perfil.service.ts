@@ -3,6 +3,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+export interface Mote {
+  id: number;
+  nombre: string;
+  nivel_minimo: number;
+  descripcion: string;
+  desbloqueado: boolean;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -68,5 +77,13 @@ export class PerfilService {
 
   dejarDeSeguir(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}usuarios/${id}/seguir`);
+  }
+  
+  seleccionarMote(id: number) {
+    return this.http.post<{ message: string; mote_actual: string }>(`${this.apiUrl}motes-seleccionar/${id}`, {});
+   }
+
+   getMotes() {
+    return this.http.get<any[]>(`${this.apiUrl}motes`);
   }
 }

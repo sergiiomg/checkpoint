@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PerfilService } from '../../services/perfil.service';
 import { PublicacionesService, Publicacion } from '../../services/publicaciones.service';
+import { PerfilEventsService } from '../../services/perfil-event.service';
 
 @Component({
   selector: 'app-perfil-page',
@@ -19,10 +20,14 @@ export class PerfilPageComponent implements OnInit {
   constructor(
     private perfilService: PerfilService,
     public publicacionesService: PublicacionesService,
+    private perfilEventsService: PerfilEventsService,
   ) {}
 
   ngOnInit(): void {
     this.cargarPerfil();
+    this.perfilEventsService.moteCambiado$.subscribe(() => {
+      this.cargarPerfil();
+    });
   }
 
   cargarPerfil(): void {
