@@ -65,6 +65,12 @@ app-header{
 .info div{
   display: flex;
   justify-content: space-between;
+  gap: 10px;
+}
+
+.nombres p{
+  font-size: 20px;
+  margin-top: 1.46rem;
 }
 
 .btn-seguir {
