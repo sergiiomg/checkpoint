@@ -89,3 +89,251 @@
 .login:hover{
     color: rgb(190, 190, 190);
 }
+
+/* Media Queries para Responsive Design */
+
+/* Pantallas grandes (escritorio) */
+@media (min-width: 1200px) {
+    .header-container {
+        padding: 10px 20px;
+        margin-left: 1.5rem;
+    }
+    
+    .search-form input {
+        width: 30%;
+        margin-right: 5rem;
+    }
+}
+
+/* Pantallas medianas (tabletas horizontales) */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .header-container {
+        margin-left: 0.8rem;
+    }
+    
+    .search-form input {
+        width: 40%;
+        margin-right: 3rem;
+    }
+    
+    .site-name {
+        font-size: 1.4em;
+    }
+}
+
+/* Pantallas pequeñas-medianas (tabletas verticales) */
+@media (max-width: 991px) and (min-width: 768px) {
+    .header-container {
+        padding: 8px 8px;
+        margin-left: 0.5rem;
+    }
+    
+    .logo img {
+        width: 45px;
+        height: 45px;
+        margin-right: 0.3rem;
+    }
+    
+    .site-name {
+        font-size: 1.3em;
+    }
+    
+    .search-form input {
+        width: 45%;
+        height: 45px;
+        font-size: 15px;
+        margin-right: 2rem;
+    }
+    
+    .profile-link img {
+        width: 55px;
+        height: 55px;
+        margin-right: 0.8rem;
+    }
+    
+    .login {
+        font-size: 18px;
+        margin-right: 1.5rem;
+    }
+}
+
+/* Pantallas pequeñas (móviles horizontales) */
+@media (max-width: 767px) and (min-width: 576px) {
+    .header-container {
+        padding: 6px 6px;
+        margin-left: 0.3rem;
+        flex-wrap: wrap;
+    }
+    
+    .header-nav {
+        flex-wrap: wrap;
+    }
+    
+    .logo img {
+        width: 40px;
+        height: 40px;
+        margin-right: 0.2rem;
+    }
+    
+    .site-name {
+        font-size: 1.2em;
+    }
+    
+    .search-form {
+        order: 3;
+        width: 100%;
+        margin-top: 10px;
+        justify-content: flex-start;
+    }
+    
+    .search-form input {
+        width: 70%;
+        height: 40px;
+        font-size: 14px;
+        margin-right: 0;
+        margin-top: 0;
+    }
+    
+    .profile-link img {
+        width: 50px;
+        height: 50px;
+        margin-right: 0.5rem;
+    }
+    
+    .login {
+        font-size: 16px;
+        margin-right: 1rem;
+        margin-top: 1rem;
+    }
+}
+
+/* Pantallas extra pequeñas (móviles verticales) */
+@media (max-width: 575px) {
+    .header-container {
+        padding: 5px;
+        margin-left: 0;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .header-nav {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    /* Primera fila: Logo y perfil/login */
+    .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .logo {
+        flex-shrink: 0;
+    }
+    
+    .logo img {
+        width: 35px;
+        height: 35px;
+        margin-right: 0.2rem;
+    }
+    
+    .site-name {
+        font-size: 1.1em;
+    }
+    
+    /* Segunda fila: Buscador */
+    .search-form {
+        width: 100%;
+        justify-content: stretch;
+        margin-bottom: 5px;
+    }
+    
+    .search-form input {
+        width: 100%;
+        height: 38px;
+        font-size: 14px;
+        margin: 0;
+        border-radius: 10px;
+    }
+    
+    .profile-link img {
+        width: 40px;
+        height: 40px;
+        margin-right: 0.3rem;
+    }
+    
+    .login {
+        font-size: 14px;
+        margin: 0;
+        padding: 5px 10px;
+    }
+}
+
+/* Pantallas muy pequeñas (móviles pequeños) */
+@media (max-width: 400px) {
+    .header-container {
+        padding: 4px;
+    }
+    
+    .logo img {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .site-name {
+        font-size: 1em;
+    }
+    
+    .search-form input {
+        height: 35px;
+        font-size: 13px;
+        padding: 8px;
+    }
+    
+    .profile-link img {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .login {
+        font-size: 13px;
+    }
+}
+
+/* Ajustes específicos para cuando el header se reorganiza en móvil */
+@media (max-width: 575px) {
+    /* Si necesitas mantener el header en una sola línea en móviles muy pequeños */
+    .header-compact {
+        flex-direction: row !important;
+    }
+    
+    .header-compact .search-form {
+        order: 0;
+        width: auto;
+        flex-grow: 1;
+        margin: 0 10px;
+    }
+    
+    .header-compact .search-form input {
+        width: 100%;
+        height: 30px;
+        font-size: 12px;
+    }
+    
+    .header-compact .logo img {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .header-compact .site-name {
+        display: none; /* Oculta el nombre en modo compacto */
+    }
+    
+    .header-compact .profile-link img {
+        width: 30px;
+        height: 30px;
+    }
+}

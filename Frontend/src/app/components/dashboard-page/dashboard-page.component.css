@@ -20,7 +20,6 @@ app-header{
   font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
   width: 100%;
   margin: auto;
-  margin-left: 13rem;
 }
 
 .publicacion {
@@ -221,4 +220,192 @@ app-header{
 .btn-crear-publicacion:hover{
   background-color: #0099ff;
   color: white;
+}
+
+/* Media Queries para Responsive Design */
+
+/* Pantallas grandes (escritorio) */
+@media (min-width: 1200px) {
+  .publicacion {
+    width: 40%;
+  }
+}
+
+/* Pantallas medianas (tabletas en horizontal) */
+@media (max-width: 1199px) and (min-width: 992px) {
+  .publicacion {
+    width: 60%;
+  }
+}
+
+/* Pantallas pequeñas-medianas (tabletas en vertical) */
+@media (max-width: 991px) and (min-width: 768px) {
+  .publicacion {
+    width: 75%;
+  }
+  
+  .publicaciones-container {
+    padding: 0.8rem;
+  }
+  
+  .publicacion h3 {
+    font-size: 1.3rem;
+  }
+  
+  .media {
+    max-height: 350px;
+  }
+}
+
+/* Pantallas pequeñas (móviles en horizontal) */
+@media (max-width: 767px) and (min-width: 576px) {
+  .publicacion {
+    width: 90%;
+    padding: 1rem 0.6rem 0.6rem 0.6rem;
+  }
+  
+  .publicaciones-container {
+    padding: 0.6rem;
+  }
+  
+  .publicacion h3 {
+    font-size: 1.2rem;
+  }
+  
+  .publicacion p {
+    font-size: 0.9rem;
+  }
+  
+  .media {
+    max-height: 300px;
+  }
+  
+  .btn {
+    font-size: 1.1rem;
+  }
+  
+  .acciones-superiores {
+    right: 5px;
+    bottom: 20px;
+  }
+  
+  .btn-crear-publicacion {
+    padding: 0.6rem;
+    font-size: 1rem;
+  }
+}
+
+/* Pantallas extra pequeñas (móviles en vertical) */
+@media (max-width: 575px) {
+  .publicacion {
+    width: 95%;
+    padding: 0.8rem 0.5rem 0.5rem 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .publicaciones-container {
+    padding: 0.5rem;
+  }
+  
+  .publicacion h3 {
+    font-size: 1.1rem;
+  }
+  
+  .publicacion p {
+    font-size: 0.85rem;
+  }
+  
+  .nombre-autor {
+    font-size: 0.9rem;
+  }
+  
+  .foto-perfil {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .media {
+    max-height: 250px;
+  }
+  
+  .btn {
+    font-size: 1rem;
+  }
+  
+  .acciones {
+    gap: 10px;
+  }
+  
+  .grupo-izquierda,
+  .grupo-derecha {
+    gap: 3px;
+  }
+  
+  .formulario-comentario {
+    padding: 0.8rem;
+  }
+  
+  .formulario-comentario textarea {
+    height: 50px;
+    font-size: 0.9rem;
+  }
+  
+  .formulario-comentario button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .acciones-superiores {
+    right: 5px;
+    bottom: 15px;
+    margin-right: 0;
+  }
+  
+  .btn-crear-publicacion {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Pantallas muy pequeñas (móviles pequeños) */
+@media (max-width: 400px) {
+  .publicacion {
+    width: 98%;
+    padding: 0.6rem 0.4rem 0.4rem 0.4rem;
+  }
+  
+  .publicacion h3 {
+    font-size: 1rem;
+  }
+  
+  .publicacion p {
+    font-size: 0.8rem;
+  }
+  
+  .nombre-autor {
+    font-size: 0.85rem;
+  }
+  
+  .foto-perfil {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .media {
+    max-height: 200px;
+  }
+  
+  .btn {
+    font-size: 0.9rem;
+  }
+  
+  .formulario-comentario textarea {
+    height: 45px;
+    font-size: 0.85rem;
+  }
+  
+  .formulario-comentario button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
 }

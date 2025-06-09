@@ -236,3 +236,365 @@ app-header{
 .formulario-comentario button:hover {
   background-color: rgb(0, 110, 200);
 }
+
+/* Media Queries para Responsive Design */
+
+/* Pantallas grandes (escritorio) */
+@media (min-width: 1200px) {
+  .informacion {
+    width: 1100px;
+    padding: 2.5rem;
+  }
+  
+  .banner {
+    width: 900px;
+    height: 220px;
+  }
+  
+  .foto-perfil {
+    width: 220px;
+    height: 220px;
+  }
+  
+  .publicacion {
+    width: 45%;
+  }
+}
+
+/* Pantallas medianas (tabletas horizontales) */
+@media (max-width: 1199px) and (min-width: 992px) {
+  .informacion {
+    width: 900px;
+    padding: 2rem;
+  }
+  
+  .banner {
+    width: 700px;
+    height: 180px;
+    margin-right: 70px;
+  }
+  
+  .foto-perfil {
+    width: 180px;
+    height: 180px;
+    right: 15px;
+  }
+  
+  .btn-seguir {
+    margin-right: 120px;
+  }
+  
+  .publicacion {
+    width: 55%;
+  }
+}
+
+/* Pantallas pequeñas-medianas (tabletas verticales) */
+@media (max-width: 991px) and (min-width: 768px) {
+  .informacion {
+    width: 90%;
+    max-width: 750px;
+    padding: 1.5rem;
+  }
+  
+  .banner {
+    width: 100%;
+    height: 160px;
+    margin-right: 0;
+  }
+  
+  .imagenes {
+    justify-content: flex-start;
+  }
+  
+  .foto-perfil {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 150px;
+    height: 150px;
+    margin-top: -75px;
+    margin-left: 20px;
+    border: 4px solid #1A1A1D;
+  }
+  
+  .info {
+    margin-left: 20px;
+    margin-top: 10px;
+  }
+  
+  .btn-seguir {
+    margin-right: 20px;
+    width: 120px;
+    font-size: 15px;
+  }
+  
+  .publicacion {
+    width: 70%;
+  }
+  
+  .publicacion h3 {
+    font-size: 1.3rem;
+  }
+  
+  .media {
+    max-height: 350px;
+  }
+}
+
+/* Pantallas pequeñas (móviles horizontales) */
+@media (max-width: 767px) and (min-width: 576px) {
+  .informacion {
+    width: 95%;
+    padding: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .banner {
+    display: none;
+  }
+  
+  .foto-perfil {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 120px;
+    height: 120px;
+    margin-top: 0;
+    margin-left: 15px;
+    border: 3px solid #1A1A1D;
+  }
+  
+  .info {
+    margin-left: 15px;
+    margin-top: 15px;
+  }
+  
+  .info div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .btn-seguir {
+    margin: 0;
+    width: 100px;
+    height: 35px;
+    font-size: 14px;
+  }
+  
+  .publicacion {
+    width: 85%;
+    padding: 1rem 0.6rem 0.6rem 0.6rem;
+  }
+  
+  .publicacion h3 {
+    font-size: 1.2rem;
+  }
+  
+  .publicacion p {
+    font-size: 0.9rem;
+  }
+  
+  .media {
+    max-height: 300px;
+  }
+  
+  .btn {
+    font-size: 1.1rem;
+  }
+}
+
+/* Pantallas extra pequeñas (móviles verticales) */
+@media (max-width: 575px) {
+  .informacion {
+    width: 98%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+  }
+  
+  .banner {
+    display: none;
+  }
+  
+  .foto-perfil {
+    position: relative;
+    top: auto;
+    right: auto;
+    transform: none;
+    width: 100px;
+    height: 100px;
+    margin-top: 0;
+    margin-left: 10px;
+    border: 3px solid #1A1A1D;
+  }
+  
+  .info {
+    margin-left: 10px;
+    margin-top: 15px;
+  }
+  
+  .info div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .info h2 {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+  
+  .info p {
+    font-size: 0.9rem;
+    margin: 5px 0;
+  }
+  
+  .btn-seguir {
+    margin: 0;
+    width: 90px;
+    height: 32px;
+    font-size: 13px;
+    padding: 5px;
+  }
+  
+  .publicaciones-container {
+    padding: 0.5rem;
+    margin-top: 1rem;
+  }
+  
+  .publicacion {
+    width: 95%;
+    padding: 0.8rem 0.5rem 0.5rem 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .publicacion h3 {
+    font-size: 1.1rem;
+  }
+  
+  .publicacion p {
+    font-size: 0.85rem;
+  }
+  
+  .media {
+    max-height: 250px;
+  }
+  
+  .btn {
+    font-size: 1rem;
+  }
+  
+  .acciones {
+    gap: 10px;
+  }
+  
+  .grupo-izquierda,
+  .grupo-derecha {
+    gap: 3px;
+  }
+  
+  .formulario-comentario {
+    padding: 0.8rem;
+  }
+  
+  .formulario-comentario textarea {
+    height: 50px;
+    font-size: 0.9rem;
+  }
+  
+  .formulario-comentario button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* Pantallas muy pequeñas (móviles pequeños) */
+@media (max-width: 400px) {
+  .informacion {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 0;
+  }
+  
+  .banner {
+    display: none;
+  }
+  
+  .foto-perfil {
+    width: 80px;
+    height: 80px;
+    margin-left: 8px;
+  }
+  
+  .info {
+    margin-left: 8px;
+    margin-top: 15px;
+  }
+  
+  .info h2 {
+    font-size: 1.1rem;
+  }
+  
+  .info p {
+    font-size: 0.8rem;
+  }
+  
+  .btn-seguir {
+    width: 80px;
+    height: 30px;
+    font-size: 12px;
+  }
+  
+  .publicacion {
+    width: 98%;
+    padding: 0.6rem 0.4rem 0.4rem 0.4rem;
+  }
+  
+  .publicacion h3 {
+    font-size: 1rem;
+  }
+  
+  .publicacion p {
+    font-size: 0.8rem;
+  }
+  
+  .media {
+    max-height: 200px;
+  }
+  
+  .btn {
+    font-size: 0.9rem;
+  }
+  
+  .formulario-comentario textarea {
+    height: 45px;
+    font-size: 0.85rem;
+  }
+  
+  .formulario-comentario button {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Ajuste especial para el layout de perfil en móviles */
+@media (max-width: 767px) {
+  /* Reorganización del perfil para mejor legibilidad */
+  .imagenes {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  
+  /* Espaciado mejorado para el contenido de información */
+  .info div h2 {
+    order: 1;
+  }
+  
+  .info div .btn-seguir {
+    order: 2;
+  }
+}

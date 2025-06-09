@@ -47,3 +47,173 @@ aside a:hover {
     background-color: #29292E; /* Color de fondo al pasar el ratón */
 }
 
+/* Media Queries para Responsive Design */
+
+/* Pantallas medianas y grandes (escritorio y tabletas horizontales) */
+@media (min-width: 992px) {
+    aside {
+        width: 200px;
+        height: calc(100vh - 84px); /* Altura dinámica */
+    }
+}
+
+/* Pantallas pequeñas-medianas (tabletas verticales) */
+@media (max-width: 991px) and (min-width: 768px) {
+    aside {
+        width: 180px;
+        height: calc(100vh - 84px);
+        padding: 15px;
+    }
+    
+    aside a {
+        font-size: 1rem;
+        padding: 10px;
+    }
+    
+    aside nav div:first-child {
+        gap: 12px;
+    }
+}
+
+/* Pantallas pequeñas (móviles horizontales) */
+@media (max-width: 767px) and (min-width: 576px) {
+    aside {
+        transform: translateX(-100%); /* Oculto por defecto */
+        transition: transform 0.3s ease;
+        width: 250px; /* Más ancho cuando se despliega */
+        height: calc(100vh - 84px);
+        padding: 20px;
+        z-index: 1001; /* Por encima de otros elementos */
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Clase para mostrar el menú */
+    aside.show {
+        transform: translateX(0);
+    }
+    
+    aside a {
+        font-size: 1rem;
+        padding: 15px;
+        margin-bottom: 5px;
+    }
+    
+    aside nav div:first-child {
+        gap: 8px;
+    }
+    
+    /* Overlay para cerrar el menú */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+    
+    .sidebar-overlay.show {
+        display: block;
+    }
+}
+
+/* Pantallas extra pequeñas (móviles verticales) */
+@media (max-width: 575px) {
+    aside {
+        transform: translateX(-100%); /* Oculto por defecto */
+        transition: transform 0.3s ease;
+        width: 250px; /* Más ancho cuando se despliega */
+        height: calc(100vh - 84px);
+        padding: 20px;
+        z-index: 1001; /* Por encima de otros elementos */
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Clase para mostrar el menú */
+    aside.show {
+        transform: translateX(0);
+    }
+    
+    aside a {
+        font-size: 1rem;
+        padding: 15px;
+        margin-bottom: 5px;
+    }
+    
+    aside nav div:first-child {
+        gap: 8px;
+    }
+    
+    /* Overlay para cerrar el menú */
+    .sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+    
+    .sidebar-overlay.show {
+        display: block;
+    }
+}
+
+/* Pantallas muy pequeñas (móviles pequeños) */
+@media (max-width: 400px) {
+    aside {
+        width: 220px; /* Ligeramente más pequeño */
+        padding: 15px;
+    }
+    
+    aside a {
+        font-size: 0.9rem;
+        padding: 12px;
+    }
+}
+
+/* Botón hamburguesa para móviles (solo visible en pantallas pequeñas) */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 10px;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1002;
+}
+
+@media (max-width: 767px) {
+    .menu-toggle {
+        display: block;
+    }
+    
+    /* Ajustar contenido principal cuando el menú está oculto */
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+/* Ajuste del contenido principal para diferentes tamaños */
+@media (min-width: 992px) {
+    .main-content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+    }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+    .main-content {
+        margin-left: 180px;
+        width: calc(100% - 180px);
+    }
+}
