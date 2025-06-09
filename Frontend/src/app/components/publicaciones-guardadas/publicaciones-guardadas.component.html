@@ -1,51 +1,52 @@
-<!-- Contenedor principal -->
-<div class="publicaciones-guardadas-container">
-  <!-- Título de la sección -->
-  <h2 class="titulo-seccion">Publicaciones guardadas</h2>
-  
-  <!-- Texto explicativo -->
-  <div class="texto-explicativo">
-    <p>Aquí podrás ver todas las publicaciones que hayas guardado para revisarlas más tarde</p>
-  </div>
-
-  <!-- Lista de publicaciones guardadas -->
-  <div *ngFor="let pub of publicacionesGuardadas" class="publicacion" (click)="verDetalle(pub.id)">
-    <h3>{{ pub.titulo }}</h3>
-    <p>{{ pub.descripcion }}</p>
-    <div *ngIf="pub.tipo_media === 'imagen' && pub.media_url">
-      <img [src]="getMediaUrl(pub.media_url)" class="media" />
-    </div>
-    <div *ngIf="pub.tipo_media === 'video' && pub.media_url">
-      <video class="media" controls (click)="$event.stopPropagation()">
-        <source [src]="getMediaUrl(pub.media_url)" type="video/mp4" />
-      </video>
-    </div>
-    <!-- 🔘 Botones de interacción -->
-    <div class="acciones" (click)="$event.stopPropagation()">
-      <div class="grupo-izquierda">
-        <button class="btn like" [class.liked]="pub.liked">
-          <i class="{{ pub.liked ? 'fas' : 'far' }} fa-heart"></i>
-          {{ pub.likesCount || 0 }}
-        </button>
-        <button class="btn comentar" (click)="toggleFormularioComentario(pub.id)">
-          <i class="far fa-comment"></i>
-        </button>
+<div class="dashboard-layout">
+  <div class="dashboard-body">
+    <app-aside></app-aside>
+    <div class="publicaciones-guardadas-container">
+      <h2 class="titulo-seccion">Publicaciones guardadas</h2>
+      
+      <div class="texto-explicativo">
+        <p>Aquí podrás ver todas las publicaciones que hayas guardado para revisarlas más tarde</p>
       </div>
-      <div class="grupo-derecha">
-        <button class="btn guardar" (click)="toggleGuardar(pub)" [class.guardada]="pub.guardada">
-          <i class="{{ pub.guardada ? 'fas' : 'far' }} fa-bookmark"></i>
-        </button>
+
+      <div *ngFor="let pub of publicacionesGuardadas" class="publicacion" (click)="verDetalle(pub.id)">
+        <h3>{{ pub.titulo }}</h3>
+        <p>{{ pub.descripcion }}</p>
+        <div *ngIf="pub.tipo_media === 'imagen' && pub.media_url">
+          <img [src]="getMediaUrl(pub.media_url)" class="media" />
+        </div>
+        <div *ngIf="pub.tipo_media === 'video' && pub.media_url">
+          <video class="media" controls (click)="$event.stopPropagation()">
+            <source [src]="getMediaUrl(pub.media_url)" type="video/mp4" />
+          </video>
+        </div>
+        <div class="acciones" (click)="$event.stopPropagation()">
+          <div class="grupo-izquierda">
+            <button class="btn like" [class.liked]="pub.liked">
+              <i class="{{ pub.liked ? 'fas' : 'far' }} fa-heart"></i>
+              {{ pub.likesCount || 0 }}
+            </button>
+            <button class="btn comentar" (click)="toggleFormularioComentario(pub.id)">
+              <i class="far fa-comment"></i>
+            </button>
+          </div>
+          <div class="grupo-derecha">
+            <button class="btn guardar" (click)="toggleGuardar(pub)" [class.guardada]="pub.guardada">
+              <i class="{{ pub.guardada ? 'fas' : 'far' }} fa-bookmark"></i>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="publicacionComentandoId === pub.id" class="formulario-comentario" (click)="$event.stopPropagation()">
+          <textarea [(ngModel)]="nuevoComentario" placeholder="Escribe tu comentario..."></textarea>
+          <button (click)="enviarComentario(pub.id)">Enviar</button>
+        </div>
+      </div>
+
+      <div *ngIf="!publicacionesGuardadas || publicacionesGuardadas.length === 0" class="mensaje-vacio">
+        <p>Aún no has guardado ninguna publicación. ¡Empieza a guardar contenido interesante!</p>
       </div>
     </div>
-    <!-- 💬 Formulario para comentar -->
-    <div *ngIf="publicacionComentandoId === pub.id" class="formulario-comentario" (click)="$event.stopPropagation()">
-      <textarea [(ngModel)]="nuevoComentario" placeholder="Escribe tu comentario..."></textarea>
-      <button (click)="enviarComentario(pub.id)">Enviar</button>
-    </div>
-  </div>
-
-  <!-- Mensaje cuando no hay publicaciones guardadas -->
-  <div *ngIf="!publicacionesGuardadas || publicacionesGuardadas.length === 0" class="mensaje-vacio">
-    <p>Aún no has guardado ninguna publicación. ¡Empieza a guardar contenido interesante!</p>
   </div>
 </div>
+
+
+

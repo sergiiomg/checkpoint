@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PublicacionesService, Publicacion } from '../../services/publicaciones.service';
 import { Router } from '@angular/router';
 import { ComentariosService } from '../../services/comentarios.service';
+import { PerfilService } from '../../services/perfil.service';
 
 @Component({
   selector: 'app-publicaciones-guardadas',
@@ -13,16 +14,21 @@ export class PublicacionesGuardadasComponent implements OnInit {
   publicaciones: Publicacion[] = [];
   publicacionComentandoId: number | null = null;
   nuevoComentario: string = '';
-
+  query: string = '';
+  usuario: any = null;
+  cargando: boolean = true;
+  error: string | null = null;
 
   constructor(
     private publicacionesService: PublicacionesService,
+    private perfilService: PerfilService,
     private comentariosService: ComentariosService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.cargarPublicacionesGuardadas();
+    this.cargarPerfil();
   }
 
   cargarPublicacionesGuardadas(): void {
@@ -79,6 +85,22 @@ export class PublicacionesGuardadasComponent implements OnInit {
       },
       error: (err) => {
         console.error('❌ Error al enviar comentario:', err);
+      }
+    });
+  }
+
+    cargarPerfil(): void {
+    this.cargando = true;
+    this.perfilService.obtenerPerfil().subscribe({
+      next: (data) => {
+        this.usuario = data;
+        this.cargando = false;
+        console.log('✅ Perfil cargado:', this.usuario);
+      },
+      error: (err) => {
+        this.error = 'Error al cargar el perfil';
+        this.cargando = false;
+        console.error('❌ Error al cargar el perfil:', err);
       }
     });
   }

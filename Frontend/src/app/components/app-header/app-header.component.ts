@@ -28,7 +28,7 @@ export class AppHeaderComponent {
     }
   }
 
-    cargarPerfil(): void {
+  cargarPerfil(): void {
     this.cargando = true;
     this.perfilService.obtenerPerfil().subscribe({
       next: (data) => {

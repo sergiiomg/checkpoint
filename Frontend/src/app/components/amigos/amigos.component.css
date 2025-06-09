@@ -1,3 +1,17 @@
+
+.dashboard-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+app-header{
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
 .amigos-wrapper {
   display: flex;
   justify-content: center;
@@ -15,6 +29,7 @@
   color: white;
   font-family: sans-serif;
   text-align: center;
+  margin-bottom: 40rem;
 }
 
 

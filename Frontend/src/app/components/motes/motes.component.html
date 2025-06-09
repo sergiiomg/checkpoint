@@ -1,71 +1,78 @@
-<div class="motes-container">
-  <!-- Título principal -->
-  <h2 class="titulo-seccion">Motes Disponibles</h2>
-  <p class="descripcion-seccion">Personaliza tu perfil con motes únicos. Cada mote requiere un nivel mínimo para ser desbloqueado.</p>
+<div class="dashboard-layout">
+  <app-header></app-header>
+  <div class="dashboard-body">
+    <app-aside></app-aside>
+    <div class="motes-container">
+      <!-- Título principal -->
+      <h2 class="titulo-seccion">Motes Disponibles</h2>
+      <p class="descripcion-seccion">Personaliza tu perfil con motes únicos. Cada mote requiere un nivel mínimo para ser desbloqueado.</p>
 
-  <!-- Estados de carga y error -->
-  <div *ngIf="cargando" class="mensaje-carga">
-    <div class="spinner"></div>
-    <p>Cargando motes...</p>
-  </div>
+      <!-- Estados de carga y error -->
+      <div *ngIf="cargando" class="mensaje-carga">
+        <div class="spinner"></div>
+        <p>Cargando motes...</p>
+      </div>
 
-  <div *ngIf="error" class="error">
-    <i class="icon-error">⚠️</i>
-    <p>{{ error }}</p>
-  </div>
+      <div *ngIf="error" class="error">
+        <i class="icon-error">⚠️</i>
+        <p>{{ error }}</p>
+      </div>
 
-  <!-- Mensaje cuando no hay motes -->
-  <div *ngIf="!cargando && motes.length === 0" class="mensaje-vacio">
-    <div class="icono-vacio">🏆</div>
-    <h3>No hay motes disponibles</h3>
-    <p>Por el momento no tienes motes disponibles para aplicar.</p>
-  </div>
+      <!-- Mensaje cuando no hay motes -->
+      <div *ngIf="!cargando && motes.length === 0" class="mensaje-vacio">
+        <div class="icono-vacio">🏆</div>
+        <h3>No hay motes disponibles</h3>
+        <p>Por el momento no tienes motes disponibles para aplicar.</p>
+      </div>
 
-  <!-- Lista de motes (2 por fila) -->
-  <div *ngIf="!cargando && motes.length > 0" class="motes-grid">
-    <div class="grid-header">
-      <h3>Selecciona un mote para personalizar tu perfil</h3>
-    </div>
-
-    <div class="motes-row">
-      <div *ngFor="let mote of motes" class="mote-card" 
-           [class.bloqueado]="mote.estado === 'Bloqueado'"
-           [class.aplicado]="mote.estado === 'Aplicado'">
-        
-        <!-- Header de la tarjeta -->
-        <div class="mote-header">
-          <div class="mote-icono">🎖️</div>
-          <div class="mote-info">
-            <h4>{{ mote.nombre }}</h4>
-            <span class="nivel-badge" 
-                  [class.desbloqueado]="mote.estado !== 'Bloqueado'">
-              Nivel {{ mote.nivel_minimo }}
-            </span>
-          </div>
-          <div class="estado-badge" 
-               [class.disponible]="mote.estado === 'Aplicar'"
-               [class.aplicado]="mote.estado === 'Aplicado'"
-               [class.bloqueado]="mote.estado === 'Bloqueado'">
-            {{ mote.estado }}
-          </div>
+      <!-- Lista de motes (2 por fila) -->
+      <div *ngIf="!cargando && motes.length > 0" class="motes-grid">
+        <div class="grid-header">
+          <h3>Selecciona un mote para personalizar tu perfil</h3>
         </div>
 
-        <!-- Descripción -->
-        <p class="mote-descripcion">{{ mote.descripcion }}</p>
-
-        <!-- Botón de acción -->
-        <div class="mote-acciones">
-          <button class="btn-mote"
-                  [disabled]="mote.estado === 'Bloqueado' || mote.estado === 'Aplicado'"
+        <div class="motes-row">
+          <div *ngFor="let mote of motes" class="mote-card" 
+              [class.bloqueado]="mote.estado === 'Bloqueado'"
+              [class.aplicado]="mote.estado === 'Aplicado'">
+            
+            <!-- Header de la tarjeta -->
+            <div class="mote-header">
+              <div class="mote-icono">🎖️</div>
+              <div class="mote-info">
+                <h4>{{ mote.nombre }}</h4>
+                <span class="nivel-badge" 
+                      [class.desbloqueado]="mote.estado !== 'Bloqueado'">
+                  Nivel {{ mote.nivel_minimo }}
+                </span>
+              </div>
+              <div class="estado-badge" 
+                  [class.disponible]="mote.estado === 'Aplicar'"
                   [class.aplicado]="mote.estado === 'Aplicado'"
-                  [class.bloqueado]="mote.estado === 'Bloqueado'"
-                  (click)="aplicarMote(mote)">
-            <span *ngIf="mote.estado === 'Aplicado'">✓ Aplicado</span>
-            <span *ngIf="mote.estado === 'Bloqueado'">🔒 Bloqueado</span>
-            <span *ngIf="mote.estado === 'Aplicar'">Aplicar Mote</span>
-          </button>
+                  [class.bloqueado]="mote.estado === 'Bloqueado'">
+                {{ mote.estado }}
+              </div>
+            </div>
+
+            <!-- Descripción -->
+            <p class="mote-descripcion">{{ mote.descripcion }}</p>
+
+            <!-- Botón de acción -->
+            <div class="mote-acciones">
+              <button class="btn-mote"
+                      [disabled]="mote.estado === 'Bloqueado' || mote.estado === 'Aplicado'"
+                      [class.aplicado]="mote.estado === 'Aplicado'"
+                      [class.bloqueado]="mote.estado === 'Bloqueado'"
+                      (click)="aplicarMote(mote)">
+                <span *ngIf="mote.estado === 'Aplicado'">✓ Aplicado</span>
+                <span *ngIf="mote.estado === 'Bloqueado'">🔒 Bloqueado</span>
+                <span *ngIf="mote.estado === 'Aplicar'">Aplicar Mote</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
