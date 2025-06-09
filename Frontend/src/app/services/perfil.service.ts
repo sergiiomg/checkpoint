@@ -79,8 +79,8 @@ export class PerfilService {
     return this.http.delete(`${this.apiUrl}usuarios/${id}/seguir`);
   }
   
-  seleccionarMote(id: number) {
-    return this.http.post<{ message: string; mote_actual: string }>(`${this.apiUrl}motes-seleccionar/${id}`, {});
+  seleccionarMote(id: number | null) {
+    return this.http.put<{ message: string; mote_actual: string }>(`${this.apiUrl}seleccionar-mote/${id}`, {headers: this.headers});
    }
 
    getMotes() {

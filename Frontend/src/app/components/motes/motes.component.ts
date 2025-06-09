@@ -11,6 +11,7 @@ export class MotesPageComponent implements OnInit {
   motes: any[] = [];
   cargando = false;
   error: string | null = null;
+  usuario: any;
 
   constructor(
       private perfilService: PerfilService,
@@ -21,39 +22,49 @@ export class MotesPageComponent implements OnInit {
     this.cargarMotes();
   }
 
-cargarMotes() {
-  this.cargando = true;
-  this.perfilService.getMotes().subscribe({
-    next: (data) => {
-      // Supongamos que tienes el mote actual guardado en algún lado,
-      // por ejemplo en el perfil del usuario que cargas en otro servicio.
-      // Aquí lo ponemos hardcoded para el ejemplo:
-      const moteActual = 'Aprendiz Digital'; // O lo sacas del usuario real
+  cargarMotes() {
+    this.cargando = true;
+    this.perfilService.getMotes().subscribe({
+      next: (data) => {
+        // Obtener el mote actual desde el perfil real, por ejemplo:
+        const moteActual = this.usuario?.mote_actual || null;
+  
+        this.motes = data.map(mote => {
+          let estado: 'Aplicado' | 'Aplicar' | 'Bloqueado';
+  
+          if (!mote.desbloqueado) {
+            estado = 'Bloqueado';
+          } else if (mote.nombre === moteActual) {
+            estado = 'Aplicado';
+          } else {
+            estado = 'Aplicar';
+          }
+  
+          return { ...mote, estado };
+        });
+  
+        this.cargando = false;
+      },
+      error: (err) => {
+        this.error = '❌ Error al cargar motes';
+        this.cargando = false;
+        console.error(err);
+      }
+    });
+  }
 
-      this.motes = data.map(mote => {
-        let estado: 'Aplicado' | 'Aplicar' | 'Bloqueado';
-
-        if (!mote.desbloqueado) {
-          estado = 'Bloqueado';
-        } else if (mote.nombre === moteActual) {
-          estado = 'Aplicado';
-        } else {
-          estado = 'Aplicar';
-        }
-
-        return { ...mote, estado };
-      });
-
-      this.cargando = false;
-    },
-    error: (err) => {
-      this.error = '❌ Error al cargar motes';
-      this.cargando = false;
-      console.error(err);
-    }
-  });
-}
-
+  quitarMote() {
+    this.perfilService.seleccionarMote(null).subscribe({
+      next: () => {
+        alert('✅ Mote quitado correctamente');
+        this.cargarMotes();
+        this.perfilEventsService.emitirMoteCambiado();
+      },
+      error: () => {
+        alert('❌ No se pudo quitar el mote');
+      }
+    });
+  }
 
     aplicarMote(mote: any) {
       if (mote.estado !== 'Aplicar') return;
