@@ -75,131 +75,93 @@ aside a:hover {
     }
 }
 
-/* Pantallas pequeñas (móviles horizontales) */
-@media (max-width: 767px) and (min-width: 576px) {
+/* Pantallas pequeñas (móviles horizontales y verticales) */
+@media (max-width: 767px) {
     aside {
-        transform: translateX(-100%); /* Oculto por defecto */
-        transition: transform 0.3s ease;
-        width: 250px; /* Más ancho cuando se despliega */
-        height: calc(100vh - 84px);
-        padding: 20px;
-        z-index: 1001; /* Por encima de otros elementos */
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+        width: 100%;
+        height: auto;
+        position: fixed;
+        top: auto;
+        bottom: 0; /* Posiciona en la parte inferior */
+        left: 0;
+        padding: 10px 15px;
+        flex-direction: row; /* Cambia a horizontal */
+        justify-content: center;
+        z-index: 1001;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        /* Siempre visible - sin transform */
     }
     
-    /* Clase para mostrar el menú */
-    aside.show {
-        transform: translateX(0);
-    }
-    
-    aside a {
-        font-size: 1rem;
-        padding: 15px;
-        margin-bottom: 5px;
+    /* Reorganización del nav para móviles */
+    aside nav {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
     }
     
     aside nav div:first-child {
-        gap: 8px;
+        flex-direction: row;
+        gap: 5px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
     
-    /* Overlay para cerrar el menú */
-    .sidebar-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-    }
-    
-    .sidebar-overlay.show {
-        display: block;
+    aside a {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+        margin: 2px;
+        text-align: center;
+        min-width: auto;
+        border-radius: 8px;
     }
 }
 
-/* Pantallas extra pequeñas (móviles verticales) */
-@media (max-width: 575px) {
-    aside {
-        transform: translateX(-100%); /* Oculto por defecto */
-        transition: transform 0.3s ease;
-        width: 250px; /* Más ancho cuando se despliega */
-        height: calc(100vh - 84px);
-        padding: 20px;
-        z-index: 1001; /* Por encima de otros elementos */
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* Clase para mostrar el menú */
-    aside.show {
-        transform: translateX(0);
-    }
-    
-    aside a {
-        font-size: 1rem;
-        padding: 15px;
-        margin-bottom: 5px;
-    }
-    
-    aside nav div:first-child {
-        gap: 8px;
-    }
-    
-    /* Overlay para cerrar el menú */
-    .sidebar-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
-    }
-    
-    .sidebar-overlay.show {
-        display: block;
+/* Alternativa: Menú superior en móviles */
+@media (max-width: 767px) {
+    aside.top-menu {
+        top: 84px; /* Justo debajo del header */
+        bottom: auto;
+        /* Siempre visible - sin transform */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     }
 }
 
 /* Pantallas muy pequeñas (móviles pequeños) */
 @media (max-width: 400px) {
     aside {
-        width: 220px; /* Ligeramente más pequeño */
-        padding: 15px;
+        padding: 8px 10px;
     }
     
     aside a {
-        font-size: 0.9rem;
-        padding: 12px;
+        font-size: 0.7rem;
+        padding: 6px 8px;
+        border-radius: 6px;
+    }
+    
+    aside nav div:first-child {
+        gap: 3px;
     }
 }
 
-/* Botón hamburguesa para móviles (solo visible en pantallas pequeñas) */
+/* Botón toggle para móviles - OPCIONAL si quieres mantenerlo */
 .menu-toggle {
     display: none;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 10px;
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1002;
+    /* Puedes eliminar este botón si el menú siempre está visible */
 }
 
 @media (max-width: 767px) {
-    .menu-toggle {
-        display: block;
-    }
-    
-    /* Ajustar contenido principal cuando el menú está oculto */
+    /* Ajustar contenido principal */
     .main-content {
         margin-left: 0;
         width: 100%;
+        padding-bottom: 80px; /* Espacio para el menú inferior siempre visible */
+    }
+    
+    /* Para menú superior */
+    .main-content.top-menu {
+        padding-bottom: 0;
+        padding-top: 80px; /* Espacio para el menú superior siempre visible */
     }
 }
 
@@ -215,5 +177,32 @@ aside a:hover {
     .main-content {
         margin-left: 180px;
         width: calc(100% - 180px);
+    }
+}
+
+/* Variación con iconos para móviles (opcional) */
+@media (max-width: 767px) {
+    /* Si usas iconos, puedes ocultar texto en móviles muy pequeños */
+    aside a .text {
+        display: none;
+    }
+    
+    aside a .icon {
+        display: block;
+        font-size: 1.2rem;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+    /* En móviles horizontales, mostrar texto abreviado */
+    aside a .text {
+        display: block;
+        font-size: 0.7rem;
+    }
+    
+    aside a {
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
     }
 }
