@@ -63,7 +63,7 @@ class UsuariosRepository{
         const [rows] = await db!.execute(
             `SELECT u.*, m.nombre AS mote_nombre
              FROM usuarios u
-             LEFT JOIN motes m ON u.mote_actual = m.id
+             LEFT JOIN motes m ON u.mote_actual = m.nombre
              WHERE u.id = ?`,
             [id]
         );

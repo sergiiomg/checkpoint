@@ -3,6 +3,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
+export interface Mote {
+  id: number;
+  nombre: string;
+  nivel_minimo: number;
+  descripcion: string;
+  desbloqueado: boolean;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,11 +20,15 @@ export class PerfilService {
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders();
-    this.headers = this.headers.set('content-type', 'application/json')
-                               .set('Authorization', "Bearer " + localStorage.getItem('token')!);
+
    }
 
   private headers: HttpHeaders;
+  private getHeaders(): HttpHeaders {
+  return new HttpHeaders()
+    .set('content-type', 'application/json')
+    .set('Authorization', `Bearer ${localStorage.getItem('token')}`);
+}
 
   // Obtener el perfil del usuario logueado
   obtenerPerfil(): Observable<any> {
@@ -24,7 +37,7 @@ export class PerfilService {
     //   console.log('Token en PerfilService:', token ? 'Presente' : 'No encontrado');
     // }
 
-    return this.http.get(`${this.apiUrl}perfil`, {'headers': this.headers}).pipe(
+    return this.http.get(`${this.apiUrl}perfil`, {'headers': this.getHeaders()}).pipe(
       tap(response => console.log('Perfil obtenido:', response))
     );
   }
@@ -68,5 +81,13 @@ export class PerfilService {
 
   dejarDeSeguir(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}usuarios/${id}/seguir`);
+  }
+  
+  seleccionarMote(id: number | null) {
+    return this.http.put<{ message: string; mote_actual: string }>(`${this.apiUrl}seleccionar-mote/${id}`, {}, { headers: this.headers });
+  }
+
+  getMotes() {
+    return this.http.get<any[]>(`${this.apiUrl}motes`);
   }
 }
