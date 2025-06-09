@@ -28,13 +28,21 @@ export class ComentariosService {
   }
 
   async obtenerComentariosDePublicacion(publicacionId: number) {
-      if (!this.db) this.db = await obtenerDB();
-      const [rows] = await this.db.query(
-        'SELECT * FROM comentarios WHERE publicacion_id = ? AND comentario_padre_id IS NULL ORDER BY fecha_creacion DESC',
-        [publicacionId]
-      );
-      return rows;
-    }
+    if (!this.db) this.db = await obtenerDB();
+    const [rows] = await this.db.query(
+      `SELECT 
+          c.*, 
+          u.nombre_usuario 
+       FROM comentarios c
+       JOIN usuarios u ON c.autor_id = u.id
+       WHERE c.publicacion_id = ? 
+         AND c.comentario_padre_id IS NULL
+       ORDER BY c.fecha_creacion DESC`,
+      [publicacionId]
+    );
+    return rows;
+  }
+
 
     async obtenerRespuestasDeComentario(comentarioId: number) {
       if (!this.db) this.db = await obtenerDB();
