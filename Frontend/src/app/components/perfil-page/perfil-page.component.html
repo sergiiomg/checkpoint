@@ -63,6 +63,11 @@
                   </button>
                 </div>
               </div>
+              <div *ngIf="publicacionComentandoId === p.id" class="formulario-comentario" (click)="$event.stopPropagation()">
+                <textarea [(ngModel)]="nuevoComentario" placeholder="Escribe tu comentario..."></textarea>
+                <button (click)="enviarComentario(p.id)">Enviar</button>
+              </div>
+            </div>
           </div>
 
         <ng-template #sinPublicaciones>
