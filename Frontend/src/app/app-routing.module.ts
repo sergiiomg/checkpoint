@@ -18,9 +18,9 @@ import { NivelComponent } from './components/nivel/nivel.component';
 
 const routes: Routes = [
   { path: 'dashboard', component: DashboardPageComponent },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'usuarios', component: SignUpComponent },
   { path: 'login', component: LoginPageComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'usuarios', component: SignUpComponent },
   { path: 'perfil', component: PerfilPageComponent, canActivate: [AuthGuard]  },
   { path: 'amigos', component: AmigosComponent},
   { path: 'logros', component: LogrosComponent },
