@@ -76,3 +76,16 @@
     border: none;
     margin-right: 1rem;
 }
+
+.login{
+    margin-top: 1.5rem;
+    margin-right: 2rem;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    transition: all 0.3s;
+}
+
+.login:hover{
+    color: rgb(190, 190, 190);
+}

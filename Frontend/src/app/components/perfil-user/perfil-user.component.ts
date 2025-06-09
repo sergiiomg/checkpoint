@@ -1,8 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PerfilService } from '../../services/perfil.service';
 import { PublicacionesService, Publicacion } from '../../services/publicaciones.service';
 import { PublicacionesGuardadasService } from '../../services/publicaciones-guardadas.service';
+import { Component, OnInit, Inject, PLATFORM_ID, Input } from '@angular/core';
+import { PerfilEventsService } from '../../services/perfil-event.service';
+import { isPlatformBrowser } from '@angular/common';
+import { ComentariosService } from '../../services/comentarios.service';
+import { Router } from '@angular/router';
+import { UsuariosService } from '../../services/usuarios.service';
 
 @Component({
   selector: 'app-perfil-user',
@@ -15,6 +20,10 @@ export class PerfilUserComponent implements OnInit {
   seguidoresCount = 0;
   seguidosCount = 0;
   error: string | null = null;
+  cargando: boolean = true;
+  publicacionComentandoId: number | null = null;
+  nuevoComentario: string = '';
+  usuarioActualId: number = 0;
   
   @Input() usuarioId?: number; // puede venir de afuera
 
@@ -24,11 +33,14 @@ export class PerfilUserComponent implements OnInit {
     private route: ActivatedRoute,
     private perfilService: PerfilService,
     private publicacionesService: PublicacionesService,
-    private publicacionesGuardadasService: PublicacionesGuardadasService
+    private perfilEventsService: PerfilEventsService,
+    private usuariosService: UsuariosService,
+    private comentariosService: ComentariosService,
+    private publicacionesGuardadasService: PublicacionesGuardadasService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    // Prioridad a usuarioId recibido por Input, si no existe, tomar de ruta
     const id = this.usuarioId ?? Number(this.route.snapshot.paramMap.get('id'));
     console.log('📦 ID del usuario desde ruta:', id);
 
@@ -60,8 +72,16 @@ export class PerfilUserComponent implements OnInit {
 
   cargarPublicaciones(id: number) {
     this.perfilService.obtenerPublicacionesDeUsuario(id).subscribe({
-      next: posts => this.publicaciones = posts,
-      error: () => this.error = 'No se pudieron cargar las publicaciones'
+      next: (data) => {
+        this.publicaciones = data;
+        console.log('✅ Publicaciones cargadas:', data);
+  
+        this.verificarGuardadasUsuario();
+        this.verificarLikeadasUsuario();
+      },
+      error: (err) => {
+        console.error('❌ Error al cargar publicaciones:', err);
+      }
     });
   }
 
@@ -99,17 +119,86 @@ export class PerfilUserComponent implements OnInit {
     });
   }
 
-  isGuardada(publicacion: Publicacion): boolean {
-    return publicacion.guardada === true;
+  verificarLikeadasUsuario() {
+    this.publicacionesService.obtenerPublicacionesLikeadas().subscribe(
+      likeadas => {
+        this.publicaciones.forEach(pub => {
+          pub.liked = likeadas.includes(pub.id);
+        });
+      },
+      error => {
+        console.error('Error al verificar publicaciones likeadas:', error);
+      }
+    );
   }
 
-  toggleGuardado(publicacion: Publicacion) {
-    this.publicacionesGuardadasService.toggleGuardado(publicacion.id).subscribe({
-      next: () => {
-        publicacion.guardada = !this.isGuardada(publicacion);
+  toggleLike(publicacion: Publicacion): void {
+    this.publicacionesService.toggleLike(publicacion.id).subscribe(
+      (res) => {
+        publicacion.liked = res.liked;
+        publicacion.likesCount = res.totalLikes;
       },
-      error: (err) => console.error('Error al togglear guardado:', err)
+      (error) => {
+        console.error('Error al dar like:', error);
+      }
+    );
+  }
+
+  verificarGuardadasUsuario() {
+    this.publicacionesService.obtenerPublicacionesGuardadas().subscribe(
+      guardadas => {
+        const guardadasIds = guardadas.map(p => p.id);
+        this.publicaciones.forEach(pub => {
+          pub.guardada = guardadasIds.includes(pub.id);
+        });
+      },
+      error => {
+        console.error('Error al verificar publicaciones guardadas:', error);
+      }
+    );
+  }
+
+  toggleGuardar(pub: any) {
+    if (pub.guardada) {
+      this.publicacionesService.desguardarPublicacion(pub.id).subscribe(() => {
+        pub.guardada = false;
+      });
+    } else {
+      this.publicacionesService.guardarPublicacion(pub.id).subscribe(() => {
+        pub.guardada = true;
+      });
+    }
+  }
+
+  irAlPerfil(usuarioId: number) {
+    this.router.navigate(['/usuarios', usuarioId]);
+  }
+
+  toggleFormularioComentario(publicacionId: number): void {
+    if (this.publicacionComentandoId === publicacionId) {
+      this.publicacionComentandoId = null;
+    } else {
+      this.publicacionComentandoId = publicacionId;
+    }
+  }
+
+  enviarComentario(publicacionId: number) {
+    if (!this.nuevoComentario.trim()) return;
+
+    this.comentariosService.crearComentario(publicacionId, this.nuevoComentario).subscribe({
+      next: (res) => {
+        console.log('✅ Comentario creado:', res);
+        this.nuevoComentario = '';
+        this.publicacionComentandoId = null;
+      },
+      error: (err) => {
+        console.error('❌ Error al enviar comentario:', err);
+      }
     });
+  }
+
+  verDetalle(id: number) {
+    this.router.navigate(['/publicacion', id]);
   }
 
   getMediaUrl(mediaUrl: string | null): string | null {

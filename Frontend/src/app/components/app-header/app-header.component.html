@@ -16,9 +16,11 @@
                 >
             </form>
 
+            <a class="login" href="/login" *ngIf="!usuario">Iniciar sesión</a>
+
 
             <a href="/perfil" class="profile-link">
-                <img [src]="usuario.foto_perfil_url" alt="Foto de perfil" class="foto-perfil">
+                <img *ngIf="usuario" [src]="usuario.foto_perfil_url" alt="Foto de perfil" class="foto-perfil">
             </a>
         </nav>
     </header>

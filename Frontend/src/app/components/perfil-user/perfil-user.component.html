@@ -1,73 +1,77 @@
-<div class="header">
+<div class="dashboard-layout">
   <app-header></app-header>
-  <div class="aside">
+  <div class="dashboard-body">
     <app-aside></app-aside>
-  </div>
-</div>
-<div class="container">
+      <div class="container">
   <div>
     <div class="informacion" *ngIf="usuario; else cargando">
-    <div class="imagenes">
-      <img [src]="usuario.banner_url" alt="Banner" class="banner">
-      <img [src]="usuario.foto_perfil_url" alt="Foto de perfil" class="foto-perfil">
-    </div>
-
-    <div class="info">
-      <div>
-        <div class="nombres">
-          <h2>{{usuario.nombre_usuario}}</h2>
-          <p>{{usuario.mote_actual}}</p>
-        </div>
-        <button class="btn-seguir" (click)="toggleSeguir()">{{ siguiendo ? 'Dejar de seguir' : 'Seguir' }}</button>
+      <div class="imagenes">
+        <img [src]="usuario.banner_url" alt="Banner" class="banner">
+        <img [src]="usuario.foto_perfil_url" alt="Foto de perfil" class="foto-perfil">
       </div>
-      <p>Nivel: {{ usuario.nivel }}</p>
-      <p>{{seguidoresCount}} seguidores</p>
-      <p>{{seguidosCount}} seguidos</p>
-    </div>
-  </div>
-  </div>
-  
 
-  <div class="publicaciones-container" *ngIf="publicaciones.length > 0; else sinPublicaciones">
-      <div class="publicacion" *ngFor="let p of publicaciones">
-        <h3>{{ p.titulo }}</h3>
-        <p>{{ p.descripcion }}</p>
-
-        <div *ngIf="p.tipo_media === 'imagen' && p.media_url">
-          <img [src]="getMediaUrl(p.media_url)" class="media" />
-        </div>
-        <div *ngIf="p.tipo_media === 'video' && p.media_url">
-          <video class="media" controls>
-            <source [src]="getMediaUrl(p.media_url)" type="video/mp4" />
-          </video>
-        </div>
-
-        <div class="acciones">
-          <div class="grupo-izquierda">
-            <button class="btn like">
-              <i class="{{ p.liked ? 'fas' : 'far' }} fa-heart"></i>
-              {{ p.likesCount || 0 }}
-            </button>
-            <button class="btn comentar">
-              <i class="far fa-comment"></i>
-            </button>
+      <div class="info">
+        <div>
+          <div class="nombres">
+            <h2>{{usuario.nombre_usuario}}</h2>
+            <p>{{usuario.mote_actual}}</p>
           </div>
-          <div class="grupo-derecha">
-            <button class="btn guardar">
-              <i class="{{ p.guardada ? 'fas' : 'far' }} fa-bookmark"></i>
-            </button>
-          </div>
+          <button class="btn-seguir" (click)="toggleSeguir()">{{ siguiendo ? 'Dejar de seguir' : 'Seguir' }}</button>
         </div>
+        <p>Nivel: {{ usuario.nivel }}</p>
+        <p>{{seguidoresCount}} seguidores</p>
+        <p>{{seguidosCount}} seguidos</p>
       </div>
     </div>
+    </div>
+    
 
-  <ng-template #sinPublicaciones>
-    <p>Este usuario aún no ha creado publicaciones.</p>
-  </ng-template>
+    <div class="publicaciones-container" *ngIf="publicaciones.length > 0; else sinPublicaciones">
+        <div class="publicacion" *ngFor="let p of publicaciones"  (click)="verDetalle(p.id)">
+          <h3>{{ p.titulo }}</h3>
+          <p>{{ p.descripcion }}</p>
+
+          <div *ngIf="p.tipo_media === 'imagen' && p.media_url">
+            <img [src]="getMediaUrl(p.media_url)" class="media" />
+          </div>
+          <div *ngIf="p.tipo_media === 'video' && p.media_url">
+            <video class="media" controls>
+              <source [src]="getMediaUrl(p.media_url)" type="video/mp4" />
+            </video>
+          </div>
+
+          <div class="acciones" (click)="$event.stopPropagation()">
+                  <div class="grupo-izquierda">
+                    <button class="btn like" [class.liked]="p.liked" (click)="toggleLike(p)">
+                      <i class="{{ p.liked ? 'fas' : 'far' }} fa-heart"></i>
+                      {{ p.likesCount || 0 }}
+                    </button>
+                    <button class="btn comentar" (click)="toggleFormularioComentario(p.id)">
+                      <i class="far fa-comment"></i>
+                    </button>
+                  </div>
+                  <div class="grupo-derecha">
+                    <button class="btn guardar" (click)="toggleGuardar(p)" [class.guardada]="p.guardada">
+                      <i class="{{ p.guardada ? 'fas' : 'far' }} fa-bookmark"></i>
+                    </button>
+                  </div>
+                </div>
+            <div *ngIf="publicacionComentandoId === p.id" class="formulario-comentario" (click)="$event.stopPropagation()">
+              <textarea [(ngModel)]="nuevoComentario" placeholder="Escribe tu comentario..."></textarea>
+              <button (click)="enviarComentario(p.id)">Enviar</button>
+            </div>
+        </div>
+      </div>
+
+    <ng-template #sinPublicaciones>
+      <p>Este usuario aún no ha creado publicaciones.</p>
+    </ng-template>
 
 
-  <ng-template #cargando>
-    <p *ngIf="error">{{ error }}</p>
-    <p *ngIf="!error">Cargando perfil...</p>
-  </ng-template>
+    <ng-template #cargando>
+      <p *ngIf="error">{{ error }}</p>
+      <p *ngIf="!error">Cargando perfil...</p>
+    </ng-template>
+  </div>
+  </div>
 </div>
