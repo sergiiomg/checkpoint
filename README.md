@@ -1,7 +1,7 @@
 # 🎮 CheckPoint - Red Social Gamificada para Gamers
 
-**Proyecto Final del Ciclo DAW (Desarrollo de Aplicaciones Web)**  
-Autor: [Sergio Melendi García]  
+**Proyecto Final del CFGS DAW (Desarrollo de Aplicaciones Web)**  
+Autor: Sergio Melendi García
 
 ## 🧠 Descripción del Proyecto
 
